@@ -22,11 +22,14 @@ return function(lsp, pattern, config, pre, post, override_capabilities)
     end
 
     if pattern then
-        vim.api.nvim_create_autocmd({ "BufNew", "BufReadPre" }, {
+        vim.api.nvim_create_autocmd({ "BufNew", "BufNewFile", "BufReadPre" }, {
             group = "ConfigureLsp",
             once = true,
             pattern = pattern,
-            callback = callback,
+            callback = function(args)
+                callback(args)
+                vim.schedule(vim.cmd.LspStart)
+            end,
         })
     else
         callback()

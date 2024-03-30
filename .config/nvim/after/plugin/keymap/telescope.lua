@@ -8,6 +8,11 @@ for key, picker in pairs({
     p = "projects",
     n = "notify",
     h = "highlights",
+    g = "git_status",
+    a = "autocommands",
+    r = "resume",
+    k = "keymaps",
+    v = "vim_options",
 }) do
     vim.keymap.set({"n", "i", "v"}, prefix..key, "<Cmd>Telescope "..picker.."<CR>")
 end
