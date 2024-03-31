@@ -4,15 +4,22 @@ return {
         dependencies = {
             "Mofiqul/dracula.nvim",
             {
-                "linrongbin16/lsp-progress.nvim",
+                "ray-x/lsp_signature.nvim",
+                event = "User NotCopilot",
                 config = true,
-            }
+            },
         },
         priority = 600,
         config = function() require"config.lualine".setup() end
     },
     {
         "rcarriga/nvim-notify",
+        dependencies = {
+            {
+                "mrded/nvim-lsp-notify",
+		-- Configured in `config.notify.setup()`
+            },
+        },
         priority = 300,
         config = function() require"config.notify".setup() end
     },

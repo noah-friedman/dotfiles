@@ -45,4 +45,14 @@ return {
         ft = "markdown",
         build = ":call mkdp#util#install()",
     },
+    {
+        "tpope/vim-fugitive",
+        dependencies = {
+            {
+                "seanbreckenridge/yadm-git.vim",
+                config = function() vim.g.yadm_git_gitgutter_enabled = 0 end,
+            },
+        },
+        priority = 201,
+    },
 }

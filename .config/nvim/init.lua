@@ -1,7 +1,9 @@
 table.unpack = table.unpack or unpack
 
 vim.opt.rtp--[[ @as vim.Option ]]:prepend(vim.fn.stdpath("data").."/lazy/lazy.nvim")
-vim.opt.rtp--[[ @as vim.Option ]]:prepend(vim.fn.stdpath("config").."/../local/nvim")
+
+local lpath = vim.fn.stdpath("config")--[[ @as string ]]:gsub("nvim$", "local/nvim")
+
 
 require"lazy".setup {
     spec = {
@@ -18,5 +20,13 @@ require"lazy".setup {
     },
     install = {
         colorscheme = { "dracula" }
-    }
+    },
+    performance = {
+        rtp = {
+            paths = {
+                lpath,
+                lpath .. "/after",
+            },
+        },
+    },
 }

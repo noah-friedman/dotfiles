@@ -1,15 +1,34 @@
 local M = {}
 
 function M.setup()
+    local colors = require"dracula".colors()
+    local theme = require"lualine.themes.dracula-nvim"
+    for mode, _ in pairs(theme) do
+        local fg = theme[mode].b.fg
+        theme[mode].b = { fg = colors["bright_white"], bg = colors["selection"] }
+        if not theme[mode].c then
+            theme[mode].c = { fg = fg, bg = colors["black"] }
+        else
+            theme[mode].c.fg = fg
+        end
+    end
+
     -- Disable the default mode display
     vim.o.showmode = false
 
     require"lualine".setup {
         options = {
-            theme = "dracula-nvim"
+            theme = theme,
         },
         sections = {
+            lualine_a = {
+                "mode",
+            },
             lualine_b = {
+                "branch",
+                "diff"
+            },
+            lualine_c = {
                 {
                     "buffers",
                     show_filename_only = false,
@@ -17,10 +36,8 @@ function M.setup()
                         alternate_file = "",
                         directory = "󰉖 ",
                     },
+                    use_mode_colors = true,
                 }
-            },
-            lualine_c = {
-                require"lsp-progress".progress,
             },
             lualine_x = {
                 {
@@ -34,7 +51,10 @@ function M.setup()
                         hint = "󰙴 ",
                     }
                 },
-                "(vim.b.copilot_suggestion_auto_trigger == false) and '' or ''",
+                {
+                    "(vim.b.copilot_suggestion_auto_trigger == false) and ' ' or ' '",
+                    color = { fg = colors["white"] }
+                }
             },
             lualine_y = {
                 "filetype",
@@ -45,8 +65,6 @@ function M.setup()
             lualine_z = {
                 "progress",
                 "location",
-                "branch",
-                "diff",
             }
         },
     }

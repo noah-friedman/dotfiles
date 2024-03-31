@@ -1,3 +1,9 @@
+local filetypes = {
+    'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript',
+    'xml', 'php', 'markdown', 'astro', 'glimmer', 'handlebars', 'hbs', 'svg',
+}
+
+
 return {
     {
         "ahmedkhalf/project.nvim",
@@ -5,13 +11,14 @@ return {
         priority = 450,
     },
     {
-        "tpope/vim-fugitive",
-        dependencies = {
-            {
-                "seanbreckenridge/yadm-git.vim",
-                config = function() vim.g.yadm_git_gitgutter_enabled = 0 end,
-            },
+        "PriceHiller/nvim-ts-autotag",
+        branch = "fix/close-xml-tags",
+        ft = filetypes,
+        opts = {
+            filetypes = filetypes
         },
-        priority = 201,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter"
+        },
     },
 }
