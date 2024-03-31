@@ -4,6 +4,10 @@ local filetypes = {
 }
 
 
+function _G.close_tag()
+    require('nvim-ts-autotag').update()
+end
+
 return {
     {
         "ahmedkhalf/project.nvim",

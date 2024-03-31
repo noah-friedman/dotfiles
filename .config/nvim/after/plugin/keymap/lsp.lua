@@ -1,9 +1,7 @@
 vim.keymap.set("i", "<S-BS>", function()
     local copilot = require"copilot.suggestion"
 
-    if vim.fn.pumvisible() == 1 then
-        return "<C-e>"
-    elseif copilot.is_visible() then
+    if copilot.is_visible() then
         copilot.dismiss()
     else
         return "<S-BS>"

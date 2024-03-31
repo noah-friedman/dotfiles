@@ -1,14 +1,35 @@
 return {
     {
-        "neovim/nvim-lspconfig",
-        config = function()
-            require"lsp"
-        end,
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            {
+                "neovim/nvim-lspconfig",
+                config = function()
+                    require"lsp"
+                end,
+            },
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            {
+                "dcampos/nvim-snippy",
+                dependencies = {
+                    "dcampos/cmp-snippy",
+                    "honza/vim-snippets",
+                },
+                lazy = true,
+            },
+            {
+                "zbirenbaum/copilot.lua",
+                config = function() require"config.copilot".setup() end
+            }
+        },
         priority = 400,
+        config = function() require"config.cmp".setup() end
     },
-
-    -- Auto-completion
-    {
+    --[[{
         "ms-jpq/coq.nvim",
         lazy = true,
         init = function()
@@ -19,15 +40,9 @@ return {
         build = function()
             vim.cmd "COQdeps"
         end,
-    },
+    },]]
 
     -- Copilot
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function() require"config.copilot".setup() end
-    },
 
     -- Extension to LuaLS that makes it aware of Neovim runtime files
     {

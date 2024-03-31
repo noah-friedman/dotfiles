@@ -3,11 +3,6 @@ return {
         "nvim-lualine/lualine.nvim",
         dependencies = {
             "Mofiqul/dracula.nvim",
-            {
-                "ray-x/lsp_signature.nvim",
-                event = "User NotCopilot",
-                config = true,
-            },
         },
         priority = 600,
         config = function() require"config.lualine".setup() end

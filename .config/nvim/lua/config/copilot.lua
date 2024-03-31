@@ -5,14 +5,7 @@ function M.setup()
         suggestion = {
             auto_trigger = true,
             hide_during_completion = false,
-            keymap = {
-                next = "<S-Down>",
-                prev = "<S-Up>",
-                accept = "<S-Enter>",
-
-                -- See `after/plugin/keymap/lsp.lua`
-                -- dismiss = "<S-BS>",
-            },
+            -- See `config.cmp` for keymap
         },
     }
 end

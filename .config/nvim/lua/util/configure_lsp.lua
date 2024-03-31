@@ -5,16 +5,20 @@ vim.api.nvim_create_augroup("ConfigureLsp", {})
 ---@param config? table
 ---@param pre? fun(args: table)
 ---@param post? fun(args: table)
----@param override_capabilities? false
-return function(lsp, pattern, config, pre, post, override_capabilities)
+---@param capabilities? false
+return function(lsp, pattern, config, pre, post, capabilities)
     ---@param args? table
     local callback = function(args)
         if pre then
             pre(args or {})
         end
 
-        require("lspconfig"
-        )[lsp].setup((override_capabilities == false) and config or require"coq".lsp_ensure_capabilities(config or {}))
+        if capabilities ~= false then
+            config = config or {}
+            config.capabilities = require"cmp_nvim_lsp".default_capabilities(config.capabilities or {})
+        end
+
+        require("lspconfig")[lsp].setup(config or {})
 
         if post then
             post(args or {})
