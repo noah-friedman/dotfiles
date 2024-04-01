@@ -18,4 +18,10 @@ if cmd_exists zsh && fs_exists "$HOME/.local/share/zsh/oh-my-zsh"; then
                         git clone --depth 1 "https://github.com/zsh-users/$repo" \
                                 "$HOME/.local/share/zsh/oh-my-zsh/custom/plugins/$repo"
                 done
+
+        if cmd_exists virtualenv && fs_exists "$HOME/.local/share/zsh/oh-my-zsh/custom/plugins/autoswitch_virtualenv"
+        then
+                git clone https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv \
+                        ~/.local/share/zsh/oh-my-zsh/custom/plugins/autoswitch_virtualenv
+        fi
 fi
