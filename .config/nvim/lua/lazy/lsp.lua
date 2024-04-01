@@ -1,33 +1,35 @@
 return {
     {
-        "hrsh7th/nvim-cmp",
+        "neovim/nvim-lspconfig",
+        init = function()
+            require"lsp"
+        end,
         dependencies = {
             {
-                "neovim/nvim-lspconfig",
-                config = function()
-                    require"lsp"
-                end,
-            },
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            {
-                "dcampos/nvim-snippy",
+                "hrsh7th/nvim-cmp",
                 dependencies = {
-                    "dcampos/cmp-snippy",
-                    "honza/vim-snippets",
+                    "hrsh7th/cmp-nvim-lsp",
+                    "hrsh7th/cmp-nvim-lsp-signature-help",
+                    "hrsh7th/cmp-buffer",
+                    "hrsh7th/cmp-path",
+                    "hrsh7th/cmp-cmdline",
+                    {
+                        "dcampos/nvim-snippy",
+                        dependencies = {
+                            "dcampos/cmp-snippy",
+                            "honza/vim-snippets",
+                        },
+                        lazy = true,
+                    },
+                    {
+                        "zbirenbaum/copilot.lua",
+                        config = function() require"config.copilot".setup() end
+                    }
                 },
-                lazy = true,
+                config = function() require"config.cmp".setup() end
             },
-            {
-                "zbirenbaum/copilot.lua",
-                config = function() require"config.copilot".setup() end
-            }
         },
-        priority = 400,
-        config = function() require"config.cmp".setup() end
+        lazy = true,
     },
     --[[{
         "ms-jpq/coq.nvim",
