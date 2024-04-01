@@ -10,7 +10,7 @@ return function(name, root)
     necessary.
     ]]
 
-    for entry in vim.fs.dir((root or (vim.fn.stdpath("config") .. "/lua/")) .. name, { depth = 5 }) do
+    for entry in vim.fs.dir((root or (vim.fn.stdpath("config") .. "/lua")) .. "/" .. name, { depth = 5 }) do
         -- Only `require` when `entry` is a Lua file and isn't named "init.lua"
 
         local suffix = ".lua"

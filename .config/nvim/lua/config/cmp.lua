@@ -63,7 +63,7 @@ function M.setup()
             end),
             ["<S-ScrollWheelUp>"] = cmp.mapping.scroll_docs(-1),
             ["<S-ScrollWheelDown>"] = cmp.mapping.scroll_docs(1),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ["<CR>"] = cmp.mapping.confirm({ select = true }),
             ["<Tab>"] = cmp.mapping(function(fallback)
                 -- If the completion menu is open, select the next item
                 if cmp.visible() then
@@ -95,7 +95,7 @@ function M.setup()
         ---@diagnostic disable-next-line: missing-fields
         formatting = {
             format = function(_, vim_item)
-                vim_item.kind = string.format('%s  %s', kind_icons[vim_item.kind], vim_item.kind)
+                vim_item.kind = string.format("%s  %s", kind_icons[vim_item.kind], vim_item.kind)
                 return vim_item
             end
         },
