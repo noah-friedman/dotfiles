@@ -5,7 +5,14 @@ function M.setup()
         suggestion = {
             auto_trigger = true,
             hide_during_completion = false,
-            -- See `config.cmp` for keymap
+            -- See `config.cmp` for overriden keymap
+            -- These are only here to show the keymap when `cmp` isn't loaded
+            keymap = {
+                next = "<S-Down>",
+                prev = "<S-Up>",
+                accept = "<S-Enter>",
+                dismiss = "<S-BS>",
+            },
         },
     }
 end
