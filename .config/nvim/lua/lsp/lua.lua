@@ -10,6 +10,8 @@ require"util.configure_lsp"("lua_ls", "*.lua", {
     }
 }, function(_)
     require"neodev".setup({
+        ---@param root_dir string
+        ---@param library table
         override = function(root_dir, library)
             local paths = {
                 (function()
@@ -23,7 +25,8 @@ require"util.configure_lsp"("lua_ls", "*.lua", {
             paths[2] = paths[1]:gsub("/nvim", "/local/nvim")
 
             for _, path in ipairs(paths) do
-                if root_dir:find(path, 1, true) == 1 then
+                if root_dir:find(path, 1, true) == 1 or
+                    (pcall(require, "local.dev") and root_dir:find(require"local.dev".path, 1, true) == 1) then
                     library.enabled = true
                     library.runtime = true
                     library.types = true

@@ -4,6 +4,7 @@ vim.opt.rtp--[[ @as vim.Option ]]:prepend(vim.fn.stdpath("data").."/lazy/lazy.nv
 
 local lpath = vim.fn.stdpath("config")--[[ @as string ]]:gsub("nvim$", "local/nvim")
 vim.opt.rtp:prepend(lpath)
+vim.opt.rtp:prepend(lpath.."/after")
 
 require"lazy".setup {
     dev = pcall(require, "local.dev") and require"local.dev" or nil,
@@ -29,5 +30,13 @@ require"lazy".setup {
                 lpath .. "/after",
             },
         },
+    },
+    checker = {
+        enabled = true,
+        concurrency = #vim.loop.cpu_info(),
+    },
+    change_detection = {
+        enabled = true,
+        notify = true,
     },
 }
