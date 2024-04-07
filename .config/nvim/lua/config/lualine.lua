@@ -19,6 +19,7 @@ function M.setup()
   require "lualine".setup {
     options = {
       theme = theme,
+      globalstatus = true,
     },
     sections = {
       lualine_a = {

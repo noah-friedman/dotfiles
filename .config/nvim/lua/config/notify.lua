@@ -23,9 +23,9 @@ function M.setup()
     TRACE = "white",
   }
   do
-    vim.cmd.hi("Notify" .. level .. "Border guifg=" .. colors[color])
-    vim.cmd.hi("Notify" .. level .. "Icon guifg=" .. colors["bright_" .. color])
-    vim.cmd.hi("Notify" .. level .. "Title guifg=" .. colors["bright_" .. color] .. " gui=bold")
+    vim.api.nvim_set_hl(0, "Notify" .. level .. "Border", { fg = colors[color] })
+    vim.api.nvim_set_hl(0, "Notify" .. level .. "Icon", { fg = colors["bright_" .. color] })
+    vim.api.nvim_set_hl(0, "Notify" .. level .. "Title", { fg = colors["bright_" .. color], bold = true })
   end
 
   require "lsp-notify".setup()

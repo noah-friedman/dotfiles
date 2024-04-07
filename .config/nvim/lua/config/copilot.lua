@@ -18,6 +18,6 @@ function M.setup()
 end
 
 -- Configure highlight groups
-vim.cmd.highlight [[ CopilotSuggestion cterm=italic gui=italic guifg=#969696 ]]
+vim.api.nvim_set_hl(0, "CopilotSuggestion", { fg = "#969696", italic = true })
 
 return M
