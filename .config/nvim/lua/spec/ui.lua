@@ -2,7 +2,9 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "Mofiqul/dracula.nvim",
+      {
+        "Mofiqul/dracula.nvim",
+      },
     },
     priority = 600,
     config = function() require "config.lualine".setup() end
