@@ -36,3 +36,5 @@ local opts = {
 for key, value in pairs(opts) do
   vim.o[key] = value
 end
+
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = require "dracula".colors()["white"] })
