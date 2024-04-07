@@ -14,7 +14,8 @@ require "util.configure_lsp" ("pylsp", "*.py", {
             "W",
           },
           severities = {
-            F401 = "W"
+            F401 = "W",
+            F841 = "W",
           },
         },
       }
