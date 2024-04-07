@@ -30,7 +30,7 @@ local opts = {
   termguicolors = true,
 
   -- Document textwidth
-  textwidth = 119,
+  textwidth = 120,
 }
 
 for key, value in pairs(opts) do

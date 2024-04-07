@@ -1,4 +1,3 @@
--- `pip install "python-lsp-server[all]" mypy pylsp-mypy`
 require "util.configure_lsp" ("pylsp", "*.py", {
   settings = {
     pylsp = {
@@ -7,7 +6,16 @@ require "util.configure_lsp" ("pylsp", "*.py", {
           enabled = true
         },
         ruff = {
-          lineLength = 79
+          enabled = true,
+          lineLength = 120,
+          select = {
+            "E",
+            "F",
+            "W",
+          },
+          severities = {
+            F401 = "W"
+          },
         },
       }
     }
