@@ -8,7 +8,7 @@ vim.api.nvim_create_augroup("ConfigureLsp", {})
 ---@field post? fun(args: table)
 ---@field capabilities? false Disables configuration of default and `nvim-cmp` provided capabilities
 ---@field formatter? false Disables configuration of auto-format on save
----@field filetypes? false Disables derivation of filetypes from `pattern`
+---@field derive_filetypes? false Disables derivation of additional filetypes from `pattern`
 ---@field default_filetypes? false Disables default fts from `lspconfig` being automatically added to configured fts.
 
 
@@ -22,6 +22,7 @@ return function(opts)
     end
 
     opts.config = opts.config or {}
+    opts.config.filetypes = opts.config.filetypes or {}
     local config = opts.config
 
     -- Add capabilities to the config without overriding any existing config (unless explicitly disabled)
@@ -44,11 +45,10 @@ return function(opts)
       end
     end
 
-    config.filetypes = opts.config.filetypes or {}
-
     -- Derive filetypes from the pattern (unless explicitly disabled)
-    if opts.filetypes ~= false then
+    if opts.derive_filetypes ~= false then
       for _, p in ipairs(vim.tbl_flatten { opts.pattern }) do
+        ---@diagnostic disable-next-line: need-check-nil
         table.insert(config.filetypes, (vim.filetype.match { filename = p }))
       end
     end
