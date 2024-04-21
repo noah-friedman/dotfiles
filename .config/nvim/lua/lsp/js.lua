@@ -1,1 +1,4 @@
-require "util.configure_lsp"("tsserver", { "*.js", "*.ts", "*.jsx", "*.tsx" })
+require "util.configure_lsp" {
+  lsp = "tsserver",
+  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
+}

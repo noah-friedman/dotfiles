@@ -1,1 +1,4 @@
-require "util.configure_lsp" ("taplo", "*.toml")
+require "util.configure_lsp" {
+  lsp = "taplo",
+  pattern = "*.toml",
+}

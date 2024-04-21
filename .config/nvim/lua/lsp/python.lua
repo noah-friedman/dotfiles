@@ -1,24 +1,28 @@
-require "util.configure_lsp" ("pylsp", "*.py", {
-  settings = {
-    pylsp = {
-      plugins = {
-        rope_autoimport = {
-          enabled = true
-        },
-        ruff = {
-          enabled = true,
-          lineLength = 120,
-          select = {
-            "E",
-            "F",
-            "W",
+require "util.configure_lsp" {
+  lsp = "pylsp",
+  pattern = "*.py",
+  config = {
+    settings = {
+      pylsp = {
+        plugins = {
+          rope_autoimport = {
+            enabled = true
           },
-          severities = {
-            F401 = "W",
-            F841 = "W",
+          ruff = {
+            enabled = true,
+            lineLength = 120,
+            select = {
+              "E",
+              "F",
+              "W",
+            },
+            severities = {
+              F401 = "W",
+              F841 = "W",
+            },
           },
-        },
+        }
       }
     }
   }
-})
+}

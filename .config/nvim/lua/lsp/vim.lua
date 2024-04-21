@@ -1,1 +1,4 @@
-require "util.configure_lsp" ("vimls", { "*.vim" })
+require "util.configure_lsp" {
+  lsp = "vimls",
+  pattern = "*.vim",
+}

@@ -1,1 +1,4 @@
-require "util.configure_lsp" ("marksman", "*.md")
+require "util.configure_lsp" {
+  lsp = "marksman",
+  pattern = "*.md",
+}

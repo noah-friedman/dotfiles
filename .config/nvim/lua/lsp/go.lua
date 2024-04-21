@@ -1,1 +1,4 @@
-require "util.configure_lsp" ("gopls", { "*.go", "go.mod" })
+require "util.configure_lsp" {
+  lsp = "gopls",
+  pattern = { "*.go", "go.mod" },
+}

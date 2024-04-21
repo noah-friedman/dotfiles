@@ -1,36 +1,42 @@
 vim.api.nvim_create_augroup("ConfigureLsp", {})
 
----@param lsp string
----@param pattern? string | string[]
----@param config? table
----@param pre? fun(args: table)
----@param post? fun(args: table)
----@param capabilities? false Disables configuration of default and `nvim-cmp` provided capabilities
----@param formatter? false Disables configuration of auto-format on save
----@param filetypes? false Disables derivation of filetypes from `pattern`
-return function(lsp, pattern, config, pre, post, capabilities, formatter, filetypes)
+---@class ConfigureLspOptions
+---@field lsp string
+---@field pattern? string | string[]
+---@field config? table
+---@field pre? fun(args: table)
+---@field post? fun(args: table)
+---@field capabilities? false Disables configuration of default and `nvim-cmp` provided capabilities
+---@field formatter? false Disables configuration of auto-format on save
+---@field filetypes? false Disables derivation of filetypes from `pattern`
+---@field default_filetypes? false Disables default fts from `lspconfig` being automatically added to configured fts.
+
+
+---@param opts ConfigureLspOptions
+return function(opts)
   ---@param args? table
   local callback = function(args)
     -- Run any pre-setup functions
-    if pre then
-      pre(args or {})
+    if opts.pre then
+      opts.pre(args or {})
     end
 
-    config = config or {}
+    opts.config = opts.config or {}
+    local config = opts.config
 
     -- Add capabilities to the config without overriding any existing config (unless explicitly disabled)
-    if capabilities ~= false then
-      config.capabilities = require "cmp_nvim_lsp".default_capabilities(config.capabilities or {})
+    if opts.capabilities ~= false then
+      config.capabilities = require "cmp_nvim_lsp".default_capabilities(opts.config.capabilities or {})
     end
 
     -- Set up auto-format on save (unless explicitly disabled)
-    if formatter ~= false then
+    if opts.formatter ~= false then
       local on_attach = require "lsp-format".on_attach
 
-      if not config.on_attach then
+      if not opts.config.on_attach then
         config.on_attach = on_attach
       else
-        local save = config.on_attach
+        local save = opts.config.on_attach
         config.on_attach = function(...)
           save(...)
           on_attach(...)
@@ -38,28 +44,36 @@ return function(lsp, pattern, config, pre, post, capabilities, formatter, filety
       end
     end
 
+    config.filetypes = opts.config.filetypes or {}
+
     -- Derive filetypes from the pattern (unless explicitly disabled)
-    if filetypes ~= false then
-      config.filetypes = config.filetypes or {}
-      for _, p in ipairs(vim.tbl_flatten { pattern }) do
+    if opts.filetypes ~= false then
+      for _, p in ipairs(vim.tbl_flatten { opts.pattern }) do
         table.insert(config.filetypes, (vim.filetype.match { filename = p }))
       end
     end
 
+    -- Add default fts from lspconfig to configured fts (unless explicitly disabled)
+    if opts.default_filetypes ~= false then
+      for _, ft in ipairs(require "lspconfig"[opts.lsp].document_config.default_config.filetypes) do
+        table.insert(config.filetypes, ft)
+      end
+    end
+
     -- Set up the LSP server
-    require "lspconfig"[lsp].setup(config or {})
+    require "lspconfig"[opts.lsp].setup(config or {})
 
     -- Run any post-setup functions
-    if post then
-      post(args or {})
+    if opts.post then
+      opts.post(args or {})
     end
   end
 
-  if pattern then
+  if opts.pattern then
     vim.api.nvim_create_autocmd({ "BufNew", "BufNewFile", "BufReadPre" }, {
       group = "ConfigureLsp",
       once = true,
-      pattern = pattern,
+      pattern = opts.pattern,
       callback = function(args)
         callback(args)
         vim.schedule(vim.cmd.LspStart)
