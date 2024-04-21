@@ -7,10 +7,6 @@ require "util.configure_lsp" ("lua_ls", "*.lua", {
                                         ["codestyle-check"] = "Any"
                                       },
                                     },
-                                    workspace = {
-                                      checkThirdParty = false,
-                                      library = { vim.api.nvim_get_runtime_file("", true) },
-                                    },
                                     format = {
                                       enabled = true,
                                       defaultConfig = {
@@ -23,6 +19,13 @@ require "util.configure_lsp" ("lua_ls", "*.lua", {
                                         indent_size = "2",
                                         quote_style = "double",
                                       },
+                                    },
+                                    hint = {
+                                      enable = true,
+                                    },
+                                    workspace = {
+                                      checkThirdParty = false,
+                                      library = { vim.api.nvim_get_runtime_file("", true) },
                                     },
                                   }
                                 }

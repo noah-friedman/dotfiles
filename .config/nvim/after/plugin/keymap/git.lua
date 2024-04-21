@@ -16,7 +16,7 @@ for mapping, action in pairs {
     })
   end,
   A = "<Cmd>Gitsigns stage_buffer<CR>",
-  R = "<Cmd>Git reset_buffer<CR>",
+  R = "<Cmd>Gitsigns reset_buffer<CR>",
   C = "<Cmd>tab Git commit --amend<CR>",
   P = "<Cmd>Git push -f<CR>",
   X = function()
