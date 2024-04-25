@@ -1,31 +1,37 @@
 local M = {}
 
-local kind_icons = {
-  Text = "󱩾",
-  Method = "󱝒",
-  Function = "󰒓",
-  Constructor = "󱉜",
-  Field = "󱝔",
-  Variable = "󰏫",
-  Class = "󰀼",
-  Interface = "󰠥",
-  Module = "󰏖",
-  Property = "󰓹",
-  Unit = "",
-  Value = "󰎠",
-  Enum = "󰖽",
-  Keyword = "",
-  Snippet = "󰲋",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "",
-  Folder = "󰝰",
-  EnumMember = "󰈍",
-  Constant = "󰏿",
-  Struct = "󰉺",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
+local icons = {
+  kind = {
+    Text = "󱩾",
+    Method = "󱝒",
+    Function = "󰒓",
+    Constructor = "󱉜",
+    Field = "󱝔",
+    Variable = "󰏫",
+    Class = "󰀼",
+    Interface = "󰠥",
+    Module = "󰏖",
+    Property = "󰓹",
+    Unit = "",
+    Value = "󰎠",
+    Enum = "󰖽",
+    Keyword = "",
+    Snippet = "󰲋",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "",
+    Folder = "󰝰",
+    EnumMember = "󰈍",
+    Constant = "󰏿",
+    Struct = "󰉺",
+    Event = "",
+    Operator = "",
+    TypeParameter = "",
+  },
+  source = {
+    nvim_lsp = "",
+    snippy = "",
+  },
 }
 
 function M.setup()
@@ -94,17 +100,18 @@ function M.setup()
     },
     ---@diagnostic disable-next-line: missing-fields
     formatting = {
-      format = function(_, vim_item)
-        vim_item.kind = string.format("%s  %s", kind_icons[vim_item.kind], vim_item.kind)
+      format = function(entry, vim_item)
+        vim_item.kind = string.format("%s  %13s [%s]", icons.kind[vim_item.kind],
+                                      vim_item.kind,
+                                      icons.source[entry.source.name])
         return vim_item
       end
     },
     sources = cmp.config.sources({
                                    { name = "nvim_lsp" },
-                                   { name = "nvim_lsp_signature_help" },
                                    { name = "snippy" }
                                  }, {
-                                   { name = "buffer" },
+                                   { name = "nvim_lsp_signature_help" },
                                  }),
   }
 

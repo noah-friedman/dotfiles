@@ -4,6 +4,9 @@ require "util.configure_lsp" {
   config = {
     settings = {
       Lua = {
+        completion = {
+          showWord = "Disable",
+        },
         diagnostics = {
           globals = { "vim" },
           neededFileStatus = {

@@ -16,7 +16,7 @@ local function inlay_hint_callback(args1)
     buffer = args1.buf,
     once = true,
     callback = function(args2)
-      vim.lsp.inlay_hint.enable(args2.buf)
+      vim.lsp.inlay_hint.enable(true, { bufnr = args2.buf })
     end
   })
 end
