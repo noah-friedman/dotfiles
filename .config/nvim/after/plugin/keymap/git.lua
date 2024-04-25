@@ -1,12 +1,18 @@
 local leader = "<M-g>"
 
 for mapping, action in pairs {
-  a = "<Cmd>Gitsigns stage_hunk<CR>",
-  r = "<Cmd>Gitsigns reset_hunk<CR>",
-  u = "<Cmd>Gitsigns undo_stage_hunk<CR>",
-  d = "<Cmd>Gitsigns preview_hunk<CR>",
-  c = "<Cmd>tab Git commit<CR>",
-  p = "<Cmd>Git push<CR>",
+  a = {
+    "Gitsigns stage_hunk",
+  },
+  r = {
+    "Gitsigns reset_hunk",
+  },
+  u = "Gitsigns undo_stage_hunk",
+  d = {
+    "Gitsigns preview_hunk",
+  },
+  c = "tab Git commit",
+  p = "Git push",
   x = function()
     vim.cmd "tab Git commit"
     vim.api.nvim_create_autocmd("User", {
@@ -15,10 +21,10 @@ for mapping, action in pairs {
       command = "Git push"
     })
   end,
-  A = "<Cmd>Gitsigns stage_buffer<CR>",
-  R = "<Cmd>Gitsigns reset_buffer<CR>",
-  C = "<Cmd>tab Git commit --amend<CR>",
-  P = "<Cmd>Git push -f<CR>",
+  A = "Gitsigns stage_buffer",
+  R = "Gitsigns reset_buffer",
+  C = "tab Git commit --amend",
+  P = "Git push -f",
   X = function()
     vim.cmd "tab Git commit --amend"
     vim.api.nvim_create_autocmd("User", {
@@ -28,5 +34,12 @@ for mapping, action in pairs {
     })
   end,
 } do
-  vim.keymap.set({ "n", "i", "v" }, leader .. mapping, action)
+  if type(action) == "table" then
+    vim.keymap.set("v", leader .. mapping, "<Cmd>'<,'>" .. action[1] .. "<CR>")
+    action = action[1]
+  end
+  if type(action) == "string" then
+    action = "<Cmd>" .. action .. "<CR>"
+  end
+  vim.keymap.set({ "n", "i" }, leader .. mapping, action)
 end
