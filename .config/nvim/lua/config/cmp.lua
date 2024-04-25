@@ -30,7 +30,7 @@ local icons = {
   },
   source = {
     nvim_lsp = "",
-    snippy = "",
+    snippy = "󰆐",
   },
 }
 
@@ -101,7 +101,7 @@ function M.setup()
     ---@diagnostic disable-next-line: missing-fields
     formatting = {
       format = function(entry, vim_item)
-        vim_item.kind = string.format("%s  %13s [%s]", icons.kind[vim_item.kind],
+        vim_item.kind = string.format("%s  %-13s | %s", icons.kind[vim_item.kind],
                                       vim_item.kind,
                                       icons.source[entry.source.name])
         return vim_item
