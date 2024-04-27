@@ -51,4 +51,9 @@ return {
     end,
     config = function() require "config.gitsigns".setup() end
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    config = true,
+  },
 }
