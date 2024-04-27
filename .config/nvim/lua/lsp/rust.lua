@@ -4,6 +4,11 @@ vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, {
     standalone = true,
     settings = {
       ["rust-analyzer"] = {
+        diagnostics = {
+          disabled = {
+            "inactive-code",
+          }
+        },
         procMacro = {
           enable = true,
         },
