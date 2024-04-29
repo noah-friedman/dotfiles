@@ -25,14 +25,14 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    dependencies = {
-      {
-        "mrded/nvim-lsp-notify",
-        -- Configured in `config.notify.setup()`
-      },
-    },
     priority = 300,
     config = function() require "config.notify".setup() end
+  },
+  {
+    "j-hui/fidget.nvim",
+    tag = "v1.4.1",
+    priority = 100,
+    config = function() require "config.fidget".setup() end,
   },
   {
     "nvimdev/dashboard-nvim",

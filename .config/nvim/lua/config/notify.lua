@@ -5,7 +5,7 @@ function M.setup()
 
   vim.notify = require "notify"
 
-  ---@diagnostic disable-next-line: missing-fields
+  ---@diagnostic disable-next-line: missing-fields, undefined-field
   vim.notify.setup {
     fps = 60,
     background_colour = colors["bg"],
@@ -27,8 +27,6 @@ function M.setup()
     vim.api.nvim_set_hl(0, "Notify" .. level .. "Icon", { fg = colors["bright_" .. color] })
     vim.api.nvim_set_hl(0, "Notify" .. level .. "Title", { fg = colors["bright_" .. color], bold = true })
   end
-
-  require "lsp-notify".setup()
 end
 
 return M
