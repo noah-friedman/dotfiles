@@ -1,3 +1,5 @@
+local configure = require "util.configure"
+
 local filetypes = {
   "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte", "vue", "tsx", "jsx", "rescript",
   "xml", "php", "markdown", "astro", "glimmer", "handlebars", "hbs", "svg",
@@ -11,7 +13,7 @@ end
 return {
   {
     "ahmedkhalf/project.nvim",
-    config = function() require "config.project".setup() end,
+    config = configure "project",
     priority = 450,
   },
   {

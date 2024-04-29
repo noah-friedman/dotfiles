@@ -1,5 +1,5 @@
-require "util.configure_lsp" {
-  lsp = "yamlls", 
+require "util.configure".lsp {
+  lsp = "yamlls",
   pattern = { "*.yml", "*.yaml" },
   config = {
     settings = {

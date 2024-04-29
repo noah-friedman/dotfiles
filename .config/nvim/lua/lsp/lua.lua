@@ -1,4 +1,4 @@
-require "util.configure_lsp" {
+require "util.configure".lsp {
   lsp = "lua_ls",
   pattern = "*.lua",
   config = {

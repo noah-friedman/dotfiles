@@ -1,3 +1,5 @@
+local configure = require "util.configure"
+
 return {
   "famiu/bufdelete.nvim",
   {
@@ -10,7 +12,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     cmd = "Telescope",
-    config = function() require "config.telescope".setup() end,
+    config = configure "telescope",
   },
   {
     "nvim-telescope/telescope-file-browser.nvim",

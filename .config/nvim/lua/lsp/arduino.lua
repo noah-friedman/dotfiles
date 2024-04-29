@@ -1,8 +1,6 @@
--- `go install github.com/arduino/arduino-language-server@latest`
--- (Requires `clangd` and `arduino-cli`)
-require "util.configure_lsp" {
-  lsp = "arduino_language_server", 
-  pattern = "*.ino", 
+require "util.configure".lsp {
+  lsp = "arduino_language_server",
+  pattern = "*.ino",
   config = {
     cmd = {
       "arduino-language-server",
@@ -11,6 +9,6 @@ require "util.configure_lsp" {
       vim.fn.expand "~/.arduino.yaml"
     },
   },
-  -- Don't override capabilities (using `util.configure_lsp`), as this LSP doesn't support them
+  -- Don't override capabilities (using `util.configure.lsp`), as this LSP doesn't support them
   capabilities = false,
 }

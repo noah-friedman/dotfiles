@@ -1,3 +1,5 @@
+local configure = require "util.configure"
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -24,14 +26,14 @@ return {
           {
             "zbirenbaum/copilot.lua",
             event = "InsertEnter",
-            config = function() require "config.copilot".setup() end
+            config = configure "copilot",
           },
           {
             "lukas-reineke/lsp-format.nvim",
             lazy = true,
           },
         },
-        config = function() require "config.cmp".setup() end
+        config = configure "cmp",
       },
     },
     lazy = true,

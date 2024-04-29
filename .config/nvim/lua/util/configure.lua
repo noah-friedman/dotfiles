@@ -1,3 +1,18 @@
+local M = {}
+
+---@param plugin string
+---@return fun(): nil
+local function configure(plugin)
+  return function()
+    require("config." .. plugin).setup()
+  end
+end
+local mt = {
+  __call = function(_, plugin)
+    return configure(plugin)
+  end,
+}
+
 vim.api.nvim_create_augroup("ConfigureLsp", {})
 
 ---@class ConfigureLspOptions
@@ -11,9 +26,8 @@ vim.api.nvim_create_augroup("ConfigureLsp", {})
 ---@field derive_filetypes? false Disables derivation of additional filetypes from `pattern`
 ---@field default_filetypes? false Disables default fts from `lspconfig` being automatically added to configured fts.
 
-
 ---@param opts ConfigureLspOptions
-return function(opts)
+function M.lsp(opts)
   ---@param args? table
   local callback = function(args)
     -- Run any pre-setup functions
@@ -47,7 +61,7 @@ return function(opts)
 
     -- Derive filetypes from the pattern (unless explicitly disabled)
     if opts.derive_filetypes ~= false then
-      for _, p in ipairs(vim.tbl_flatten { opts.pattern }) do
+      for _, p in ipairs(type(opts.pattern) == "string" and { opts.pattern } or opts.pattern --[[ @as string[] ]]) do
         ---@diagnostic disable-next-line: need-check-nil
         table.insert(config.filetypes, (vim.filetype.match { filename = p }))
       end
@@ -56,7 +70,7 @@ return function(opts)
     -- Add default fts from lspconfig to configured fts (unless explicitly disabled)
     if opts.default_filetypes ~= false then
       for _, ft in ipairs(require "lspconfig"[opts.lsp].document_config.default_config.filetypes) do
-        table.insert(config.filetypes, ft)
+        table.insert((config or {}).filetypes, ft)
       end
     end
 
@@ -83,3 +97,5 @@ return function(opts)
     callback()
   end
 end
+
+return setmetatable(M, mt)
