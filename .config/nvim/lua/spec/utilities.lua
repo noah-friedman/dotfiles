@@ -27,4 +27,9 @@ return {
       "nvim-treesitter/nvim-treesitter"
     },
   },
+  {
+    "linux-cultist/venv-selector.nvim",
+    event = "FileType python",
+    config = true,
+  },
 }

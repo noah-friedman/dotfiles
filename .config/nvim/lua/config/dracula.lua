@@ -5,7 +5,7 @@ function M.setup()
     colors = {
       menu = "none"
     },
-    transparent_bg = true,
+    transparent_bg = false,
     italic_comment = true,
     show_end_of_buffer = true,
     overrides = function(_) return {} end

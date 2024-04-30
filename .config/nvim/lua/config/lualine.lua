@@ -13,6 +13,8 @@ function M.setup()
     end
   end
 
+  theme["inactive"].c.fg = "white"
+
   -- Disable the default mode display
   vim.o.showmode = false
 

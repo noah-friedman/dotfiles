@@ -2,8 +2,14 @@ local configure = require "util.configure"
 
 return {
   {
+    "nvim-tree/nvim-web-devicons",
+    priority = 601,
+  },
+  {
     "nvim-lualine/lualine.nvim",
-    priority = 600,
+    dependencies = {
+      "Mofiqul/dracula.nvim",
+    },
     config = configure "lualine"
   },
   {
@@ -23,12 +29,9 @@ return {
     config = configure "fidget",
   },
   {
-    "nvimdev/dashboard-nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    event = "VimEnter",
-    config = configure "dashboard",
+    "goolord/alpha-nvim",
+    config = configure "alpha",
+    priority = 600,
   },
   {
     "lewis6991/gitsigns.nvim",
