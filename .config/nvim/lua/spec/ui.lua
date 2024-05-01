@@ -10,7 +10,22 @@ return {
     dependencies = {
       "Mofiqul/dracula.nvim",
     },
+    priority = 499,
     config = configure "lualine"
+  },
+  {
+    "nanozuki/tabby.nvim",
+    event = "VimEnter",
+    priority = 498,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = configure "tabby",
+  },
+  {
+    "backdround/tabscope.nvim",
+    event = "VeryLazy",
+    config = true,
   },
   {
     "Mofiqul/dracula.nvim",
@@ -19,7 +34,7 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    priority = 300,
+    priority = 101,
     config = configure "notify"
   },
   {

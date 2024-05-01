@@ -1,26 +1,27 @@
 local M = {}
 
-function M.setup()
-  local colors = require "dracula".colors()
-  local theme = require "lualine.themes.dracula-nvim"
-  for mode, _ in pairs(theme) do
-    local fg = theme[mode].b.fg
-    theme[mode].b = { fg = colors["bright_white"], bg = colors["selection"] }
-    if not theme[mode].c then
-      theme[mode].c = { fg = fg, bg = colors["black"] }
-    else
-      theme[mode].c.fg = fg
-    end
+local colors = require "dracula".colors()
+M.theme = require "lualine.themes.dracula-nvim"
+for mode, _ in pairs(M.theme) do
+  local fg = M.theme[mode].b.fg
+  M.theme[mode].b = { fg = colors["bright_white"], bg = colors["selection"] }
+  if not M.theme[mode].c then
+    M.theme[mode].c = { fg = fg, bg = colors["black"] }
+  else
+    M.theme[mode].c.fg = fg
   end
+end
 
-  theme["inactive"].c.fg = "white"
+M.theme["inactive"].c.fg = "white"
 
+
+function M.setup()
   -- Disable the default mode display
   vim.o.showmode = false
 
   require "lualine".setup {
     options = {
-      theme = theme,
+      theme = M.theme,
       globalstatus = true,
     },
     sections = {

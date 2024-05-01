@@ -30,6 +30,11 @@ return {
   {
     "linux-cultist/venv-selector.nvim",
     event = "FileType python",
-    config = true,
+    cmd = {
+      "VenvSelect",
+      "VenvSelectCached",
+      "VenvSelectCurrent",
+    },
+    config = configure "venv",
   },
 }

@@ -12,3 +12,50 @@ for mod, cmd in pairs {
     vim.keymap.set("n", key, "<Cmd>" .. (cmd[1] or cmd) .. dir .. "<CR>")
   end
 end
+
+-- <CR> opens folds, <S-BS> closes them
+vim.keymap.set("n", "<CR>", function()
+                 if vim.fn.foldclosed --[[@as function]] "." ~= -1 then
+                   vim.cmd.foldopen()
+                 else
+                   vim.api.nvim_feedkeys(
+                     vim.api.nvim_replace_termcodes("<CR>", true, true, true),
+                     "n", false)
+                 end
+               end, { noremap = true })
+vim.keymap.set("n", "<S-BS>", function()
+  if vim.fn.foldlevel --[[@as fun(lnum: integer | "."): integer]] "." ~= 0 then
+    vim.cmd.foldclose()
+  else
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes("<S-BS>", true, true, true),
+      "n", false)
+  end
+end)
+
+-- 'E' opens all folds, 'C' closes all folds
+for lhs, rhs in pairs {
+  E = "R",
+  C = "M"
+} do
+  vim.keymap.set("n", lhs, "z" .. rhs, { noremap = true })
+end
+
+-- Tab navigation
+local maps = {
+  ["<D-t>"] = vim.cmd.tabnew,
+  ["<D-b>"] = vim.cmd.enew,
+  ["<D-w>"] = vim.cmd.tabclose,
+  ["<D-W>"] = vim.cmd.tabonly,
+  ["<D-Left>"] = vim.cmd.tabprevious,
+  ["<D-Right>"] = vim.cmd.tabnext,
+  ["<D-T>"] = vim.cmd.terminal,
+}
+
+for i = 1, 9 do
+  maps["<D-" .. i .. ">"] = function() vim.cmd.tabn(i) end
+end
+
+for lhs, rhs in pairs(maps) do
+  vim.keymap.set({ "n", "i", "v" }, lhs, rhs, { noremap = true })
+end
