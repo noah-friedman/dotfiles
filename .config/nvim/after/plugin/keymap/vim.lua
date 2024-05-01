@@ -41,15 +41,21 @@ for lhs, rhs in pairs {
   vim.keymap.set("n", lhs, "z" .. rhs, { noremap = true })
 end
 
--- Tab navigation
 local maps = {
-  ["<D-t>"] = vim.cmd.tabnew,
+  -- Tab navigation
+  ["<D-t>"] = function() vim.cmd "$tabnew" end,
   ["<D-b>"] = vim.cmd.enew,
   ["<D-w>"] = vim.cmd.tabclose,
   ["<D-W>"] = vim.cmd.tabonly,
   ["<D-Left>"] = vim.cmd.tabprevious,
   ["<D-Right>"] = vim.cmd.tabnext,
-  ["<D-T>"] = vim.cmd.terminal,
+  ["<D-S-Left>"] = function() vim.cmd "-tabmove" end,
+  ["<D-S-Right>"] = function() vim.cmd "+tabmove" end,
+
+  -- Terminal
+  ["<D-T>"] = function()
+    vim.cmd "$tabnew +terminal"
+  end,
 }
 
 for i = 1, 9 do

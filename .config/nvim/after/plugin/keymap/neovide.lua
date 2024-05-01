@@ -1,22 +1,35 @@
-for lhs, rhs in pairs {
-  ["<M-f>"] = {
+for _, config in ipairs {
+  {
+    lhs = "<M-f>",
     rhs = function()
       vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
       vim.api.nvim_exec_autocmds("User", { pattern = "NeovideFullscreen", data = true })
     end,
-    mode = { "n", "i", "v" },
   },
-  ["<D-c>"] = '<Esc>"*y',
-  ["<D-v>"] = '<Esc>"*p',
-  ["<D-x>"] = '<Esc>"*x',
+  {
+    lhs = "<D-c>",
+    rhs = '"*y',
+    mode = "v",
+  },
+  {
+    lhs = "<D-x>",
+    rhs = '"*x',
+    mode = "v",
+  },
+  {
+    lhs = "<D-v>",
+    rhs = '<Esc>"*Pa',
+    mode = "i",
+  },
+  {
+    lhs = "<D-v>",
+    rhs = '"*p',
+    mode = { "n", "v" },
+  },
 } do
-  local mode = { "v" }
-  if type(rhs) == "string" then
-    rhs = vim.api.nvim_replace_termcodes(rhs, true, false, true)
-  elseif type(rhs) == "table" then
-    mode = rhs.mode
-    ---@diagnostic disable-next-line: cast-local-type
-    rhs = rhs.rhs
-  end
-  vim.keymap.set(mode, lhs, rhs, { noremap = true })
+  local lhs = config.lhs
+  local rhs = (type(config.rhs) == "string" and
+    vim.api.nvim_replace_termcodes(config.rhs --[[ @as string ]], true, false, true) or
+    config.rhs)
+  vim.keymap.set(config.mode or { "n", "i", "v" }, lhs, rhs, { noremap = true })
 end

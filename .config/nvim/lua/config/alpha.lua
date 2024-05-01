@@ -35,6 +35,7 @@ function M.setup()
     button("󰱽  Find Files", "s", function() vim.cmd.Telescope "find_files" end),
     button("󰞷  Terminal", "t", vim.cmd.terminal),
     button("󱐥  Plugins", "l", vim.cmd.Lazy),
+    button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
   }
   config.layout[6].val = {
     button("󰊓  Toggle fullscreen", "f", vim.schedule_wrap(function()
@@ -47,8 +48,10 @@ function M.setup()
 
   vim.api.nvim_create_autocmd("TabNewEntered", {
     callback = function(args)
-      vim.schedule_wrap(vim.cmd.bd)(args.buf)
-      vim.cmd.Alpha()
+      if vim.api.nvim_buf_get_name(args.buf) == "" then
+        vim.schedule_wrap(vim.cmd.bd)(args.buf)
+        vim.cmd.Alpha()
+      end
     end,
   })
 end
