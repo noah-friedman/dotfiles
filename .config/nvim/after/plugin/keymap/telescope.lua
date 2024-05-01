@@ -3,7 +3,9 @@ vim.keymap.set({ "n", "i", "v" }, prefix, "<Cmd>Telescope<CR>")
 
 for key, picker in pairs {
   b = "file_browser",
-  l = "file_browser path=%:p:h",
+  B = "file_browser path=%:p:h",
+  f = "find_files",
+  F = "find_files cwd=%:p:h",
   o = "oldfiles",
   p = "projects",
   n = "notify",

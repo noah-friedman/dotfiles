@@ -28,21 +28,21 @@ function M.setup()
   config.layout[5] = vim.deepcopy(config.layout[3])
   config.layout[6] = vim.deepcopy(config.layout[4])
   config.layout[4].val = {
-    button("󱪞  New File", "e", vim.cmd.enew),
-    button("󱋢  Recent Files", "o", function() vim.cmd.Telescope "oldfiles" end),
-    button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
-    button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
-    button("󰱽  Find Files", "s", function() vim.cmd.Telescope "find_files" end),
-    button("󰞷  Terminal", "t", vim.cmd.terminal),
-    button("󱐥  Plugins", "l", vim.cmd.Lazy),
-    button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
-  }
-  config.layout[6].val = {
-    button("󰊓  Toggle fullscreen", "f", vim.schedule_wrap(function()
+    button("󰊓  Toggle fullscreen", "<M-f>", vim.schedule_wrap(function()
       vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
       vim.api.nvim_exec_autocmds("User", { pattern = "NeovideFullscreen", data = vim.g.neovide_fullscreen })
     end)),
     button("󰩈  Exit", "q", vim.cmd.q),
+  }
+  config.layout[6].val = {
+    button("󱪞  New File", "e", vim.cmd.enew),
+    button("󱋢  Recent Files", "o", function() vim.cmd.Telescope "oldfiles" end),
+    button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
+    button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
+    button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),
+    button("󰞷  Terminal", "t", vim.cmd.terminal),
+    button("󱐥  Plugins", "l", vim.cmd.Lazy),
+    button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
   }
   require "alpha".setup(config)
 

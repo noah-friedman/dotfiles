@@ -1,6 +1,6 @@
 vim.b.spLauncherActionMap = {
   run = {
-    handler = "while true; do :; done",
+    handler = "open %",
     config = {
       notify = true,
       silent = true,
