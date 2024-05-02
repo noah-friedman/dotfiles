@@ -1,10 +1,7 @@
 for _, config in ipairs {
   {
     lhs = "<M-f>",
-    rhs = function()
-      vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
-      vim.api.nvim_exec_autocmds("User", { pattern = "NeovideFullscreen", data = true })
-    end,
+    rhs = require "util.fullscreen",
   },
   {
     lhs = "<D-c>",
@@ -18,7 +15,7 @@ for _, config in ipairs {
   },
   {
     lhs = "<D-v>",
-    rhs = '<Esc>"*Pa',
+    rhs = '<Esc>"*pa',
     mode = "i",
   },
   {

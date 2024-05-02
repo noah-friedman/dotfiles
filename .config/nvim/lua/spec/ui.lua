@@ -51,10 +51,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     priority = 200,
-    init = function()
-      -- This way if the plugin takes a second to load, it doesn't shift the position of the text abruptly
-      vim.o.signcolumn = "yes"
-    end,
     config = configure "gitsigns",
   },
   {

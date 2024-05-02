@@ -6,6 +6,9 @@ local opts = {
   -- Add a column to show where the lines wrap
   colorcolumn = "+1",
 
+  -- Sometimes 'Gitsigns' takes a second to load, so this prevents the text from shifting
+  signcolumn = "yes",
+
   -- Expand tab characters into some number of spaces
   expandtab = true,
 

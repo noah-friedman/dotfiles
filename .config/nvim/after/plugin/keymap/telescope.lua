@@ -10,11 +10,12 @@ for key, picker in pairs {
   p = "projects",
   n = "notify",
   h = "highlights",
-  g = "git_status",
+  g = require "util.git_status",
   a = "autocommands",
-  r = "resume",
+  r = "live_grep",
   k = "keymaps",
   v = "vim_options",
 } do
-  vim.keymap.set({ "n", "i", "v" }, prefix .. key, "<Cmd>Telescope " .. picker .. "<CR>")
+  vim.keymap.set({ "n", "i", "v" }, prefix .. key, (type(picker) == "string") and ("<Cmd>Telescope " .. picker .. "<CR>")
+    or picker)
 end

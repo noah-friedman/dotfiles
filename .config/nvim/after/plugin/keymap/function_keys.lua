@@ -9,17 +9,16 @@ local function_maps = {
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>:IncRename ", true, false, true), "n", false)
   end,
   vim.lsp.buf.code_action,
-  {
-    function() require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {}) end
-  },
+  function()
+    require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
+  end,
   vim.diagnostic.open_float,
   function()
     require "copilot.suggestion".toggle_auto_trigger()
   end,
   vim.cmd.noh,
   function()
-    vim.cmd "sp | term"
-    vim.api.nvim_feedkeys("i", "n", true)
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
   end
 }
 
