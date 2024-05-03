@@ -23,6 +23,16 @@ for _, config in ipairs {
     rhs = '"*p',
     mode = { "n", "v" },
   },
+  {
+    lhs = "<D-V>",
+    rhs = '<Esc>"*Pa',
+    mode = "i",
+  },
+  {
+    lhs = "<D-V>",
+    rhs = '"*P',
+    mode = { "n", "v" },
+  },
 } do
   local lhs = config.lhs
   local rhs = (type(config.rhs) == "string" and
