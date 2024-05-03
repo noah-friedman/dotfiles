@@ -10,7 +10,7 @@ for key, picker in pairs {
   p = "projects",
   n = "notify",
   h = "highlights",
-  g = require "util.git_status",
+  g = "builtin default_text=git",
   a = "autocommands",
   r = "live_grep",
   k = "keymaps",

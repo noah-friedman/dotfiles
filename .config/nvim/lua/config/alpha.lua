@@ -46,8 +46,9 @@ function M.setup()
     button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
     button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),
     button("󱎸  Grep Search", "r", function() vim.cmd.Telescope "live_grep" end),
-    button("󰊢  Git Status", "g", function() vim.cmd.Telescope "git_status" end,
-           nil, { noremap = true, nowait = true })
+    button("󰊢  Git Actions", "g", function()
+             vim.cmd "Telescope builtin default_text=git"
+           end, nil, { noremap = true, nowait = true })
 
   }
   config.layout[10].val = {

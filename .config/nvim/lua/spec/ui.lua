@@ -58,4 +58,17 @@ return {
     main = "ibl",
     config = true,
   },
+  {
+    "stevearc/dressing.nvim",
+    init = function()
+      vim.ui._input = vim.ui.input
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require "dressing"
+        vim.ui.input = vim.ui._input
+        vim.ui.input(...)
+      end
+    end,
+    config = configure "dressing",
+  },
 }

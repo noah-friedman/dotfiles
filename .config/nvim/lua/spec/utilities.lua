@@ -1,15 +1,5 @@
 local configure = require "util.configure"
 
-local filetypes = {
-  "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte", "vue", "tsx", "jsx", "rescript",
-  "xml", "php", "markdown", "astro", "glimmer", "handlebars", "hbs", "svg",
-}
-
-
-function _G.close_tag()
-  require "nvim-ts-autotag".update()
-end
-
 return {
   {
     "ahmedkhalf/project.nvim",
@@ -17,14 +7,13 @@ return {
     priority = 450,
   },
   {
-    "PriceHiller/nvim-ts-autotag",
-    branch = "fix/close-xml-tags",
-    ft = filetypes,
-    opts = {
-      filetypes = filetypes
-    },
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter"
+      {
+        "nvim-treesitter/nvim-treesitter",
+        config = configure "treesitter",
+      },
     },
   },
   {

@@ -1,12 +1,46 @@
 local leader = "<M-g>"
 
+---@param command string
+---@param fallback_command? string
+---@return function
+local function telescope_fallback(command, fallback_command)
+  return function()
+    fallback_command = fallback_command or command
+
+    if not pcall(vim.cmd.Telescope, "git_" .. command) then
+      vim.cmd("Git " .. fallback_command)
+    end
+  end
+end
+
+---@param description string
+---@param action string|function
+---@return function
+local function warn_wrap(description, action)
+  return function()
+    vim.ui.input({
+                   prompt = ("You are about to execute the following action: '" .. description .. "'. Are you sure y" ..
+                     "ou want to continue? [y/N] "),
+                 },
+      ---@param input? string
+                 function(input)
+                   if input and input:lower():sub(1, 1) == "y" then
+                     if type(action) == "string" then
+                       vim.cmd(action)
+                     else
+                       action()
+                     end
+                   end
+                 end)
+  end
+end
 
 for mapping, action in pairs {
   a = {
     "Gitsigns stage_hunk",
   },
   r = {
-    "Gitsigns reset_hunk",
+    warn_wrap("reset hunk", "Gitsigns reset_hunk"),
   },
   u = "Gitsigns undo_stage_hunk",
   d = {
@@ -22,18 +56,23 @@ for mapping, action in pairs {
       command = "Git push"
     })
   end,
+  t = "Git push --tags",
+  s = telescope_fallback "status",
+  b = telescope_fallback("branches", "branch"),
+  l = telescope_fallback("commits", "log"),
+  L = telescope_fallback("bcommits", "log %"),
   A = "Gitsigns stage_buffer",
-  R = "Gitsigns reset_buffer",
-  C = "tab Git commit --amend",
-  P = "Git push -f",
-  X = function()
+  R = warn_wrap("reset buffer", "Gitsigns reset_buffer"),
+  C = warn_wrap("amend commit", "tab Git commit --amend"),
+  P = warn_wrap("force push", "Git push -f"),
+  X = warn_wrap("amend commit and force push", function()
     vim.cmd "tab Git commit --amend"
     vim.api.nvim_create_autocmd("User", {
       pattern = "FugitiveChanged",
       once = true,
       command = "Git push -f"
     })
-  end,
+  end),
 } do
   if type(action) == "table" then
     vim.keymap.set("v", leader .. mapping, (type(action[1]) == string) and ("<Cmd>'<,'>" .. action[1]
