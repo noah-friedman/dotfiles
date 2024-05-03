@@ -1,5 +1,6 @@
 local leader = "<M-g>"
 
+
 for mapping, action in pairs {
   a = {
     "Gitsigns stage_hunk",
@@ -35,11 +36,10 @@ for mapping, action in pairs {
   end,
 } do
   if type(action) == "table" then
-    vim.keymap.set("v", leader .. mapping, "<Cmd>'<,'>" .. action[1] .. "<CR>")
+    vim.keymap.set("v", leader .. mapping, (type(action[1]) == string) and ("<Cmd>'<,'>" .. action[1]
+      .. "<CR>") or action[1])
     action = action[1]
   end
-  if type(action) == "string" then
-    action = "<Cmd>" .. action .. "<CR>"
-  end
-  vim.keymap.set({ "n", "i" }, leader .. mapping, action)
+  vim.keymap.set({ "n", "i" }, leader .. mapping, type(action) == "string" and ("<Cmd>" .. action ..
+    "<CR>") or action)
 end

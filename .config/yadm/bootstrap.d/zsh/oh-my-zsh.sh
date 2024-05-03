@@ -6,7 +6,7 @@ if cmd_exists zsh && fs_exists "$HOME/.local/share/zsh/oh-my-zsh"; then
         mkdir -p "$HOME/.local/share/zsh"
         git clone --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.local/share/zsh/oh-my-zsh"
 
-        git clone --depth 1 https://github.com/dracula/zsh.git \
+        git clone --depth 1 https://github.com/speelbarrow/dracula-zsh.git \
                 "$HOME/.local/share/zsh/oh-my-zsh/custom/themes/dracula"
         mkdir "$HOME/.local/share/zsh/oh-my-zsh/custom/themes/lib"
         for file in dracula.zsh-theme lib/async.zsh; do
