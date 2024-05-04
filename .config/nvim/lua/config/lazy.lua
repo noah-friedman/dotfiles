@@ -8,7 +8,10 @@ function M.setup()
   vim.opt.rtp:prepend(lpath .. "/after")
 
   require "lazy".setup {
-    dev = pcall(require, "devpath") and require "devpath" or nil,
+    dev = {
+      pcall(require, "devpath") and table.unpack(require "devpath") or nil,
+      fallback = true,
+    },
     spec = {
       -- Synced spec
       vim.iter(ipairs(require "util.require_dir" "spec")):map(function(_, value)

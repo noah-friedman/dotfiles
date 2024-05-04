@@ -57,4 +57,9 @@ return {
     },
     priority = 201,
   },
+  {
+    "speelbarrow/spLauncher.nvim",
+    config = true,
+    event = "VeryLazy",
+  },
 }
