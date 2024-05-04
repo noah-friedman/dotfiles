@@ -4,32 +4,32 @@ for _, config in ipairs {
     rhs = require "util.fullscreen",
   },
   {
-    lhs = "<D-c>",
+    lhs = "<C-c>",
     rhs = '"*y',
     mode = "v",
   },
   {
-    lhs = "<D-x>",
+    lhs = "<C-x>",
     rhs = '"*x',
     mode = "v",
   },
   {
-    lhs = "<D-v>",
+    lhs = "<C-v>",
     rhs = '<Esc>"*pa',
     mode = "i",
   },
   {
-    lhs = "<D-v>",
+    lhs = "<C-v>",
     rhs = '"*p',
     mode = { "n", "v" },
   },
   {
-    lhs = "<D-V>",
+    lhs = "<C-V>",
     rhs = '<Esc>"*Pa',
     mode = "i",
   },
   {
-    lhs = "<D-V>",
+    lhs = "<C-V>",
     rhs = '"*P',
     mode = { "n", "v" },
   },
