@@ -9,6 +9,7 @@ return {
   {
     "ahmedkhalf/project.nvim",
     config = configure "project",
+    event = "VeryLazy",
   },
   {
     "windwp/nvim-ts-autotag",

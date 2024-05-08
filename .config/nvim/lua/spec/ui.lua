@@ -15,7 +15,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = configure "tabby",
-    priorty = 501,
+    priority = 501,
   },
   {
     "backdround/tabscope.nvim",
