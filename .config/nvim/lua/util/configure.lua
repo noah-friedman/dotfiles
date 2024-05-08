@@ -37,7 +37,7 @@ function M.lsp(opts)
 
     opts.config = opts.config or {}
     opts.config.filetypes = opts.config.filetypes or {}
-    local config = opts.config
+    local config = opts.config --[[ @as table ]]
 
     -- Add capabilities to the config without overriding any existing config (unless explicitly disabled)
     if opts.capabilities ~= false then
@@ -70,12 +70,23 @@ function M.lsp(opts)
     -- Add default fts from lspconfig to configured fts (unless explicitly disabled)
     if opts.default_filetypes ~= false then
       for _, ft in ipairs(require "lspconfig"[opts.lsp].document_config.default_config.filetypes) do
-        table.insert((config or {}).filetypes, ft)
+        table.insert(config.filetypes, ft)
+      end
+    end
+
+    -- Remove duplicates from configured filetypes
+    local filetypes = vim.deepcopy(config.filetypes or {})
+    config.filetypes = {}
+    local seen = {}
+    for _, ft in ipairs(filetypes) do
+      if not seen[ft] then
+        table.insert(config.filetypes, ft)
+        seen[ft] = true
       end
     end
 
     -- Set up the LSP server
-    require "lspconfig"[opts.lsp].setup(config or {})
+    require "lspconfig"[opts.lsp].setup(config)
 
     -- Run any post-setup functions
     if opts.post then

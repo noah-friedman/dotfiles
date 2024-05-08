@@ -53,6 +53,13 @@ function M.setup()
   }
   config.layout[10].val = {
     button("󰞷  Terminal", "t", vim.cmd.terminal),
+    button("󰦗  `update`", "U", function()
+      require "spLauncher".direct_spLaunch("update", {
+        window = {
+          persist = false,
+        },
+      })
+    end)
   }
   config.layout[12].val = {
     button("󱐥  Plugins", "l", vim.cmd.Lazy),

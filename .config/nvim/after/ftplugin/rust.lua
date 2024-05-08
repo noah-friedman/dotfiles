@@ -42,5 +42,6 @@ require "spLauncher.util".workspace("rust-analyzer", {
                                           end
                                           return "build && rust-lldb target/debug/" .. result.name
                                         end
-                                      }
+                                      },
+                                      build = true,
                                     }, buf)
