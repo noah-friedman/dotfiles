@@ -3,55 +3,46 @@ local configure = require "util.configure"
 return {
   {
     "neovim/nvim-lspconfig",
-    init = function()
-      require "lsp"
-    end,
     dependencies = {
       {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-          "hrsh7th/cmp-nvim-lsp",
-          "hrsh7th/cmp-nvim-lsp-signature-help",
-          "hrsh7th/cmp-buffer",
-          "hrsh7th/cmp-path",
-          "hrsh7th/cmp-cmdline",
-          {
-            "dcampos/nvim-snippy",
-            dependencies = {
-              "dcampos/cmp-snippy",
-              "honza/vim-snippets",
-            },
-            lazy = true,
-          },
-          {
-            "zbirenbaum/copilot.lua",
-            event = "InsertEnter",
-            config = configure "copilot",
-          },
-          {
-            "lukas-reineke/lsp-format.nvim",
-            lazy = true,
-          },
-        },
-        config = configure "cmp",
+        "zbirenbaum/copilot.lua",
+        config = configure "copilot",
       },
     },
     lazy = true,
   },
-  --[[{
-    "ms-jpq/coq.nvim",
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      {
+        "dcampos/nvim-snippy",
+        dependencies = {
+          "dcampos/cmp-snippy",
+          "honza/vim-snippets",
+        },
+      },
+    },
     lazy = true,
-    init = function()
-      vim.g.coq_settings = vim.tbl_deep_extend("keep", vim.g.coq_settings or {}, {
-        auto_start = true,
-      })
-    end,
-    build = function()
-      vim.cmd "COQdeps"
-    end,
-  },]]
+    config = configure "cmp",
+  },
 
-  -- Copilot
+  -- Format on save through LSP
+  {
+    "lukas-reineke/lsp-format.nvim",
+    lazy = true,
+  },
+
+  -- JSON/YAML schemas
+  {
+    "b0o/SchemaStore.nvim",
+    lazy = true,
+  },
 
   -- Extension to LuaLS that makes it aware of Neovim runtime files
   {
@@ -71,7 +62,7 @@ return {
         },
       },
     },
-    -- Configuration found in `lsp/rust.lua`
+    -- Configuration found in `lsp/rust.lua` because we don't use `lspconfig` for this one
     ft = "rust",
   },
   {
@@ -82,9 +73,6 @@ return {
       -- Loads `rustaceanvim` for the non-LSP features it provides
       {
         "mrcjkb/rustaceanvim",
-        dependencies = {
-          "rust-lang/rust.vim"
-        },
       }
     },
     event = "BufRead *Cargo.toml",

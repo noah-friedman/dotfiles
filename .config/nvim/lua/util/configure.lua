@@ -18,7 +18,7 @@ vim.api.nvim_create_augroup("ConfigureLsp", {})
 ---@class ConfigureLspOptions
 ---@field lsp string
 ---@field pattern? string | string[]
----@field config? table
+---@field config? table | (fun(args: table): table)
 ---@field pre? fun(args: table)
 ---@field post? fun(args: table)
 ---@field capabilities? false Disables configuration of default and `nvim-cmp` provided capabilities
@@ -35,6 +35,9 @@ function M.lsp(opts)
       opts.pre(args or {})
     end
 
+    if type(opts.config) == "function" then
+      opts.config = opts.config(args or {})
+    end
     opts.config = opts.config or {}
     opts.config.filetypes = opts.config.filetypes or {}
     local config = opts.config --[[ @as table ]]

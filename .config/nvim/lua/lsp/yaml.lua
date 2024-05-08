@@ -1,13 +1,17 @@
 require "util.configure".lsp {
   lsp = "yamlls",
   pattern = { "*.yml", "*.yaml" },
-  config = {
-    settings = {
-      yaml = {
-        schemaStore = {
-          enable = true,
+  config = function()
+    return {
+      settings = {
+        yaml = {
+          schemaStore = {
+            enable = false,
+            url = "",
+          },
+          schemas = require "schemastore".yaml.schemas(),
         },
       },
-    },
-  }
+    }
+  end,
 }

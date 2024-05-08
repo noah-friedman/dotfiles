@@ -1,14 +1,14 @@
 local configure = require "util.configure"
 
 return {
-  "famiu/bufdelete.nvim",
+  {
+    "famiu/bufdelete.nvim",
+    cmd = "Bdelete",
+  },
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      {
-        "nvim-lua/plenary.nvim",
-        lazy = true,
-      },
+      "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     cmd = "Telescope",
@@ -22,7 +22,9 @@ return {
   {
     "smjonas/inc-rename.nvim",
     dependencies = {
-      "stevearc/dressing.nvim",
+      {
+        "stevearc/dressing.nvim",
+      },
     },
     opts = {
       input_buffer_type = "dressing",
@@ -55,11 +57,11 @@ return {
         config = function() vim.g.yadm_git_gitgutter_enabled = 0 end,
       },
     },
-    priority = 201,
+    cmd = "Git",
   },
   {
     "speelbarrow/spLauncher.nvim",
     config = true,
-    event = "VeryLazy",
+    event = "User FileOpened",
   },
 }

@@ -2,73 +2,64 @@ local configure = require "util.configure"
 
 return {
   {
-    "nvim-tree/nvim-web-devicons",
-    priority = 601,
-  },
-  {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "Mofiqul/dracula.nvim",
     },
-    priority = 499,
+    priority = 500,
     config = configure "lualine"
   },
   {
     "nanozuki/tabby.nvim",
-    event = "VimEnter",
-    priority = 498,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
     config = configure "tabby",
+    priorty = 501,
   },
   {
     "backdround/tabscope.nvim",
-    event = "VeryLazy",
     config = true,
+    event = "VeryLazy",
   },
   {
     "Mofiqul/dracula.nvim",
     config = configure "dracula",
-    priority = 500,
+    priority = 1000,
   },
   {
     "rcarriga/nvim-notify",
-    priority = 101,
-    config = configure "notify"
+    config = configure "notify",
+    event = "VeryLazy",
   },
   {
     "j-hui/fidget.nvim",
     tag = "v1.4.1",
-    priority = 100,
+    event = "User NotCopilot",
     config = configure "fidget",
   },
   {
     "goolord/alpha-nvim",
     config = configure "alpha",
-    priority = 600,
+    priority = 999,
   },
   {
     "lewis6991/gitsigns.nvim",
-    priority = 200,
+    dependencies = {
+      "tpope/vim-fugitive",
+    },
     config = configure "gitsigns",
+    event = "User FileOpened",
   },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
+    event = "User FileOpened",
     config = true,
   },
   {
     "stevearc/dressing.nvim",
-    init = function()
-      vim.ui._input = vim.ui.input
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require "dressing"
-        vim.ui.input = vim.ui._input
-        vim.ui.input(...)
-      end
-    end,
     config = configure "dressing",
+    lazy = true,
   },
 }

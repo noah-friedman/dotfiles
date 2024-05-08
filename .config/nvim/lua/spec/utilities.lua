@@ -2,19 +2,22 @@ local configure = require "util.configure"
 
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = true,
+    config = configure "treesitter",
+  },
+  {
     "ahmedkhalf/project.nvim",
     config = configure "project",
-    priority = 450,
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "VeryLazy",
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter",
-        config = configure "treesitter",
       },
     },
+    ft = { "html", "javascriptreact", "typescriptreact", "xml", "svg" },
   },
   {
     "linux-cultist/venv-selector.nvim",
