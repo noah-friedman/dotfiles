@@ -9,7 +9,9 @@ require "util.configure".lsp {
     "*.tsx",
   },
   capabilities = false,
-  config = function()
-    return require "cmp_nvim_lsp".default_capabilities()
-  end
+  config = {
+    on_attach = function(client, bufnr)
+      client.server_capabilities.hoverProvider = false
+    end
+  },
 }
