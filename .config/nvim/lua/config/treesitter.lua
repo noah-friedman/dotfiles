@@ -3,6 +3,7 @@ local M = {}
 function M.setup()
   ---@diagnostic disable-next-line: missing-fields
   require "nvim-treesitter.configs".setup {
+    auto_install = true,
     autotag = {
       enable = true,
       enable_rename = true,

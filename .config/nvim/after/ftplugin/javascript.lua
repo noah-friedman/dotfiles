@@ -5,14 +5,13 @@ vim.bo[buf].shiftwidth = 2
 
 ---@type spLauncher.ActionMap
 vim.b[buf].spLauncherActionMap = {
-  base = "bun",
+  base = "npm",
   run = "run %",
   test = "test %:p",
 }
 
 require "spLauncher.util".workspace("tsserver", {
-                                      run = "run start",
-                                      test = "test",
+                                      run = "start",
+                                      test = true,
                                       build = "run build",
-                                      clean = "run clean",
                                     }, buf)
