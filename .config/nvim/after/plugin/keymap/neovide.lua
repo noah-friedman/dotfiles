@@ -15,12 +15,22 @@ for _, config in ipairs {
   },
   {
     lhs = "<D-v>",
+    rhs = '"*p',
+    mode = { "n", "v" },
+  },
+  {
+    lhs = "<D-v>",
     rhs = '<Esc>"*pa',
     mode = "i",
   },
   {
     lhs = "<D-v>",
-    rhs = '"*p',
+    rhs = '<C-\\><C-n>"*pa',
+    mode = "t",
+  },
+  {
+    lhs = "<D-V>",
+    rhs = '"*P',
     mode = { "n", "v" },
   },
   {
@@ -30,8 +40,8 @@ for _, config in ipairs {
   },
   {
     lhs = "<D-V>",
-    rhs = '"*P',
-    mode = { "n", "v" },
+    rhs = '<C-\\><C-n>"*Pa',
+    mode = "t",
   },
 } do
   local lhs = config.lhs

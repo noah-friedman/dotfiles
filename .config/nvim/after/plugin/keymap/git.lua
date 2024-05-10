@@ -74,12 +74,21 @@ for mapping, action in pairs {
       command = "Git push -f"
     })
   end),
+  ["<C-a>"] = "Git add .",
+  ["<C-x>"] = function()
+    vim.cmd "Git add ."
+    vim.cmd "tab Git commit"
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "FugitiveChanged",
+      once = true,
+      command = "Git push"
+    })
+  end,
 } do
   if type(action) == "table" then
-    vim.keymap.set("v", leader .. mapping, (type(action[1]) == string) and ("<Cmd>'<,'>" .. action[1]
-      .. "<CR>") or action[1])
+    vim.keymap.set("v", leader .. mapping, (type(action[1]) == string) and ("<Cmd>'<,'>" .. action[1] .. "<CR>") or
+      action[1])
     action = action[1]
   end
-  vim.keymap.set({ "n", "i" }, leader .. mapping, type(action) == "string" and ("<Cmd>" .. action ..
-    "<CR>") or action)
+  vim.keymap.set({ "n", "i" }, leader .. mapping, type(action) == "string" and ("<Cmd>" .. action .. "<CR>") or action)
 end
