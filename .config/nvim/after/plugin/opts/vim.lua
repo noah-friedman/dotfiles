@@ -34,6 +34,9 @@ local opts = {
 
   -- Document textwidth
   textwidth = 120,
+
+  -- Send event on mouse move
+  mousemoveevent = true,
 }
 
 for key, value in pairs(opts) do

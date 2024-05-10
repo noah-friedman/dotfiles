@@ -112,4 +112,40 @@ function M.lsp(opts)
   end
 end
 
+---@param bufnr integer
+---@param opts table
+local function wo_callback(bufnr, opts)
+  for _, win in ipairs(vim.fn.win_findbuf(bufnr)) do
+    vim.schedule(function()
+      local result, msg = pcall(function()
+        for key, value in pairs(opts) do
+          vim.wo[win][key] = value
+        end
+      end)
+      if not result and not msg --[[ @as string ]]:match "Invalid window id: [0-9]+$" then
+        vim.notify("While (un)setting window options:\n" .. msg, vim.log.levels.ERROR)
+      end
+    end)
+  end
+end
+
+---@param opts function(on: boolean): table
+---@param event string
+---@param pattern? string
+---@param off_events? string[]
+function M.wo(opts, event, pattern, off_events)
+  vim.api.nvim_create_autocmd(event, {
+    pattern = pattern,
+    callback = function(args)
+      wo_callback(args.buf, opts(true))
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufUnload", table.unpack(off_events or {}) }, {
+        buffer = args.buf,
+        callback = function(args2)
+          wo_callback(args2.buf, opts(args2.event == "BufEnter"))
+        end
+      })
+    end
+  })
+end
+
 return setmetatable(M, mt)

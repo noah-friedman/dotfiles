@@ -4,32 +4,32 @@ for _, config in ipairs {
     rhs = require "util.fullscreen",
   },
   {
-    lhs = "<C-c>",
+    lhs = "<D-c>",
     rhs = '"*y',
     mode = "v",
   },
   {
-    lhs = "<C-x>",
+    lhs = "<D-x>",
     rhs = '"*x',
     mode = "v",
   },
   {
-    lhs = "<C-v>",
+    lhs = "<D-v>",
     rhs = '<Esc>"*pa',
     mode = "i",
   },
   {
-    lhs = "<C-v>",
+    lhs = "<D-v>",
     rhs = '"*p',
     mode = { "n", "v" },
   },
   {
-    lhs = "<C-V>",
+    lhs = "<D-V>",
     rhs = '<Esc>"*Pa',
     mode = "i",
   },
   {
-    lhs = "<C-V>",
+    lhs = "<D-V>",
     rhs = '"*P',
     mode = { "n", "v" },
   },
@@ -38,5 +38,7 @@ for _, config in ipairs {
   local rhs = (type(config.rhs) == "string" and
     vim.api.nvim_replace_termcodes(config.rhs --[[ @as string ]], true, false, true) or
     config.rhs)
-  vim.keymap.set(config.mode or { "n", "i", "v" }, lhs, rhs, { noremap = true })
+  vim.keymap.set(config.mode or { "n", "i", "v" }, lhs, type(rhs) ~= "string" and rhs or function()
+                   vim.api.nvim_feedkeys(rhs, "n", false)
+                 end, { noremap = true })
 end

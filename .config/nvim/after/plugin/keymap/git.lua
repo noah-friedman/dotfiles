@@ -18,6 +18,7 @@ end
 ---@return function
 local function warn_wrap(description, action)
   return function()
+    require "lazy".load { plugins = { "dressing.nvim" } }
     vim.ui.input({
                    prompt = ("You are about to execute the following action: '" .. description .. "'. Are you sure y" ..
                      "ou want to continue? [y/N] "),

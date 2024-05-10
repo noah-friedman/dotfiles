@@ -43,25 +43,28 @@ end
 
 local maps = {
   -- Tab navigation
-  ["<C-t>"] = function() vim.cmd "$tabnew" end,
-  ["<C-b>"] = vim.cmd.enew,
-  ["<C-w>"] = vim.cmd.tabclose,
-  ["<C-W>"] = vim.cmd.tabonly,
-  ["<C-Left>"] = vim.cmd.tabprevious,
-  ["<C-Right>"] = vim.cmd.tabnext,
-  ["<C-S-Left>"] = function() vim.cmd "-tabmove" end,
-  ["<C-S-Right>"] = function() vim.cmd "+tabmove" end,
+  ["<D-t>"] = function() vim.cmd "$tabnew" end,
+  ["<D-b>"] = vim.cmd.enew,
+  ["<D-w>"] = vim.cmd.tabclose,
+  ["<D-W>"] = vim.cmd.tabonly,
+  ["<D-Left>"] = vim.cmd.tabprevious,
+  ["<D-Right>"] = vim.cmd.tabnext,
+  ["<D-S-Left>"] = function() vim.cmd "-tabmove" end,
+  ["<D-S-Right>"] = function() vim.cmd "+tabmove" end,
 
   -- Terminal
-  ["<C-T>"] = function()
+  ["<D-T>"] = function()
     vim.cmd "$tabnew +terminal"
   end,
 }
 
 for i = 1, 9 do
-  maps["<C-" .. i .. ">"] = function() vim.cmd.tabn(i) end
+  maps["<D-" .. i .. ">"] = function() vim.cmd.tabn(i) end
 end
 
 for lhs, rhs in pairs(maps) do
   vim.keymap.set({ "n", "i", "v" }, lhs, rhs, { noremap = true })
 end
+
+-- Uses `vim.ui.open` to open whatever is under the cursor
+vim.keymap.set({ "n", "v", "t" }, "<M-CR>", "gx", { noremap = true })
