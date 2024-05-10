@@ -4,4 +4,4 @@ require "util.configure".wo(function(on)
                                 number = not on,
                                 signcolumn = on and "no" or "yes"
                               }
-                            end, "TermOpen", nil, { "BufLeave", "TermClose" })
+                            end, "TermOpen", nil, { "BufWinLeave", "TermClose" })
