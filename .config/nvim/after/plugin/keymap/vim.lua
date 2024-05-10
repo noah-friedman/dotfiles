@@ -65,6 +65,3 @@ end
 for lhs, rhs in pairs(maps) do
   vim.keymap.set({ "n", "i", "v" }, lhs, rhs, { noremap = true })
 end
-
--- Uses `vim.ui.open` to open whatever is under the cursor
-vim.keymap.set({ "n", "v", "t" }, "<M-CR>", "gx", { noremap = true })

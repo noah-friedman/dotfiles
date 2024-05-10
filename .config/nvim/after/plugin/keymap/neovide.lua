@@ -43,12 +43,22 @@ for _, config in ipairs {
     rhs = '<C-\\><C-n>"*Pa',
     mode = "t",
   },
+  {
+    lhs = "<D-CR>",
+    rhs = "<Cmd>normal gx<CR>",
+    mode = "n",
+  },
+  {
+    lhs = "<D-LeftRelease>",
+    rhs = "<Cmd>normal gx<CR>",
+    mode = "n",
+  },
 } do
   local lhs = config.lhs
   local rhs = (type(config.rhs) == "string" and
     vim.api.nvim_replace_termcodes(config.rhs --[[ @as string ]], true, false, true) or
     config.rhs)
   vim.keymap.set(config.mode or { "n", "i", "v" }, lhs, type(rhs) ~= "string" and rhs or function()
-                   vim.api.nvim_feedkeys(rhs, "n", false)
+                   vim.api.nvim_feedkeys(rhs --[[ @as string ]], "n", false)
                  end, { noremap = true })
 end
