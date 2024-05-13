@@ -14,6 +14,7 @@ function M.setup()
       "lua_ls",
       "clangd",
       "taplo",
+      "rust-analyzer",
     },
     silent_chdir = false,
     scope_chdir = "tab",

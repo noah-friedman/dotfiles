@@ -13,7 +13,7 @@ for key, picker in pairs {
   g = "builtin default_text=git",
   a = "autocommands",
   r = "live_grep",
-  k = "keymaps",
+  m = "keymaps",
   v = "vim_options",
 } do
   vim.keymap.set({ "n", "i", "v" }, prefix .. key, (type(picker) == "string") and ("<Cmd>Telescope " .. picker .. "<CR>")

@@ -18,7 +18,7 @@ local function_maps = {
   end,
   vim.cmd.noh,
   function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
   end
 }
 

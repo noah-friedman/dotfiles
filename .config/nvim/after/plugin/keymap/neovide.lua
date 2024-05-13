@@ -29,6 +29,11 @@ for _, config in ipairs {
     mode = "t",
   },
   {
+    lhs = "<D-v>",
+    rhs = "<C-r>*",
+    mode = "c",
+  },
+  {
     lhs = "<D-V>",
     rhs = '"*P',
     mode = { "n", "v" },

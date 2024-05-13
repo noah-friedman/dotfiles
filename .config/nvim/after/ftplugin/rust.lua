@@ -44,4 +44,5 @@ require "spLauncher.util".workspace("rust-analyzer", {
                                         end
                                       },
                                       build = true,
+                                      test = true,
                                     }, buf)
