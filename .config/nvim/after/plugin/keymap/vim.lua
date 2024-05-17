@@ -63,5 +63,14 @@ for i = 1, 9 do
 end
 
 for lhs, rhs in pairs(maps) do
-  vim.keymap.set({ "n", "i", "v" }, lhs, rhs, { noremap = true })
+  vim.keymap.set({ "n", "i", "v", "t" }, lhs, rhs, { noremap = true })
+end
+
+-- Fast scrolling with 'alt'/'meta' key
+for letter, arrow in pairs {
+  b = "Left",
+  w = "Right",
+} do
+  vim.keymap.set({ "n", "i", "t", "c" }, "<M-" .. arrow .. ">", "<Cmd>normal " .. letter .. "<CR>")
+  vim.keymap.set({ "n", "i", "t", "c" }, "<M-S-" .. arrow .. ">", "<Cmd>normal " .. letter:upper() .. "<CR>")
 end
