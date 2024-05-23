@@ -37,6 +37,9 @@ local opts = {
 
   -- Send event on mouse move
   mousemoveevent = true,
+
+  -- For session management
+  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 }
 
 for key, value in pairs(opts) do

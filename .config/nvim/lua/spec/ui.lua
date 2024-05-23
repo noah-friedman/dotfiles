@@ -18,7 +18,7 @@ return {
     priority = 501,
   },
   {
-    "backdround/tabscope.nvim",
+    "tiagovla/scope.nvim",
     config = true,
     event = "VeryLazy",
   },
