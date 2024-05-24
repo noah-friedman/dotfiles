@@ -29,6 +29,7 @@ return {
       },
     },
     lazy = true,
+    event = "CmdlineEnter",
     config = configure "cmp",
   },
 

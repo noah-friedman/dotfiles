@@ -39,7 +39,7 @@ local opts = {
   mousemoveevent = true,
 
   -- For session management
-  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals"
 }
 
 for key, value in pairs(opts) do

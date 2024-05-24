@@ -43,6 +43,7 @@ function M.setup()
   }
   config.layout[8].val = {
     button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
+    button("󰮳  Recent Sessions", "s", function() vim.cmd.Telescope "persisted" end),
     button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
     button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),
     button("󱎸  Grep Search", "r", function() vim.cmd.Telescope "live_grep" end),
@@ -69,7 +70,7 @@ function M.setup()
 
   vim.api.nvim_create_autocmd("TabNewEntered", {
     callback = function(args)
-      if vim.api.nvim_buf_get_name(args.buf) == "" then
+      if vim.api.nvim_buf_get_name(args.buf) == "" and vim.g.SessionLoad ~= 1 then
         vim.schedule_wrap(vim.cmd.bd)(args.buf)
         vim.cmd.Alpha()
       end

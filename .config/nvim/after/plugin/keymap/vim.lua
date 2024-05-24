@@ -5,8 +5,8 @@ for mod, cmd in pairs {
   ["S-A"] = "tab"
 } do
   for dir, key in pairs {
-    [cmd[2] or "p"] = "Left",
-    [cmd[3] or "n"] = "Right",
+    [cmd[2] or "p"] = mod ~= "A" and "Left" or "Down",
+    [cmd[3] or "n"] = mod ~= "A" and "Right" or "Up",
   } do
     key = "<" .. mod .. "-" .. key .. ">"
     vim.keymap.set("n", key, "<Cmd>" .. (cmd[1] or cmd) .. dir .. "<CR>")

@@ -18,11 +18,6 @@ return {
     priority = 501,
   },
   {
-    "tiagovla/scope.nvim",
-    config = true,
-    event = "VeryLazy",
-  },
-  {
     "Mofiqul/dracula.nvim",
     config = configure "dracula",
     priority = 1000,
@@ -61,5 +56,10 @@ return {
     "stevearc/dressing.nvim",
     config = configure "dressing",
     lazy = true,
+  },
+  {
+    "chentoast/marks.nvim",
+    event = "User FileOpened",
+    config = true,
   },
 }

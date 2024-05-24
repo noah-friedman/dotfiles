@@ -26,6 +26,16 @@ return {
     event = "VeryLazy",
   },
   {
+    "olimorris/persisted.nvim",
+    config = configure "persisted",
+    cmd = "Telescope persisted",
+  },
+  {
+    "tiagovla/scope.nvim",
+    config = true,
+    event = "VeryLazy",
+  },
+  {
     "linux-cultist/venv-selector.nvim",
     event = "FileType python",
     cmd = {
