@@ -5,7 +5,7 @@ vim.bo[buf].shiftwidth = 2
 
 ---@type spLauncher.ActionMap
 vim.b[buf].spLauncherActionMap = {
-  base = "npm",
+  base = "bun",
   run = "run %",
   test = "test %:p",
 }

@@ -3,10 +3,8 @@ local M = {}
 function M.setup()
   local telescope = require "telescope"
   telescope.setup {
-    pickers = {
-      persisted = {
-        sorting_strategy = "descending",
-      },
+    defaults = {
+      initial_mode = "normal",
     },
     extensions = {
       ["ui-select"] = {
