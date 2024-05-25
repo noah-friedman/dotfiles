@@ -16,7 +16,7 @@ for key, picker in pairs {
   m = "keymaps",
   v = "vim_options",
   s = "persisted",
-  h = "helpgrep",
+  h = "help_tags",
 } do
   vim.keymap.set({ "n", "i", "v" }, prefix .. key, (type(picker) == "string") and ("<Cmd>Telescope " .. picker .. "<CR>")
     or picker)

@@ -42,17 +42,16 @@ function M.setup()
     button("󱋢  Recent Files", "o", function() vim.cmd.Telescope "oldfiles" end),
   }
   config.layout[8].val = {
-    button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
     button("󰮳  Recent Sessions", "s", function() vim.cmd.Telescope "persisted" end),
+    button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
     button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
     button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),
     button("󱎸  Grep Search", "r", function() vim.cmd.Telescope "live_grep" end),
-    button("󰊢  Git Actions", "g", function()
-             vim.cmd "Telescope builtin default_text=git"
-           end, nil, { noremap = true, nowait = true })
-
   }
   config.layout[10].val = {
+    button("  Help Tags", "h", function() vim.cmd.Telescope "help_tags" end),
+  }
+  config.layout[12].val = {
     button("󰞷  Terminal", "t", vim.cmd.terminal),
     button("󰦗  `update`", "U", function()
       require "spLauncher".direct_spLaunch("update", {
@@ -60,10 +59,7 @@ function M.setup()
           persist = "force",
         },
       })
-    end)
-  }
-  config.layout[12].val = {
-    button("󱐥  Plugins", "l", vim.cmd.Lazy),
+    end),
     button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
   }
   require "alpha".setup(config)

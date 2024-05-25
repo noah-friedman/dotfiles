@@ -41,8 +41,6 @@ return {
     lazy = true,
   },
   {
-  },
-  {
     "smjonas/inc-rename.nvim",
     dependencies = {
       {

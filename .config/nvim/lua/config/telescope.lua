@@ -3,12 +3,14 @@ local M = {}
 function M.setup()
   local telescope = require "telescope"
   telescope.setup {
+    pickers = {
+      persisted = {
+        sorting_strategy = "descending",
+      },
+    },
     extensions = {
       ["ui-select"] = {
         require "telescope.themes".get_cursor {}
-      },
-      file_browser = {
-        hijack_netrw = true,
       },
     },
   }
