@@ -27,8 +27,9 @@ return {
   },
   {
     "olimorris/persisted.nvim",
-    config = configure "persisted",
     cmd = "Telescope persisted",
+    event = "User FileOpened",
+    config = configure "persisted",
   },
   {
     "tiagovla/scope.nvim",

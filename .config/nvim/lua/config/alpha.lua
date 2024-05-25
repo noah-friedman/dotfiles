@@ -57,7 +57,7 @@ function M.setup()
     button("󰦗  `update`", "U", function()
       require "spLauncher".direct_spLaunch("update", {
         window = {
-          persist = false,
+          persist = "force",
         },
       })
     end)

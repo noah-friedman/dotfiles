@@ -47,10 +47,10 @@ for mapping, action in pairs {
   d = {
     "Gitsigns preview_hunk",
   },
-  c = "tab Git commit",
+  c = "Git commit",
   p = "Git push",
   x = function()
-    vim.cmd "tab Git commit"
+    vim.cmd "Git commit"
     vim.api.nvim_create_autocmd("User", {
       pattern = "FugitiveChanged",
       once = true,
@@ -64,10 +64,10 @@ for mapping, action in pairs {
   L = telescope_fallback("bcommits", "log %"),
   A = "Gitsigns stage_buffer",
   R = warn_wrap("reset buffer", "Gitsigns reset_buffer"),
-  C = warn_wrap("amend commit", "tab Git commit --amend"),
+  C = warn_wrap("amend commit", "Git commit --amend"),
   P = warn_wrap("force push", "Git push -f"),
   X = warn_wrap("amend commit and force push", function()
-    vim.cmd "tab Git commit --amend"
+    vim.cmd "Git commit --amend"
     vim.api.nvim_create_autocmd("User", {
       pattern = "FugitiveChanged",
       once = true,

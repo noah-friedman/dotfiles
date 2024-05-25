@@ -9,13 +9,14 @@ for key, picker in pairs {
   o = "oldfiles",
   p = "projects",
   n = "notify",
-  h = "highlights",
+  H = "highlights",
   g = "builtin default_text=git",
   a = "autocommands",
   r = "live_grep",
   m = "keymaps",
   v = "vim_options",
   s = "persisted",
+  h = "helpgrep",
 } do
   vim.keymap.set({ "n", "i", "v" }, prefix .. key, (type(picker) == "string") and ("<Cmd>Telescope " .. picker .. "<CR>")
     or picker)
