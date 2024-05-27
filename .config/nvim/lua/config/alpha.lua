@@ -42,7 +42,6 @@ function M.setup()
     button("󱋢  Recent Files", "o", function() vim.cmd.Telescope "oldfiles" end),
   }
   config.layout[8].val = {
-    button("󰮳  Recent Sessions", "s", function() vim.cmd.Telescope "persisted" end),
     button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
     button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
     button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),

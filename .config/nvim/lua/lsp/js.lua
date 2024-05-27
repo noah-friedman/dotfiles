@@ -16,3 +16,16 @@ require "util.configure".lsp {
     },
   },
 }
+
+require "util.configure".lsp {
+  lsp = "eslint",
+  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
+  config = {
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
+  },
+}

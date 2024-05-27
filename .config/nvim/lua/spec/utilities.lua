@@ -26,12 +26,6 @@ return {
     event = "VeryLazy",
   },
   {
-    "olimorris/persisted.nvim",
-    cmd = "Telescope persisted",
-    event = "User FileOpened",
-    config = configure "persisted",
-  },
-  {
     "tiagovla/scope.nvim",
     config = true,
     event = "VeryLazy",

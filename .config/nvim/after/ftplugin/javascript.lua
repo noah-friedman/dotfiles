@@ -11,7 +11,8 @@ vim.b[buf].spLauncherActionMap = {
 }
 
 require "spLauncher.util".workspace("tsserver", {
+                                      base = "bun run",
                                       run = "start",
                                       test = true,
-                                      build = "run build",
+                                      build = true,
                                     }, buf)
