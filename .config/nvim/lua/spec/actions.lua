@@ -22,6 +22,7 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = {
+      "nvim-telescope/telescope.nvim",
       "stevearc/dressing.nvim",
     },
     cmd = "Telescope file_browser",

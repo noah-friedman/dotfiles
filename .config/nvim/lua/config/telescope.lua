@@ -10,6 +10,9 @@ function M.setup()
       ["ui-select"] = {
         require "telescope.themes".get_cursor {}
       },
+      file_browser = {
+        hijack_netrw = true,
+      },
     },
   }
 end

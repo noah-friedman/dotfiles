@@ -43,7 +43,7 @@ function M.setup()
   }
   config.layout[8].val = {
     button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
-    button("󱏒  File Browser", "b", function() vim.cmd.Telescope "file_browser" end),
+    button("󱏒  File Browser", "b", require "util.file_browser" (false)),
     button("󰱽  Find Files", "f", function() vim.cmd.Telescope "find_files" end),
     button("󱎸  Grep Search", "r", function() vim.cmd.Telescope "live_grep" end),
   }

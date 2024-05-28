@@ -1,9 +1,11 @@
 local prefix = "<M-v>"
 vim.keymap.set({ "n", "i", "v" }, prefix, "<Cmd>Telescope<CR>")
 
+local file_browser = require "util.file_browser"
+
 for key, picker in pairs {
-  b = "file_browser",
-  B = "file_browser path=%:p:h",
+  b = file_browser(false),
+  B = file_browser(true),
   f = "find_files",
   F = "find_files cwd=%:p:h",
   o = "oldfiles",
