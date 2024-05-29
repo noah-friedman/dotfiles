@@ -71,6 +71,7 @@ return {
   {
     "speelbarrow/spLauncher.nvim",
     config = true,
+    main = "spLauncher",
     event = "User FileOpened",
   },
 }

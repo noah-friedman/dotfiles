@@ -53,8 +53,7 @@ require "util.configure".lsp {
         paths[2] = paths[1]:gsub("/nvim", "/local/nvim")
 
         for _, path in ipairs(paths) do
-          if root_dir:find(path, 1, true) == 1 or (pcall(require, "devpath") and root_dir:find(require "devpath".path,
-                                                                                               1, true) == 1) then
+          if root_dir:find(path, 1, true) == 1 or require "util.devpath".match(root_dir) then
             library.enabled = true
             library.runtime = true
             library.types = true

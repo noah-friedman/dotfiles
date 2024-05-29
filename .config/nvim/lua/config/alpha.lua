@@ -1,35 +1,17 @@
-local M = {}
+local button = require "util.alpha".button
 
----@param label string
----@param shortcut string
----@param action function
----@param config? table
----@param keyopts? table
----@return table
-local function button(label, shortcut, action, config, keyopts)
-  return vim.tbl_deep_extend("force", {
-                               type = "button",
-                               val = label,
-                               on_press = action,
-                               opts = {
-                                 keymap = { "n", shortcut, action, keyopts or { noremap = true } },
-                                 shortcut = shortcut,
-                                 align_shortcut = "right",
-                                 hl_shortcut = "Keyword",
-                                 position = "center",
-                                 cursor = 3,
-                                 width = 50,
-                               },
-                             }, config or {})
-end
+local M = {}
 
 function M.setup()
   local config = require "alpha.themes.dashboard".config
-  for i = 4, 12, 2 do
+  local localConfig = require "util.alpha".get()
+  local base = localConfig and 14 or 12
+
+  for i = 4, base, 2 do
     config.layout[i] = vim.deepcopy(config.layout[4])
   end
-  config.layout[14] = vim.deepcopy(config.layout[5])
-  for i = 5, 13, 2 do
+  config.layout[base + 2] = vim.deepcopy(config.layout[5])
+  for i = 5, base + 1, 2 do
     config.layout[i] = { type = "padding", val = 1 }
   end
 
@@ -52,15 +34,11 @@ function M.setup()
   }
   config.layout[12].val = {
     button("󰞷  Terminal", "t", vim.cmd.terminal),
-    button("󰦗  `update`", "U", function()
-      require "spLauncher".direct_spLaunch("update", {
-        window = {
-          persist = "force",
-        },
-      })
-    end),
     button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
   }
+  if localConfig then
+    config.layout[14].val = localConfig
+  end
   require "alpha".setup(config)
 
   vim.api.nvim_create_autocmd("TabNewEntered", {
