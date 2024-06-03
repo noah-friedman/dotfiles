@@ -58,6 +58,10 @@ function M.setup()
         {
           "(vim.b.copilot_suggestion_auto_trigger == false) and ' ' or ' '",
           color = { fg = colors["white"] }
+        },
+        {
+          "(vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }) == false) and '󱙎 ' or '󰚢 '",
+          color = { fg = colors["white"] }
         }
       },
       lualine_y = {

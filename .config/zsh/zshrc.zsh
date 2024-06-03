@@ -12,6 +12,10 @@ function zshrc {
         for file in $config/zsh/source/before/**/*
                 . $file
 
+        # Initialize completions
+        autoload -Uz compinit
+        compinit
+
         # Load oh-my-zsh
         export ZSH=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/oh-my-zsh
         . $ZSH/oh-my-zsh.sh

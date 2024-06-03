@@ -57,9 +57,4 @@ return {
     config = configure "dressing",
     lazy = true,
   },
-  {
-    "chentoast/marks.nvim",
-    event = "User FileOpened",
-    config = true,
-  },
 }

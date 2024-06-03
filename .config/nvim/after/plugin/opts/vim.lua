@@ -37,6 +37,9 @@ local opts = {
 
   -- Send event on mouse move
   mousemoveevent = true,
+
+  -- For `tabby.nvim`
+  showtabline = 2,
 }
 
 for key, value in pairs(opts) do

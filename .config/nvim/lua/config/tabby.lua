@@ -55,14 +55,6 @@ function M.setup()
       hl = theme.fill,
     }
   end)
-  --[[use_preset("tab_with_top_win", {
-    nerdfont = true,                -- whether use nerdfont
-    lualine_theme = "dracula-nvim", -- lualine theme name
-    buf_name = {
-      mode = "unique",
-    },
-
-  })]]
 end
 
 return M
