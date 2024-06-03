@@ -2,6 +2,6 @@ require "util.configure".lsp {
   lsp = "sourcekit",
   pattern = "*.swift",
   config = {
-    cmd = { "sourcekit-lsp" },
+    cmd = { "sourcekit-lsp", "--sync" },
   },
 }
