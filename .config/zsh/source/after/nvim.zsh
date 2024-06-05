@@ -19,8 +19,14 @@ if [ -x `command -v nvim` ]; then
 
                 # Create an alias for 'nvim' that sends the file to the parent Neovim instance
                 function nvim {
+                        command nvim --server $NVIM --remote-send "<Cmd>lua vim.schedule_wrap(vim.cmd.e)('$@')<CR>"
+                }
+                function nvim-tab {
                         command nvim --server $NVIM --remote-send "<Cmd>tabnew<CR>"
                         command nvim --server $NVIM --remote-send "<Cmd>lua vim.schedule_wrap(vim.cmd.e)('$@')<CR>"
                 }
+                alias nvimt="nvim-tab"
+                alias vim-tab="nvim-tab"
+                alias vimt="nvim-tab"
         fi
 fi
