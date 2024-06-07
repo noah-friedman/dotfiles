@@ -1,4 +1,14 @@
 require "util.configure".lsp {
+  lsp = "html",
+  pattern = "*.html",
+}
+
+require "util.configure".lsp {
+  lsp = "cssls",
+  pattern = "*.css",
+}
+
+require "util.configure".lsp {
   lsp = "tsserver",
   pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
   config = {
@@ -27,5 +37,19 @@ require "util.configure".lsp {
         command = "EslintFixAll",
       })
     end,
+  },
+}
+
+require "util.configure".lsp {
+  lsp = "custom_elements_ls",
+  pattern = { "*.html", "*.js", "*.ts", "*.jsx", "*.tsx" },
+  derive_filetypes = false,
+  default_filetypes = false,
+  config = {
+    filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+    ---@param client lsp.Client
+    on_attach = function(client, _)
+      client.server_capabilities.hoverProvider = false
+    end
   },
 }

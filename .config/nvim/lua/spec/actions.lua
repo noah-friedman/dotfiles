@@ -13,6 +13,7 @@ return {
         build = "make",
         config = function() require "telescope".load_extension "fzf" end,
       },
+      "nvim-telescope/telescope-symbols.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
     },

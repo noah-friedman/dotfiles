@@ -30,6 +30,8 @@ vim.api.nvim_create_augroup("ConfigureLsp", {})
 function M.lsp(opts)
   ---@param args? table
   local callback = function(args)
+    local lspconfig = require "lspconfig"
+
     -- Run any pre-setup functions
     if opts.pre then
       opts.pre(args or {})
@@ -44,7 +46,8 @@ function M.lsp(opts)
 
     -- Add capabilities to the config without overriding any existing config (unless explicitly disabled)
     if opts.capabilities ~= false then
-      config.capabilities = require "cmp_nvim_lsp".default_capabilities(opts.config.capabilities or {})
+      config.capabilities = vim.tbl_deep_extend("keep", opts.config.capabilities or {},
+                                                require "cmp_nvim_lsp".default_capabilities())
     end
 
     -- Set up auto-format on save (unless explicitly disabled)
@@ -72,7 +75,7 @@ function M.lsp(opts)
 
     -- Add default fts from lspconfig to configured fts (unless explicitly disabled)
     if opts.default_filetypes ~= false then
-      for _, ft in ipairs(require "lspconfig"[opts.lsp].document_config.default_config.filetypes) do
+      for _, ft in ipairs(lspconfig[opts.lsp].document_config.default_config.filetypes) do
         table.insert(config.filetypes, ft)
       end
     end
@@ -88,8 +91,11 @@ function M.lsp(opts)
       end
     end
 
-    -- Set up the LSP server
-    require "lspconfig"[opts.lsp].setup(config)
+    -- Set up the language server
+    if opts.lsp == "sourcekit" then
+      Config = vim.deepcopy(config)
+    end
+    lspconfig[opts.lsp].setup(config)
 
     -- Run any post-setup functions
     if opts.post then

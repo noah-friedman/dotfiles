@@ -2,6 +2,8 @@ require "util.configure".lsp {
   lsp = "sourcekit",
   pattern = "*.swift",
   config = {
-    cmd = { "sourcekit-lsp", "--sync" },
+    on_attach = function(client, bufnr)
+      client.capabilities.textDocument.inlayHint = {}
+    end
   },
 }

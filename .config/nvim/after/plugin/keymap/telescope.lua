@@ -17,7 +17,9 @@ for key, picker in pairs {
   r = "live_grep",
   m = "keymaps",
   v = "vim_options",
-  s = "persisted",
+  s = function()
+    require "telescope.builtin".symbols { sources = { "emoji", "math", "nerd" } }
+  end,
   h = "help_tags",
   d = "diagnostics bufnr=0",
   D = "diagnostics",
