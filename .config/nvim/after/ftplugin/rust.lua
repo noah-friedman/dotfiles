@@ -27,22 +27,10 @@ vim.b[buf].spLauncherActionMap = {
 }
 
 require "spLauncher.util".workspace("rust-analyzer", {
-                                      base = "cargo",
+                                      base = "cargo cmd",
                                       run = true,
-                                      debug = {
-                                        handler = function()
-                                          local output = vim.fn.system("(cd " .. vim.fn.expand "%:p:h" ..
-                                            " && cargo read-manifest)")
-                                          local success, result = pcall(vim.json.decode, output)
-                                          if not (success and result and result.name) then
-                                            vim.notify(
-                                              "failed to read cargo manifest: " .. result .. "\n`cargo read-manifest`" ..
-                                              " output:\n" .. output, vim.log.levels.ERROR)
-                                            return
-                                          end
-                                          return "build && rust-lldb target/debug/" .. result.name
-                                        end
-                                      },
+                                      debug = true,
                                       build = true,
                                       test = true,
+                                      clean = true,
                                     }, buf)

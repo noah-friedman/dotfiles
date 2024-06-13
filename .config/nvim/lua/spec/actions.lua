@@ -43,18 +43,6 @@ return {
     lazy = true,
   },
   {
-    "smjonas/inc-rename.nvim",
-    dependencies = {
-      {
-        "stevearc/dressing.nvim",
-      },
-    },
-    opts = {
-      input_buffer_type = "dressing",
-    },
-    lazy = true,
-  },
-  {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
     build = ":call mkdp#util#install()",

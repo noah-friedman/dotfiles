@@ -3,7 +3,9 @@ require "util.configure".lsp {
   pattern = "*.swift",
   config = {
     on_attach = function(client, bufnr)
-      client.capabilities.textDocument.inlayHint = {}
+      client.capabilities.textDocument.inlayHint = {
+        dynamicRegistration = false,
+      }
     end
   },
 }

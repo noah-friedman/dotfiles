@@ -17,3 +17,5 @@ vim.b[bufnr].spLauncherActionMap = {
 require "spLauncher.util".workspace("custom_elements_ls", {
                                       run = "bun run start"
                                     }, bufnr)
+
+require "otter".activate { "css", "javascript" }

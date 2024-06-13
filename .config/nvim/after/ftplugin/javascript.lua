@@ -16,3 +16,5 @@ require "spLauncher.util".workspace("tsserver", {
                                       test = true,
                                       build = true,
                                     }, buf)
+
+require "otter".activate { "html", "css" }

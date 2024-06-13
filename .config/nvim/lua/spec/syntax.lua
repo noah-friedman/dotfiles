@@ -10,4 +10,8 @@ return {
       vim.schedule_wrap(vim.cmd.e)()
     end,
   },
+  {
+    "aldafu/vim-widl",
+    event = { "BufReadPre *.webidl", "BufNewFile *.webidl" },
+  },
 }

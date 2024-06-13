@@ -1,17 +1,9 @@
+local otter = require "otter"
 local function_maps = {
-  vim.lsp.buf.hover,
-  function()
-    require "lazy".load {
-      plugins = {
-        "inc-rename.nvim"
-      }
-    }
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>:IncRename ", true, false, true), "n", false)
-  end,
+  otter.ask_hover,
+  otter.ask_rename,
   vim.lsp.buf.code_action,
-  function()
-    require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
-  end,
+  otter.ask_definition,
   vim.diagnostic.open_float,
   function()
     require "copilot.suggestion".toggle_auto_trigger()

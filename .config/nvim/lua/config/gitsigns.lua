@@ -11,7 +11,7 @@ function M.setup()
         vim.schedule(function() gitsigns.detach(bufnr) end)
       end
     end,
-    _signs_staged_enable = true,
+    signs_staged = true,
     attach_to_untracked = true,
     numhl = true,
     preview_config = {

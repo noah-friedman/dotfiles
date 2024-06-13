@@ -27,6 +27,20 @@ return {
           "honza/vim-snippets",
         },
       },
+      {
+        "nvim-treesitter/nvim-treesitter",
+        dependencies = {
+          {
+            "windwp/nvim-ts-autotag",
+            config = configure "autotag",
+          },
+          {
+            "jmbuhr/otter.nvim",
+            config = configure "otter"
+          }
+        },
+        config = configure "treesitter",
+      },
     },
     lazy = true,
     event = "CmdlineEnter",
