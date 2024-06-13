@@ -42,8 +42,6 @@ return {
         config = configure "treesitter",
       },
     },
-    lazy = true,
-    event = "CmdlineEnter",
     config = configure "cmp",
   },
 

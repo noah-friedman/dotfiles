@@ -1,6 +1,7 @@
 require "util.configure".lsp {
   lsp = "html",
-  pattern = "*.html",
+  pattern = { "*.html", "*.js", "*.ts" },
+  derive_filetypes = false,
 }
 
 require "util.configure".lsp {
