@@ -44,6 +44,15 @@ return {
     },
     config = configure "cmp",
   },
+  {
+    "davidmh/mdx.nvim",
+    event = {
+      "BufReadPre *.mdx",
+      "BufNewFile *.mdx",
+    },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+  },
 
   -- Format on save through LSP
   {

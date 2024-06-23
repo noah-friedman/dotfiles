@@ -8,10 +8,10 @@ require "util.configure".lsp {
     "*.jsx",
     "*.tsx",
   },
-  capabilities = false,
   config = {
     on_attach = function(client, bufnr)
       client.server_capabilities.hoverProvider = false
-    end
+    end,
+    root_dir = require "lspconfig.util".root_pattern("tailwind.config.js", "tailwind.config.ts", "tailwind.config.json"),
   },
 }

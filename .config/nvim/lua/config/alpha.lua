@@ -5,7 +5,7 @@ local M = {}
 function M.setup()
   local config = require "alpha.themes.dashboard".config
   local localConfig = require "util.alpha".get()
-  local base = localConfig and 14 or 12
+  local base = localConfig and 12 or 10
 
   for i = 4, base, 2 do
     config.layout[i] = vim.deepcopy(config.layout[4])
@@ -16,12 +16,11 @@ function M.setup()
   end
 
   config.layout[4].val = {
-    button("󰊓  Toggle fullscreen", "<M-f>", require "util.fullscreen"),
-    button("󰩈  Exit", "q", vim.cmd.q),
-  }
-  config.layout[6].val = {
     button("󱪞  New File", "e", vim.cmd.enew),
     button("󱋢  Recent Files", "o", function() vim.cmd.Telescope "oldfiles" end),
+  }
+  config.layout[6].val = {
+    button("󰩈  Exit", "q", vim.cmd.q),
   }
   config.layout[8].val = {
     button("󰪻  Recent Projects", "p", function() vim.cmd.Telescope "projects" end),
@@ -31,13 +30,11 @@ function M.setup()
   }
   config.layout[10].val = {
     button("  Help Tags", "h", function() vim.cmd.Telescope "help_tags" end),
-  }
-  config.layout[12].val = {
     button("󰞷  Terminal", "t", vim.cmd.terminal),
     button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
   }
   if localConfig then
-    config.layout[14].val = localConfig
+    config.layout[base].val = localConfig
   end
   require "alpha".setup(config)
 

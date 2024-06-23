@@ -40,6 +40,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    tag = "v0.9.0",
     dependencies = {
       "tpope/vim-fugitive",
     },

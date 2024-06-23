@@ -10,11 +10,24 @@ vim.b[buf].spLauncherActionMap = {
   test = "test %:p",
 }
 
-require "spLauncher.util".workspace("tsserver", {
-                                      base = "bun run",
-                                      run = "start",
-                                      test = true,
-                                      build = true,
-                                    }, buf)
+require "spLauncher.util".workspace("tsserver", function(root_dir)
+                                      if vim.fn.filereadable(root_dir .. "/bun.lockb") ~= 0 then
+                                        return {
+                                          base = "bun run",
+                                          run = "start",
+                                          debug = true,
+                                          test = true,
+                                          build = true,
+                                        }
+                                      elseif vim.fn.filereadable(root_dir .. "/package-lock.json") ~= 0 then
+                                        return {
+                                          base = "npm run",
+                                          run = "start",
+                                          debug = true,
+                                          test = true,
+                                          build = true,
+                                        }
+                                      end
+                                    end, buf)
 
 require "otter".activate { "html", "css" }

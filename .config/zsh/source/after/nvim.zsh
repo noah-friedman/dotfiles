@@ -8,7 +8,7 @@ if [ -x `command -v nvim` ]; then
                 function nvim_sync_recv {
                         local tmp=$(mktemp)
                         command nvim --server $NVIM --remote-expr "getcwd()" 1>/dev/null 2>$tmp
-                        cd `cat $tmp`
+                        cd "$(cat $tmp)"
                 }
                 function nvim_sync_send {
                         command nvim --server $NVIM --remote-send "<CMD>cd $PWD<CR>"
