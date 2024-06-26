@@ -10,8 +10,8 @@ function M.setup()
     end,
     ---@param bufnr number
     on_attach = function(bufnr)
-      if vim.b[bufnr].gitsigns_status_dict.gitdir == vim.fn.stdpath "data" --[[ @as string ]]:gsub("/nvim",
-                                                                                                   "") .. "/yadm/repo.git" and vim.fn["fugitive#Head"]() == "" then
+      if vim.b[bufnr].gitsigns_status_dict.gitdir == vim.fn.stdpath "data" --[[ @as string ]]:gsub("/nvim", "") ..
+      "/yadm/repo.git" and vim.fn["fugitive#Head"]() == "" then
         vim.schedule(function() gitsigns.detach(bufnr) end)
       end
     end,
