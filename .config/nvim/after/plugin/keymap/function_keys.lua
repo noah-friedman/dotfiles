@@ -1,12 +1,22 @@
+local loadedIncRename = false
 local function_maps = {
   vim.lsp.buf.hover,
   function()
-    require "lazy".load {
-      plugins = {
-        "inc-rename.nvim"
-      }
-    }
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>:IncRename ", true, false, true), "n", false)
+    if #(vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf(), name = "custom_elements_ls" }) > 0 then
+      vim.lsp.buf.rename()
+    else
+      if not loadedIncRename then
+        require "lazy".load {
+          plugins = {
+            "inc-rename.nvim"
+          }
+        }
+        loadedIncRename = true
+      end
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>:IncRename " .. vim.fn.expand "<cword>", true, false,
+                                                           true),
+                            "n", false)
+    end
   end,
   vim.lsp.buf.code_action,
   function()
