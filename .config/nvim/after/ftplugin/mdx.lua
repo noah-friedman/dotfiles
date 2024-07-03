@@ -18,5 +18,3 @@ require "spLauncher.util".workspace("mdx_analyzer", function(root_dir)
   end
   return {}
 end)
-
-require "otter".activate { "typescriptreact" }

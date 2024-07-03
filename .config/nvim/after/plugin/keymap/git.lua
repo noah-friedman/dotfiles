@@ -59,6 +59,7 @@ for mapping, action in pairs {
   end,
   t = "Git push --tags",
   s = telescope_fallback "status",
+  S = telescope_fallback("stash", "stash list"),
   b = telescope_fallback("branches", "branch"),
   l = telescope_fallback("commits", "log"),
   L = telescope_fallback("bcommits", "log %"),

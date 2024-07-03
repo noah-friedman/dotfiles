@@ -40,6 +40,10 @@ local opts = {
 
   -- For `tabby.nvim`
   showtabline = 2,
+
+  -- Spellcheck
+  spell = true,
+  spelllang = "en_ca",
 }
 
 for key, value in pairs(opts) do

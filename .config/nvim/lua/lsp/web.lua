@@ -43,11 +43,11 @@ require "util.configure".lsp {
 
 require "util.configure".lsp {
   lsp = "custom_elements_ls",
-  pattern = { "*.html", "*.js", "*.ts", "*.jsx", "*.tsx" },
+  pattern = { "*.html", "*.js", "*.ts", "*.jsx", "*.tsx", "*.mdx" },
   derive_filetypes = false,
   default_filetypes = false,
   config = {
-    filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+    filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "mdx" },
     ---@param client lsp.Client
     on_attach = function(client, _)
       client.server_capabilities.hoverProvider = false
