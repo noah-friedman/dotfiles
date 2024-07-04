@@ -48,7 +48,7 @@ for mapping, action in pairs {
     "Gitsigns preview_hunk",
   },
   c = "Git commit",
-  p = "Git push",
+  p = "Git push | Git push --tags",
   x = function()
     vim.cmd "Git commit"
     vim.api.nvim_create_autocmd("User", {

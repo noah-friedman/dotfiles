@@ -7,7 +7,6 @@ return function(current)
     require "telescope".extensions.file_browser.file_browser {
       hidden = true,
       respect_gitignore = true,
-      collapse_dirs = true,
       path = current and vim.fn.expand "%:p:h" or nil,
     }
   end
