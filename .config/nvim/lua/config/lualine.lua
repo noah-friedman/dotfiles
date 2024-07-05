@@ -14,7 +14,6 @@ end
 
 M.theme["inactive"].c.fg = "white"
 
-
 function M.setup()
   -- Disable the default mode display
   vim.o.showmode = false
@@ -57,12 +56,20 @@ function M.setup()
         },
         {
           "(vim.b.copilot_suggestion_auto_trigger == false) and ' ' or ' '",
-          color = { fg = colors["white"] }
+          color = function()
+            return (vim.b.copilot_suggestion_auto_trigger ~= false) and {} or { fg = colors["white"] }
+          end,
         },
         {
-          "(vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }) == false) and '󱙎 ' or '󰚢 '",
-          color = { fg = colors["white"] }
-        }
+          "(vim.lsp.inlay_hint.is_enabled { bufnr = 0 } == false) and '󱙎 ' or '󰚢 '",
+          color = function()
+            return vim.lsp.inlay_hint.is_enabled { bufnr = 0 } and {} or { fg = colors["white"] }
+          end,
+        },
+        {
+          "vim.wo.spell and '󱍓 ' or '󰏯 '",
+          color = function() return vim.wo.spell and {} or { fg = colors["white"] } end,
+        },
       },
       lualine_y = {
         "filetype",

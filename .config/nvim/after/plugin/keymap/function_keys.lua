@@ -23,13 +23,16 @@ local function_maps = {
     require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
   end,
   vim.diagnostic.open_float,
+  vim.cmd.noh,
   function()
     require "copilot.suggestion".toggle_auto_trigger()
   end,
-  vim.cmd.noh,
   function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 })
-  end
+  end,
+  function()
+    vim.wo.spell = not vim.wo.spell
+  end,
 }
 
 for index, mapping in ipairs(function_maps) do
