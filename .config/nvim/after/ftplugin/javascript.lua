@@ -12,23 +12,19 @@ vim.b[buf].spLauncherActionMap = {
 }
 
 require "spLauncher.util".workspace("tsserver", function(root_dir)
-                                      if vim.fn.filereadable(root_dir .. "/bun.lockb") ~= 0 then
-                                        return {
-                                          base = "bun run",
-                                          run = "start",
-                                          debug = true,
-                                          test = true,
-                                          build = true,
-                                        }
-                                      elseif vim.fn.filereadable(root_dir .. "/package-lock.json") ~= 0 then
-                                        return {
-                                          base = "npm run",
-                                          run = "start",
-                                          debug = true,
-                                          test = true,
-                                          build = true,
-                                        }
+                                      ---@param fname string
+                                      local function checkFile(fname)
+                                        return vim.fn.filereadable(root_dir .. "/" .. fname) ~= 0
                                       end
+                                      local r = {
+                                        base = (checkFile "bun.lockb" and "bun run" or (checkFile "package-lock.json" and "npm run" or nil)),
+                                        run = "start",
+                                        debug = true,
+                                        test = true,
+                                        build = true,
+                                        clean = true,
+                                      }
+                                      return r.base and r or {}
                                     end, buf)
 
 require "otter".activate { "html", "css" }
