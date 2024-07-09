@@ -10,22 +10,23 @@ require "util.configure".lsp {
 }
 
 require "util.configure".lsp {
-  lsp = "tsserver",
+  lsp = function()
+    require "typescript-tools".setup {
+      settings = {
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = "all",
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+          importModuleSpecifierPreference = "non-relative",
+        }
+      }
+    }
+  end,
   pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
-  config = {
-    init_options = {
-      preferences = {
-        includeInlayParameterNameHints = "all",
-        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayEnumMemberValueHints = true,
-        importModuleSpecifierPreference = "non-relative",
-      },
-    },
-  },
 }
 
 require "util.configure".lsp {

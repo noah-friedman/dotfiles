@@ -100,4 +100,17 @@ return {
     event = "BufRead *Cargo.toml",
     config = true
   },
+  {
+    "pmizio/typescript-tools.nvim",
+    lazy = true,
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  {
+    "chrisgrieser/nvim-lsp-endhints",
+    event = "User NotCopilot",
+    config = true,
+  },
 }

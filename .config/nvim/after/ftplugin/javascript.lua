@@ -11,7 +11,7 @@ vim.b[buf].spLauncherActionMap = {
   test = "test %:p",
 }
 
-require "spLauncher.util".workspace("tsserver", function(root_dir)
+require "spLauncher.util".workspace("typescript-tools", function(root_dir)
                                       ---@param fname string
                                       local function checkFile(fname)
                                         return vim.fn.filereadable(root_dir .. "/" .. fname) ~= 0

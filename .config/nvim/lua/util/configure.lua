@@ -16,7 +16,7 @@ local mt = {
 vim.api.nvim_create_augroup("ConfigureLsp", {})
 
 ---@class ConfigureLspOptions
----@field lsp string
+---@field lsp string | function
 ---@field pattern? string | string[]
 ---@field config? table | (fun(args: table): table)
 ---@field pre? fun(args: table)
@@ -74,7 +74,7 @@ function M.lsp(opts)
     end
 
     -- Add default fts from lspconfig to configured fts (unless explicitly disabled)
-    if opts.default_filetypes ~= false then
+    if opts.default_filetypes ~= false and type(opts.lsp) == "string" then
       for _, ft in ipairs(lspconfig[opts.lsp].document_config.default_config.filetypes) do
         table.insert(config.filetypes, ft)
       end
@@ -92,10 +92,11 @@ function M.lsp(opts)
     end
 
     -- Set up the language server
-    if opts.lsp == "sourcekit" then
-      Config = vim.deepcopy(config)
+    if type(opts.lsp) == "string" then
+      lspconfig[opts.lsp].setup(config)
+    else
+      opts.lsp()
     end
-    lspconfig[opts.lsp].setup(config)
 
     -- Run any post-setup functions
     if opts.post then
