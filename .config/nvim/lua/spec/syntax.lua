@@ -14,4 +14,8 @@ return {
     "aldafu/vim-widl",
     event = { "BufReadPre *.webidl", "BufNewFile *.webidl" },
   },
+  {
+    "compnerd/modulemap-vim",
+    event = { "BufReadPre *.modulemap", "BufNewFile *.modulemap" },
+  },
 }

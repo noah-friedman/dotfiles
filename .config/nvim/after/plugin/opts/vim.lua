@@ -42,8 +42,8 @@ local opts = {
   showtabline = 2,
 
   -- Spellcheck
-  spell = true,
   spelllang = "en_ca",
+  spell = false,
 }
 
 for key, value in pairs(opts) do

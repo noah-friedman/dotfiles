@@ -31,7 +31,10 @@ function M.setup()
   config.layout[10].val = {
     button("  Help Tags", "h", function() vim.cmd.Telescope "help_tags" end),
     button("󰞷  Terminal", "t", vim.cmd.terminal),
-    button("󰦗  Update Plugins", "u", function() vim.cmd.Lazy "update" end),
+    button("󰦗  Update Plugins", "u", function()
+      vim.cmd.TSUpdate()
+      vim.cmd.Lazy "update"
+    end),
   }
   if localConfig then
     config.layout[base].val = localConfig

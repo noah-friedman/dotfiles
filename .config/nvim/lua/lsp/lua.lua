@@ -1,3 +1,4 @@
+Activated = {}
 require "util.configure".lsp {
   lsp = "lua_ls",
   pattern = "*.lua",
@@ -36,32 +37,4 @@ require "util.configure".lsp {
       }
     }
   },
-  pre = function(_)
-    require "neodev".setup {
-      ---@param root_dir string
-      ---@param library table
-      override = function(root_dir, library)
-        local paths = {
-          (function()
-            local r = vim.fn.stdpath "config"
-            if type(r) == "table" then
-              r = r[1]
-            end
-            return r
-          end)()
-        }
-        paths[2] = paths[1]:gsub("/nvim", "/local/nvim")
-
-        for _, path in ipairs(paths) do
-          if root_dir:find(path, 1, true) == 1 or require "util.devpath".match(root_dir) then
-            library.enabled = true
-            library.runtime = true
-            library.types = true
-            library.plugins = true
-            return
-          end
-        end
-      end
-    }
-  end
 }

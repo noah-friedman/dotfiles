@@ -68,8 +68,13 @@ return {
 
   -- Extension to LuaLS that makes it aware of Neovim runtime files
   {
-    "folke/neodev.nvim",
-    lazy = true,
+    "folke/lazydev.nvim",
+    dependencies = {
+      "Bilal2453/luvit-meta",
+
+    },
+    ft = "lua",
+    config = configure "lazydev",
   },
 
   -- Rust LSP and other goodies
