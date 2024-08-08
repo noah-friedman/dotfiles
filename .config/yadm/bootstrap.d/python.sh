@@ -17,7 +17,7 @@ if ! cmd_exists python3; then
         fi
 fi
 
-if ! cmd_exists pipx; then
+if cmd_exists pip && ! cmd_exists pipx; then
         $PYTHON_EXEC -m pip install --break-system-packages pipx
         pipx ensurepath
 fi
@@ -25,3 +25,5 @@ fi
 if ! cmd_exists virtualenv; then
         pipx install virtualenv
 fi
+
+git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "$ZSH_CUSTOM/plugins/autoswitch_virtualenv"

@@ -1,6 +1,6 @@
 ---@type spLauncher.ActionMap
 vim.b.spLauncherActionMap = {
-  base = "clang++",
+  base = "clang",
   run = function()
     local temp = vim.fn.tempname()
     return "-o " .. temp .. " % && " .. temp
@@ -19,3 +19,19 @@ vim.b.spLauncherActionMap = {
   },
   build = "%",
 }
+
+
+require "spLauncher.util".workspace("clangd", function(root_dir)
+  if vim.fn.globpath(root_dir, "**/CMakeLists.txt") ~= "" then
+    ---@type spLauncher.ActionMap
+    return {
+      base = "cmake -S . -B ./build",
+      run = function()
+        local fname = vim.fn.expand "%:t:r"
+        return "&& cmake --build ./build && [ -f './build/" .. fname .. "' ] && ./build/" .. fname
+      end,
+      build = "",
+    }
+  end
+  return vim.b.spLauncherActionMap
+end)

@@ -12,5 +12,3 @@ vim.b.spLauncherActionMap = {
   },
   test = "-m unittest %",
 }
-
-vim.schedule_wrap(require "venv-selector".retrieve_from_cache)()

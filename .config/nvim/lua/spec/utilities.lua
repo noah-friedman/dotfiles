@@ -13,12 +13,13 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
-    event = "FileType python",
-    cmd = {
-      "VenvSelect",
-      "VenvSelectCached",
-      "VenvSelectCurrent",
+    branch = "regexp",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-telescope/telescope.nvim",
     },
-    config = configure "venv",
+    ft = "python",
+    main = "venv-selector",
+    config = true,
   },
 }

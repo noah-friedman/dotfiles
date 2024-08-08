@@ -12,7 +12,6 @@ function M.setup()
     ignore_lsp = {
       "copilot",
       "lua_ls",
-      "clangd",
       "taplo",
       "rust-analyzer",
     },

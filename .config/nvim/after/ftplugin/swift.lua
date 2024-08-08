@@ -12,10 +12,21 @@ vim.b[bufnr].spLauncherActionMap = {
   build = "build %",
 }
 
-require "spLauncher.util".workspace("sourcekit", {
-                                      run = true,
-                                      debug = "run --debugger",
-                                      build = true,
-                                      test = true,
-                                      clean = true,
-                                    }, bufnr)
+require "spLauncher.util".workspace("sourcekit", function(root_dir)
+                                      if vim.fn.globpath(root_dir, "*.xcodeproj") ~= "" then
+                                        return {
+                                          base = "xcodebuild",
+                                          run = nil,
+                                          debug = nil,
+                                          build = ""
+                                        }
+                                      else
+                                        return {
+                                          run = true,
+                                          debug = "run --debugger",
+                                          build = true,
+                                          test = true,
+                                          clean = true,
+                                        }
+                                      end
+                                    end, bufnr)
