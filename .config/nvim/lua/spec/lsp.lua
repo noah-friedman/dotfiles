@@ -58,6 +58,7 @@ return {
   {
     "lukas-reineke/lsp-format.nvim",
     lazy = true,
+    config = configure "lsp-format"
   },
 
   -- JSON/YAML schemas

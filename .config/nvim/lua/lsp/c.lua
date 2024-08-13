@@ -16,7 +16,7 @@ require "util.configure".lsp {
         "compile_flags.txt",
         "configure.ac", -- AutoTools
       }
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or vim.fn.expand "%:p:h"
     end,
   }
 }
