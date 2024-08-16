@@ -27,7 +27,7 @@ vim.b[buf].spLauncherActionMap = {
 }
 
 require "spLauncher.util".workspace("rust-analyzer", {
-                                      base = "cargo cmd",
+                                      base = "cargo",
                                       run = true,
                                       debug = true,
                                       build = true,
