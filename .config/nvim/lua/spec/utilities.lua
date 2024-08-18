@@ -22,4 +22,12 @@ return {
     main = "venv-selector",
     config = true,
   },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    lazy = true,
+    dependencies = { "zbirenbaum/copilot.lua", "nvim-lua/plenary.nvim" },
+    cmd = "CopilotChat",
+    config = configure "copilot.chat"
+  },
 }

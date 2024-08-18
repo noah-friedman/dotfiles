@@ -10,6 +10,10 @@ vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, {
         checkOnSave = true,
       },
     },
+    ---@param fname string
+    root_dir = function(fname)
+      return require "lspconfig.util".root_pattern "Cargo.toml" (fname)
+    end
   },
 })
 

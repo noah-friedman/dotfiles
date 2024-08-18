@@ -26,11 +26,13 @@ vim.b[buf].spLauncherActionMap = {
   build = "%",
 }
 
-require "spLauncher.util".workspace("rust-analyzer", {
-                                      base = "cargo",
-                                      run = true,
-                                      debug = true,
-                                      build = true,
-                                      test = true,
-                                      clean = true,
-                                    }, buf)
+if #vim.fs.find("Cargo.toml", { upward = true, path = vim.fn.expand "%:p:h" }) > 0 then
+  vim.b.spLauncherActionMap = vim.tbl_deep_extend("force", vim.b.spLauncherActionMap, {
+    base = "cargo",
+    run = true,
+    debug = true,
+    test = true,
+    build = true,
+    clean = true,
+  })
+end

@@ -2,6 +2,10 @@ local M = {}
 
 function M.setup()
   require "copilot".setup {
+    filetypes = {
+      yaml = true,
+      markdown = true,
+    },
     suggestion = {
       auto_trigger = true,
       hide_during_completion = false,
