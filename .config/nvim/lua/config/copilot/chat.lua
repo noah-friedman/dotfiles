@@ -4,12 +4,12 @@ function M.setup()
   require "CopilotChat".setup {
     auto_insert_mode = true,
     window = {
-      layout = "float",
+      layout = "horizontal",
     },
     mappings = {
       submit_prompt = {
-        normal = "<A-CR>",
-        insert = "<A-CR>",
+        normal = "<S-Enter>",
+        insert = "<S-Enter>",
       }
     }
   }

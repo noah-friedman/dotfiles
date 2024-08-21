@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 local M = {}
 
 local icons = {
@@ -44,17 +46,60 @@ function M.setup()
         require "snippy".expand_snippet(args.body)
       end
     },
+    view = {
+      docs = {
+        auto_open = false,
+      },
+      entries = {
+        follow_cursor = true,
+      }
+    },
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
     },
+    sorting = {
+      priority_weight = 2,
+      comparators = {
+        cmp.config.compare.kind,
+      }
+    },
     mapping = {
-      ["<Up>"] = cmp.mapping.select_prev_item(),
-      ["<Down>"] = cmp.mapping.select_next_item(),
-      ["<ScrollWheelUp>"] = cmp.mapping.select_prev_item(),
-      ["<ScrollWheelDown>"] = cmp.mapping.select_next_item(),
+      ["<Up>"] = function(fallback)
+        if cmp.visible() then
+          cmp.close_docs()
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end,
+      ["<Down>"] = function(fallback)
+        if cmp.visible() then
+          cmp.close_docs()
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end,
+      ["<ScrollWheelUp>"] = function(fallback)
+        if cmp.visible() then
+          cmp.close_docs()
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end,
+      ["<ScrollWheelDown>"] = function(fallback)
+        if cmp.visible() then
+          cmp.close_docs()
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end,
       ["<S-Up>"] = cmp.mapping(function()
         if cmp.visible() then
+          cmp.open_docs()
           cmp.scroll_docs(-1)
         else
           copilot.next()
@@ -62,6 +107,7 @@ function M.setup()
       end),
       ["<S-Down>"] = cmp.mapping(function()
         if cmp.visible() then
+          cmp.open_docs()
           cmp.scroll_docs(1)
         else
           copilot.prev()
@@ -73,7 +119,11 @@ function M.setup()
       ["<Tab>"] = cmp.mapping(function(fallback)
                                 -- If the completion menu is open, select the next item
                                 if cmp.visible() then
-                                  cmp.select_next_item()
+                                  if cmp.visible_docs() then
+                                    cmp.close_docs();
+                                  else
+                                    cmp.open_docs();
+                                  end
                                 else
                                   fallback()
                                 end
@@ -134,13 +184,11 @@ function M.setup()
 
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-                                   { name = "path" }
-                                 }, {
-                                   { name = "cmdline" }
-                                 }),
-    ---@diagnostic disable-next-line: missing-fields
-    matching = { disallow_symbol_nonprefix_matching = false }
+    sources = cmp.config.sources {
+      { name = "path" },
+      { name = "cmdline" },
+
+    },
   })
 end
 

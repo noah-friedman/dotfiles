@@ -7,6 +7,9 @@ function M.setup()
     },
     cpp = {
       exclude = { "clangd" },
+    },
+    toml = {
+      exclude = { "taplo" },
     }
   }
 end
