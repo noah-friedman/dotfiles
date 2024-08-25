@@ -33,7 +33,7 @@ local opts = {
   termguicolors = true,
 
   -- Document textwidth
-  textwidth = 120,
+  textwidth = 100,
 
   -- Send event on mouse move
   mousemoveevent = true,

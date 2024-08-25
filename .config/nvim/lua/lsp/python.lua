@@ -24,7 +24,7 @@ require "util.configure".lsp {
           ruff = {
             enabled = true,
             formatEnabled = true,
-            lineLength = 120,
+            lineLength = 100,
             select = {
               "E",
               "F",
