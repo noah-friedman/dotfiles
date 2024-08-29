@@ -15,7 +15,7 @@ function M.setup()
       }
     },
     suggestion = {
-      auto_trigger = true,
+      auto_trigger = false,
       hide_during_completion = false,
       -- See `config.cmp` for overriden keymap
       -- These are only here to show the keymap when `cmp` isn't loaded

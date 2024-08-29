@@ -55,9 +55,9 @@ function M.setup()
           }
         },
         {
-          "(vim.b.copilot_suggestion_auto_trigger == false) and ' ' or ' '",
+          "(vim.b.copilot_suggestion_auto_trigger == true) and ' ' or ' '",
           color = function()
-            return (vim.b.copilot_suggestion_auto_trigger ~= false) and {} or { fg = colors["white"] }
+            return (vim.b.copilot_suggestion_auto_trigger == true) and {} or { fg = colors["white"] }
           end,
         },
         {
