@@ -44,7 +44,7 @@ if #roots > 0 then
     end,
     debug = true,
     test = true,
-    build = true,
+    build = "build -vv",
     clean = true,
   })
 end

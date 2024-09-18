@@ -28,9 +28,6 @@ local function_maps = {
     require "copilot.suggestion".toggle_auto_trigger()
   end,
   function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 })
-  end,
-  function()
     vim.wo.spell = not vim.wo.spell
   end,
 }

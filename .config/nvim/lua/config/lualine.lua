@@ -61,12 +61,6 @@ function M.setup()
           end,
         },
         {
-          "(vim.lsp.inlay_hint.is_enabled { bufnr = 0 } == false) and '󱙎 ' or '󰚢 '",
-          color = function()
-            return vim.lsp.inlay_hint.is_enabled { bufnr = 0 } and {} or { fg = colors["white"] }
-          end,
-        },
-        {
           "vim.wo.spell and '󱍓 ' or '󰏯 '",
           color = function() return vim.wo.spell and {} or { fg = colors["white"] } end,
         },
