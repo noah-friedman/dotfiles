@@ -25,5 +25,3 @@ fi
 if ! cmd_exists virtualenv; then
         pipx install virtualenv
 fi
-
-git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "$ZSH_CUSTOM/plugins/autoswitch_virtualenv"
