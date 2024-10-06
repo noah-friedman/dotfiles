@@ -42,9 +42,9 @@ if #roots > 0 then
         return "run --example=" .. name:gsub("%.rs$", "")
       end
     end,
-    debug = true,
-    test = true,
-    build = "build -vv",
-    clean = true,
+    debug = "d",
+    test = "t",
+    build = "b",
+    clean = "c",
   })
 end

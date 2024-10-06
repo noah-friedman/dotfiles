@@ -30,6 +30,10 @@ require "spLauncher.util".workspace("clangd", function(root_dir)
         local fname = vim.fn.expand "%:t:r"
         return "&& cmake --build ./build && [ -f './build/" .. fname .. "' ] && ./build/" .. fname
       end,
+      debug = function()
+        local fname = vim.fn.expand "%:t:r"
+        return "&& cmake --build ./build && [ -f './build/" .. fname .. "' ] && lldb ./build/" .. fname
+      end,
       build = "",
     }
   end

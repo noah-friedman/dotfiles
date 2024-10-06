@@ -24,11 +24,16 @@ vim.b.spLauncherActionMap = {
 require "spLauncher.util".workspace("clangd", function(root_dir)
   if vim.fn.globpath(root_dir, "**/CMakeLists.txt") ~= "" then
     return {
-      base = "cmake",
-      ---@return string
-      build = function()
-        return "-S " .. vim.fn.getcwd() .. " -B " .. vim.fn.getcwd() .. "/build"
-      end
+      base = "cmake -S . -B ./build",
+      run = function()
+        local fname = vim.fn.expand "%:t:r"
+        return "&& cmake --build ./build && [ -f './build/" .. fname .. "' ] && ./build/" .. fname
+      end,
+      debug = function()
+        local fname = vim.fn.expand "%:t:r"
+        return "&& cmake --build ./build && [ -f './build/" .. fname .. "' ] && lldb ./build/" .. fname
+      end,
+      build = "",
     }
   end
   return {}
