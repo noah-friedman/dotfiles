@@ -37,9 +37,9 @@ if #roots > 0 then
       local path = (vim.fn.expand "%:p"):gsub("^" .. stripped, "")
       local name, count = path:gsub("^/examples/", "")
       if count == 0 then
-        return true
+        return "r"
       else
-        return "run --example=" .. name:gsub("%.rs$", "")
+        return "r --example=" .. name:gsub("%.rs$", "")
       end
     end,
     debug = "d",
