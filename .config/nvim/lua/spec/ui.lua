@@ -42,7 +42,7 @@ return {
     "lewis6991/gitsigns.nvim",
     dependencies = {
       "tpope/vim-fugitive",
-      "seanbreckenridge/gitsigns-yadm.nvim"
+      "purarue/gitsigns-yadm.nvim"
     },
     config = configure "gitsigns",
     event = "User FileOpened",

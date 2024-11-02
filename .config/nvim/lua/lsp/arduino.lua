@@ -1,6 +1,7 @@
 require "util.configure".lsp {
   lsp = "arduino_language_server",
-  pattern = "*.ino",
+  pattern = { "*.ino", "*.hpp" },
+  derive_filetypes = false,
   config = {
     cmd = {
       "arduino-language-server",

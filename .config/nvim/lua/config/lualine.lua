@@ -55,13 +55,13 @@ function M.setup()
           }
         },
         {
-          "(vim.b.copilot_suggestion_auto_trigger == true) and ' ' or ' '",
+          "(vim.b.copilot_suggestion_auto_trigger == true) and '' or ''",
           color = function()
             return (vim.b.copilot_suggestion_auto_trigger == true) and {} or { fg = colors["white"] }
           end,
         },
         {
-          "vim.wo.spell and '󱍓 ' or '󰏯 '",
+          "vim.wo.spell and '󱍓' or '󰏯'",
           color = function() return vim.wo.spell and {} or { fg = colors["white"] } end,
         },
       },

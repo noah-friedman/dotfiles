@@ -1,5 +1,6 @@
 -- Set global config variable without overwriting anything it might already contain
 vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, {
+  ---@type rustaceanvim.lsp.ClientOpts
   server = {
     standalone = true,
     settings = {
