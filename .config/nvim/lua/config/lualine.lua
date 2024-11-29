@@ -45,6 +45,7 @@ function M.setup()
       lualine_x = {
         {
           "diagnostics",
+          cond = vim.diagnostic.is_enabled,
           sources = { "nvim_lsp" },
           sections = { "error", "warn", "info", "hint" },
           symbols = {
@@ -53,6 +54,11 @@ function M.setup()
             info = " ",
             hint = "󰙴 ",
           }
+        },
+        {
+          "'󱗢'",
+          cond = function() return not vim.diagnostic.is_enabled() end,
+          color = { fg = colors["white"] }
         },
         {
           "(vim.b.copilot_suggestion_auto_trigger == true) and '' or ''",

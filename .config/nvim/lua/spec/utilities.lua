@@ -30,4 +30,10 @@ return {
     cmd = "CopilotChat",
     config = configure "copilot.chat"
   },
+  {
+    "vyfor/cord.nvim",
+    event = "VeryLazy",
+    build = "./build || .\\build",
+    config = true,
+  }
 }

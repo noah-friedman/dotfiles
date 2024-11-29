@@ -1,6 +1,6 @@
 require "util.configure".lsp {
   lsp = "arduino_language_server",
-  pattern = { "*.ino", "*.hpp" },
+  pattern = { "*.ino", "*.cpp", "*.hpp", "*.h" },
   derive_filetypes = false,
   config = {
     cmd = {
@@ -13,7 +13,9 @@ require "util.configure".lsp {
       "-format-conf-path",
       -- Make a symlink to the .clang-format file in your home directory in order to maintain
       -- platform agnosticism
-      vim.env.HOME .. "/Library/Preferences/clangd/.clang-format"
+      vim.env.HOME .. "/.clang-format",
+      "-jobs",
+      tostring(#vim.uv.cpu_info()),
     },
   },
   -- Don't override capabilities (using `util.configure.lsp`), as this LSP doesn't support them

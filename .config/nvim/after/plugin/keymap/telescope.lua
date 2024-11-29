@@ -35,7 +35,8 @@ for key, picker in pairs {
     t.actions["Commit staged"] = t.actions["CommitStaged"]
     t.actions["CommitStaged"] = nil
     require "CopilotChat.integrations.telescope".pick(t)
-  end
+  end,
+  ["<Enter>"] = "resume"
 } do
   vim.keymap.set({ "n", "i", "v" }, prefix .. key, (type(picker) == "string") and ("<Cmd>Telescope " .. picker .. "<CR>")
     or picker)

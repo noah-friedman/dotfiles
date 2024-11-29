@@ -25,6 +25,9 @@ local function_maps = {
   vim.diagnostic.open_float,
   vim.cmd.noh,
   function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end,
+  function()
     require "copilot.suggestion".toggle_auto_trigger()
   end,
   function()

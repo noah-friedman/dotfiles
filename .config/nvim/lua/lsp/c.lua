@@ -2,6 +2,7 @@ local util = require "lspconfig.util"
 require "util.configure".lsp {
   lsp = "clangd",
   pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
+  derive_filetypes = false,
   formatter = false,
   config = {
     capabilities = {
