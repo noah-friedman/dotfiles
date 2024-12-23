@@ -74,3 +74,6 @@ for letter, arrow in pairs {
   vim.keymap.set({ "n", "i", "t", "c" }, "<M-" .. arrow .. ">", "<Cmd>normal " .. letter .. "<CR>")
   vim.keymap.set({ "n", "i", "t", "c" }, "<M-S-" .. arrow .. ">", "<Cmd>normal " .. letter:upper() .. "<CR>")
 end
+
+-- Go to beginning using <C-a> in command mode
+vim.keymap.set("c", "<C-a>", "<C-b>")
