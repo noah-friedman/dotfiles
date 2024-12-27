@@ -4,7 +4,7 @@ if [ -x $(command -v nvim) ]; then
         alias vim='nvim'
 
         if [[ -v NVIM ]]; then
-                if ! [[ -v KITTY_PID ]]; then
+                if ! [[ -v GHOSTTY_BIN_DIR ]]; then
                         # Keep the current directory in sync with Neovim's when in the Neovim terminal
                         function nvim_sync_recv {
                                 local tmp=$(mktemp)
@@ -22,7 +22,7 @@ if [ -x $(command -v nvim) ]; then
                 # Create an alias for 'nvim' that sends the file to the parent Neovim instance
                 function nvim {
                         command nvim --server $NVIM --remote-send "<Cmd>lua vim.schedule_wrap(vim.cmd.e)('$(realpath $@)')<CR>"
-                        [[ -v KITTY_PID ]] && command nvim --server $NVIM --remote-send "<Cmd>lua vim.schedule_wrap(vim.cmd.NeovideFocus)()<CR>"
+                        [[ -v GHOSTTY_BIN_DIR ]] && command nvim --server $NVIM --remote-send "<Cmd>lua vim.schedule_wrap(vim.cmd.NeovideFocus)()<CR>"
                 }
                 function nvim-tab {
                         command nvim --server $NVIM --remote-send "<Cmd>tabnew<CR>"

@@ -75,4 +75,5 @@ if [ "${words[2]}" = "disposable" ]; then
 fi
 _docker
 }
-compdef _docker-custom docker
+
+zicompdef _docker-custom docker
