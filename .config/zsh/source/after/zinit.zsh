@@ -1,8 +1,7 @@
-zinit ice wait'!0' 
-zinit load zsh-users/zsh-autosuggestions 
-zinit ice wait'!0' 
+zinit load zsh-users/zsh-autosuggestions
+zinit ice wait'!0'
 zinit load zsh-users/zsh-syntax-highlighting
-zinit ice wait'!0' 
+zinit ice wait'!0'
 zinit load speelbarrow/dracula-zsh
 
 function cmd_exists {
@@ -11,7 +10,7 @@ function cmd_exists {
 }
 
 if cmd_exists virtualenv; then
-        zinit ice wait'!0' 
+        zinit ice wait'!0'
         zinit load MichaelAquilina/zsh-autoswitch-virtualenv
 fi
 
