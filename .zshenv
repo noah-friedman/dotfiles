@@ -1,1 +1,1 @@
-/Users/speelbarrow/.config/zsh/env.zsh
+.config/zsh/env.zsh
