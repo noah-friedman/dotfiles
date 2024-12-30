@@ -1,0 +1,37 @@
+cmd_exists() {
+        command -v $1 >/dev/null 2>&1
+        return $?
+}
+
+NIXV="$(cat "${HOME}/.nix")"
+
+for COMMAND in curl xz sudo; do
+        ! cmd_exists $COMMAND && {
+                echo "please install $COMMAND"
+                exit 1
+        }
+done
+
+if ! cmd_exists nix-channel || ! cmd_exists nix-shell; then
+        ! { 
+                sh <(curl -L https://nixos.org/nix/install) --daemon && . /etc/profile;
+        } && {
+                sh <(curl -L https://nixos.org/nix/install) --no-daemon;
+                . "$HOME/.nix-profile/etc/profile.d/nix.sh";
+        }
+fi
+
+PACKAGES=$(case "$(uname)" in
+        "Darwin")
+                echo -n "nixpkgs-${NIXV}-darwin"
+                ;;
+        *)
+                echo -n "nixos-${NIXV}"
+                ;;
+                
+esac)
+
+nix-channel --add "https://channels.nixos.org/${PACKAGES}" nixpkgs
+nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${NIXV}.tar.gz" home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
