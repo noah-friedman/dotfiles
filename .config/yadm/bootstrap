@@ -40,3 +40,6 @@ nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}unstable" nixpkgs-uns
 nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${NIXV}.tar.gz" home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
+
+# Set up Git hook
+$HOME/.config/yadm/git-hooks.sh
