@@ -6,12 +6,7 @@
   };
   neovide.program = {
     enable = true;
-    package = if currentSystem == "darwin" 
-              then (import (fetchTarball
-                            "https://github.com/jacekszymanski/nixcasks/archive/master.tar.gz") { 
-                inherit pkgs; 
-              }).neovide
-              else pkgs.neovide;
+    package = with pkgs; neovide;
     settings = {
       frame = "transparent";
       font = let

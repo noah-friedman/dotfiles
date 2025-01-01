@@ -8,7 +8,8 @@ let
   cmake = import ./cmake.nix { inherit pkgs; };
   darwin = import ./darwin.nix { inherit pkgs; };
   eza = import ./eza.nix { inherit currentSystem lib; };
-  gpg = import ./gpg;
+  git = import ./git;
+  gpg = git.gpg;
   neovim = import ./neovim.nix { inherit currentSystem pkgs; };
   neovide = neovim.neovide;
   rust = import ./rust.nix { inherit config pkgs; };
@@ -27,6 +28,7 @@ in {
     in (with pkgs; [
       docker
       unstable.ghostty
+      vesktop
     ])
       ++ cmake.packages
       ++ darwin.packages
@@ -49,6 +51,7 @@ in {
 
   programs = {
     eza = eza.program;
+    git = git.program;
     go.enable = true;
     gpg = gpg.program;
     home-manager.enable = true;

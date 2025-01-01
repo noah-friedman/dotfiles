@@ -35,16 +35,12 @@
       lib.lists.flatten [
         [
           "if [ -d '${config.xdg.configHome}/zsh' ]; then"
-          "\tfor file in ${config.xdg.configHome}/zsh/**/*; do"
-          "\t\techo \"$file\""
+          "\tfor file in ${config.xdg.configHome}/zsh/**/*"
           "\t\t. \"$file\""
-          "\tdone"
           "fi"
           "if [ -d '${config.xdg.configHome}/local/zsh' ]; then"
-          "\tfor file in ${config.xdg.configHome}/local/zsh/**/*; do"
-          "\t\techo \"$file\""
+          "\tfor file in ${config.xdg.configHome}/local/zsh/**/*"
           "\t\t. \"$file\""
-          "\tdone"
           "fi"
         ]
         (import ./recursive.nix {

@@ -5,7 +5,7 @@ cmd_exists() {
 
 NIXV="$(cat "${HOME}/.nix")"
 
-for COMMAND in curl xz sudo; do
+for COMMAND in curl sudo tar; do
         ! cmd_exists $COMMAND && {
                 echo "please install $COMMAND"
                 exit 1
@@ -13,30 +13,31 @@ for COMMAND in curl xz sudo; do
 done
 
 if ! cmd_exists nix-channel || ! cmd_exists nix-shell; then
+	TMPFILE=$(mktemp)
+	curl -o $TMPFILE -L https://nixos.org/nix/install
+	chmod +x $TMPFILE
         ! { 
-                sh <(curl -L https://nixos.org/nix/install) --daemon && . /etc/profile;
+        	$TMPFILE --daemon && . /etc/profile;
         } && {
-                sh <(curl -L https://nixos.org/nix/install) --no-daemon;
-                . "$HOME/.nix-profile/etc/profile.d/nix.sh";
+               	$TMPFILE --no-daemon && . "$HOME/.nix-profile/etc/profile.d/nix.sh";
         }
+	command rm $TMPFILE
 fi
 
-PKG_PREFIX=$(case "$(uname)" in
-        "Darwin")
-                echo -n "nixpkgs-"
-                ;;
-        *)
-                echo -n "nixos-"
-                ;;
-esac)
-PKG_SUFFIX=$(case "$(uname)" in
-        "Darwin")
-                echo -n "-darwin"
-                ;; 
-esac)
+PKG_PREFIX=$(if [ "$(uname)" = "Darwin"  ]; then
+	printf "nixpkgs-"
+else
+	printf "nixos-"
+fi)
+PKG_SUFFIX=$(if [ "$(uname)" = "Darwin"  ]; then
+	printf -- "-darwin"
+fi)
 
+echo "${PKG_PREFIX}${NIXV}${PKG_SUFFIX}"
 nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}${NIXV}${PKG_SUFFIX}" nixpkgs
+echo "${PKG_PREFIX}unstable"
 nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}unstable" nixpkgs-unstable
+echo "release-${NIXV}.tar.gz"
 nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${NIXV}.tar.gz" home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install

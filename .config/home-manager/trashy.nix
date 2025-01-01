@@ -4,6 +4,6 @@
   else [];
 
   aliases = {
-    rm = "echo 'Are you sure you didn\\'t mean `trash`?'";
+    rm = ''echo "Are you sure you didn't mean \`trash\`?"'';
   };
 }
