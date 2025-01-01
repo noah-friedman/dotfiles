@@ -21,17 +21,22 @@ if ! cmd_exists nix-channel || ! cmd_exists nix-shell; then
         }
 fi
 
-PACKAGES=$(case "$(uname)" in
+PKG_PREFIX=$(case "$(uname)" in
         "Darwin")
-                echo -n "nixpkgs-${NIXV}-darwin"
+                echo -n "nixpkgs-"
                 ;;
         *)
-                echo -n "nixos-${NIXV}"
+                echo -n "nixos-"
                 ;;
-                
+esac)
+PKG_SUFFIX=$(case "$(uname)" in
+        "Darwin")
+                echo -n "-darwin"
+                ;; 
 esac)
 
-nix-channel --add "https://channels.nixos.org/${PACKAGES}" nixpkgs
+nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}${NIXV}${PKG_SUFFIX}" nixpkgs
+nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}unstable" nixpkgs-unstable
 nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${NIXV}.tar.gz" home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
