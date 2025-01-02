@@ -4,9 +4,15 @@ let
   currentSystem = if lib.strings.hasSuffix "darwin" builtins.currentSystem
                   then "darwin"
                   else "linux";
+  casks = if currentSystem == "darwin"
+          then (import (fetchTarball "https://github.com/jacekszymanski/nixcasks/archive/master.tar.gz") {
+              inherit pkgs;
+            })
+          else null;
+
 
   cmake = import ./cmake.nix { inherit pkgs; };
-  darwin = import ./darwin.nix { inherit pkgs; };
+  darwin = with pkgs.stdenv; if pkgs.stdenv.isLinux
   eza = import ./eza.nix { inherit currentSystem lib; };
   git = import ./git;
   gpg = git.gpg;
@@ -24,14 +30,15 @@ in {
     stateVersion = lib.strings.fileContents "${homeDirectory}/.nix";
 
     packages = let
-      unstable = import <nixpkgs-unstable> {};
+      ghostty = if casks != null
+                then [casks.ghostty]
+                else [];
     in (with pkgs; [
       docker
-      unstable.ghostty
       vesktop
     ])
+      ++ ghostty
       ++ cmake.packages
-      ++ darwin.packages
       ++ neovim.packages
       ++ rust.packages
       ++ trashy.packages

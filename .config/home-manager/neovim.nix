@@ -10,7 +10,7 @@
     settings = {
       frame = "transparent";
       font = let
-        family = "Monocraft Nerd Font";
+        family = "JetBrains Mono Nerd Font";
       in {
         size = 14;
         normal = [{
@@ -19,7 +19,7 @@
         }];
         bold = [{
           inherit family;
-          style = "SemiBold";
+          style = "ExtraBold";
         }];
         italic = [{
           inherit family;
@@ -27,12 +27,12 @@
         }];
         bold_italic = [{
           inherit family;
-          style = "SemiBold-Italic";
+          style = "ExtraBold-Italic";
         }];
       };
     };
   };
   packages = with pkgs; [
-    monocraft
+    jetbrains-mono
   ];
 }

@@ -1,3 +1,5 @@
+set -e
+
 cmd_exists() {
         command -v $1 >/dev/null 2>&1
         return $?
@@ -16,14 +18,11 @@ if ! cmd_exists nix-channel || ! cmd_exists nix-shell; then
 	TMPFILE=$(mktemp)
 	curl -o $TMPFILE -L https://nixos.org/nix/install
 	chmod +x $TMPFILE
-        ! { 
-        	$TMPFILE --daemon && . /etc/profile;
-        } && {
-               	$TMPFILE --no-daemon && . "$HOME/.nix-profile/etc/profile.d/nix.sh";
-        }
+	! ($TMPFILE --daemon) && ([ "$(uname)" != "Darwin" ] && $TMPFILE --no-daemon)
 	command rm $TMPFILE
 fi
 
+NIXV="$(cat "${HOME}/.nix")"
 PKG_PREFIX=$(if [ "$(uname)" = "Darwin"  ]; then
 	printf "nixpkgs-"
 else
@@ -33,11 +32,8 @@ PKG_SUFFIX=$(if [ "$(uname)" = "Darwin"  ]; then
 	printf -- "-darwin"
 fi)
 
-echo "${PKG_PREFIX}${NIXV}${PKG_SUFFIX}"
+PATH="/nix/var/nix/profiles/default/bin:$PATH"
 nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}${NIXV}${PKG_SUFFIX}" nixpkgs
-echo "${PKG_PREFIX}unstable"
-nix-channel --add "https://channels.nixos.org/${PKG_PREFIX}unstable" nixpkgs-unstable
-echo "release-${NIXV}.tar.gz"
 nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${NIXV}.tar.gz" home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
