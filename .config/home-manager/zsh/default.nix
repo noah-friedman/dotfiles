@@ -1,4 +1,4 @@
-{ config, currentSystem, lib, pkgs, ... }:
+{ config, lib, pkgs }:
 {
   program = let
     dot = "${config.xdg.dataHome}/zsh";
@@ -6,6 +6,7 @@
     enable = true;
 
     autosuggestion.enable = true;
+    autocd = true;
 
     dotDir = lib.strings.removePrefix "${config.home.homeDirectory}/" dot;
 
@@ -55,7 +56,7 @@
     );
 
     localVariables = let
-      linux = if currentSystem == "linux"
+      linux = if pkgs.stdenv.isLinux
               then {
                 DEBIAN_PREVENT_KEYBOARD_CHANGES = "yes";
               }

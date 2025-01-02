@@ -1,4 +1,4 @@
-{ currentSystem, lib }:
+{ lib, pkgs }:
 {
   program = {
     enable = true;
@@ -11,7 +11,7 @@
   };
 
   aliases = let
-    darwin = if currentSystem == "darwin" then [
+    darwin = if pkgs.stdenv.isDarwin then [
       ".DS_Store"
     ] else [];
 
