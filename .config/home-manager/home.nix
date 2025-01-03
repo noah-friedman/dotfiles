@@ -17,15 +17,12 @@ let
   eza = import ./eza.nix { inherit lib pkgs; };
   git = import ./git;
   gpg = git.gpg;
-  neovim = import ./neovim.nix { inherit cask lib pkgs stateVersion; };
+  neovim = import ./neovim.nix { inherit cask pkgs; };
   neovide = neovim.neovide;
   rust = import ./rust.nix { inherit config pkgs; };
   trashy = import ./trashy.nix { inherit pkgs; };
   zsh = import ./zsh { inherit config lib pkgs; };
 in {
-  imports = []
-    ++ neovim.imports;
-
   home = {
     inherit username homeDirectory stateVersion;
 
@@ -65,7 +62,6 @@ in {
     go.enable = true;
     gpg = gpg.program;
     home-manager.enable = true;
-    nixvim = neovim.program;
     neovide = neovide.program;
     zsh = zsh.program;
   };

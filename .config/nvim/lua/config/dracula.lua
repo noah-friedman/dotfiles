@@ -1,0 +1,16 @@
+local M = {}
+
+function M.setup()
+  require "dracula".setup {
+    colors = {
+      menu = "none"
+    },
+    transparent_bg = false,
+    italic_comment = true,
+    show_end_of_buffer = true,
+    overrides = function(_) return {} end
+  }
+  vim.cmd.colorscheme "dracula"
+end
+
+return M
