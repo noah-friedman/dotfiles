@@ -16,6 +16,11 @@
     })
   ];
 
+  program = {
+    enable = true;
+    withNodeJs = true;
+  };
+
   neovide.program = {
     enable = true;
 

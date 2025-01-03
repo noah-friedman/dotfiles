@@ -14,6 +14,7 @@ let
           else null;
 
   cmake = import ./cmake.nix { inherit pkgs; };
+  darwin = import ./darwin.nix { inherit cask pkgs; };
   eza = import ./eza.nix { inherit lib pkgs; };
   git = import ./git;
   gpg = git.gpg;
@@ -36,6 +37,7 @@ in {
     ])
       ++ ghostty
       ++ cmake.packages
+      ++ darwin.packages
       ++ neovim.packages
       ++ rust.packages
       ++ trashy.packages
