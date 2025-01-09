@@ -65,6 +65,7 @@ in {
     gpg = gpg.program;
     home-manager.enable = true;
     neovide = neovide.program;
+    neovim = neovim.program;
     zsh = zsh.program;
   };
 }

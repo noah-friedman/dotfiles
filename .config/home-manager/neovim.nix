@@ -1,9 +1,14 @@
 { cask, pkgs }: {
 
   packages = with pkgs; [
-    neovim
+    act
+    arduino-cli
 
+    arduino-language-server
+    bash-language-server
+    lua-language-server
     nixd
+    yaml-language-server
 
     nerdfonts
   ];
