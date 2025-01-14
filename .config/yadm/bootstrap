@@ -1,0 +1,64 @@
+#!/bin/sh
+
+cmd_exists() {
+        command -v $1 >/dev/null 2>&1
+        return $?
+}
+
+set -e
+
+VERSION=$(cat "$HOME/.config/nix/version.nix" | sed s/\"//g)
+
+for command in curl sudo tar; do
+	! cmd_exists $COMMAND && {
+		echo "please install $COMMAND"
+		exit 1
+	}
+done
+
+if ! cmd_exists nix; then
+	TMPFILE=$(mktemp)
+	curl -o $TMPFILE -L https://nixos.org/nix/install
+	chmod +x $TMPFILE
+	! ($TMPFILE --daemon) && ([ $(uname) != Darwin ] && $TMPFILE --no-daemon)
+	rm -f $TMPFILE
+fi
+
+PATH="/nix/var/nix/profiles/default/bin:$PATH"
+
+PKGS=$(if [ $(uname) = Darwin ]; then
+	NIX_DARWIN="https://github.com/LnL7/nix-darwin/archive/nix-darwin-${VERSION}.tar.gz"
+	nix-channel --add $NIX_DARWIN darwin
+	printf "nixpkgs-${VERSION}-darwin"
+else
+	printf "nixos-$VERSION"
+fi)
+
+nix-channel --add "https://channels.nixos.org/${PKGS}" nixpkgs
+nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${VERSION}.tar.gz" home-manager
+nix-channel --update
+
+if [ $(uname) = Darwin ]; then
+	TMPDIR=$(mktemp -d)
+	cd $TMPDIR
+
+	nix-build $NIX_DARWIN -A darwin-rebuild
+	./result/bin/darwin-rebuild switch -I darwin-config=$HOME/.config/nix/configuration.nix
+
+	cd -
+	rm -rf $TMPDIR
+elif cmd_exists nixos-rebuild; then
+	nixos-rebuild switch -I nixos-config=$HOME/.config/nix/configuration.nix
+else
+	nix-shell '<home-manager>' -A install
+fi
+
+YADM_DIR=$(dirname $(readlink -f "$0"))
+for hook in $YADM_DIR/hooks/*; do
+	if ! [ -e "$HOME/.local/share/yadm/repo.git/hooks/$(basename $hook)" ]; then
+		ln -s "$hook" "$HOME/.local/share/yadm/repo.git/hooks/$(basename $hook)"
+		echo "$hook -> $HOME/.local/share/yadm/repo.git/hooks/$(basename $hook)"
+	else
+		echo "not overwriting $HOME/.local/share/yadm/repo.git/hooks/$(basename $hook) because it already exists" 1>&2
+        fi
+done
