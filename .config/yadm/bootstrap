@@ -24,6 +24,10 @@ if ! cmd_exists nix; then
 	rm -f $TMPFILE
 fi
 
+SINGLE_SRC="$HOME/.nix-profile/etc/profile.d/nix.sh"
+if [ -e $SINGLE_SRC ]; then
+	. $SINGLE_SRC
+fi
 PATH="/nix/var/nix/profiles/default/bin:$PATH"
 
 PKGS=$(if [ $(uname) = Darwin ]; then
