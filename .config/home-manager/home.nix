@@ -1,1 +1,1 @@
-args: import ../nix/home args
+{ pkgs, ... } @ args: import ../nix/home args
