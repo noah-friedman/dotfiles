@@ -1,4 +1,4 @@
-{ casks, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = let
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
@@ -29,7 +29,6 @@
 
   programs.neovide = {
     enable = true;
-    package = casks.neovide;
     settings = {
       frame = "transparent";
       font = let

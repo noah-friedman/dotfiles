@@ -1,10 +1,10 @@
-{ casks, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     docker
-    casks.ghostty
+    ghostty
     git
     neovim
-    casks.neovide
+    neovide
     ripgrep
     wireguard-tools
     yadm
