@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, ... }: {
   imports = let
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
@@ -21,9 +21,21 @@
       };
     };
 
+    opts = {
+      colorcolumn = "+1";
+      number = true;
+      signcolumn = "number";
+      textwidth = 100;
+    };
+
     extraFiles = (import ../../mkDir.nix {
       inherit lib;
       path = ./files;
+    }).config;
+
+    plugins = (import ../../mkDir.nix {
+      inherit lib;
+      path = ./plugins;
     }).config;
   };
 

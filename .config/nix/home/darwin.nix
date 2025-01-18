@@ -11,6 +11,8 @@ in lib.mkIf pkgs.stdenv.isDarwin {
     macos-icon-ghost-color = "green";
     macos-icon-screen-color = "red";
   };
-  programs.ghostty.package = casks.ghostty;
+  programs.ghostty.package = casks.ghostty // {
+    meta.mainProgram = "ghostty";
+  };
   programs.neovide.package = casks.neovide;
 }
