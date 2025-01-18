@@ -1,4 +1,6 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: let 
+  mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
+in {
   imports = let
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
@@ -23,18 +25,22 @@
 
     opts = {
       colorcolumn = "+1";
+      mouse = "a";
       number = true;
       signcolumn = "number";
       textwidth = 100;
     };
 
-    extraFiles = (import ../../mkDir.nix {
-      inherit lib;
+    extraFiles = (mkDir { 
       path = ./files;
     }).config;
 
-    plugins = (import ../../mkDir.nix {
-      inherit lib;
+    keymaps = (mkDir {
+      args = { inherit pkgs; };
+      path = ./keymaps;
+    }).config;
+
+    plugins = (mkDir {
       path = ./plugins;
     }).config;
   };
