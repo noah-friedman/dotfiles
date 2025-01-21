@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: let 
-  mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
+mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
 in {
   imports = let
     nixvim = import (builtins.fetchGit {
@@ -25,23 +25,41 @@ in {
 
     opts = {
       colorcolumn = "+1";
+      expandtab = true;
       mouse = "a";
       number = true;
-      signcolumn = "number";
+      shiftwidth = 4;
+      signcolumn = "number";  
+      softtabstop = 4;
+      splitbelow = true;
+      splitright = true;
+      tabstop = 4;
       textwidth = 100;
     };
 
+    autoCmd = (mkDir {
+      path = ./autocmd;
+    }).config;
+
     extraFiles = (mkDir { 
+      args = { inherit pkgs; };
       path = ./files;
     }).config;
 
     keymaps = (mkDir {
-      args = { inherit pkgs; };
+      args = {
+        inherit lib;
+        modifier = if pkgs.stdenv.isDarwin then "D" else "C";
+        mode = ["n" "i" "v" "t" "c"];
+      };
       path = ./keymaps;
     }).config;
 
     plugins = (mkDir {
       path = ./plugins;
+      extra = [{
+        web-devicons.enable = true;
+      }];
     }).config;
   };
 

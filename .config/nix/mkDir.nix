@@ -1,5 +1,6 @@
-{ args ? {}, filter ? ["default.nix"], lib, path }: with builtins; let
-  list = map (x: import (path + "/${x}") args) (attrNames (removeAttrs (readDir path) filter));
+{ args ? {}, extra ? [], filter ? ["default.nix"], lib, path }: with builtins; let
+  list = (map (x: import (path + "/${x}") args) (attrNames (removeAttrs (readDir path) filter))) ++
+            extra;
 in {
   config = if isList (elemAt list 0)
            then lib.flatten list

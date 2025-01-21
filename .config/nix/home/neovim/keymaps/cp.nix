@@ -1,12 +1,11 @@
-{ pkgs, ... }: let
-  paste = if pkgs.stdenv.isDarwin then "<D-v>" else "<C-v>";
-in [ 
+{ modifier, ... }: let
+  paste = "<${modifier}-v>";
+in [
   {
     action = ''"*y'';
-    key = if pkgs.stdenv.isDarwin then "<D-c>" else "<C-c>";
+    key = "<${modifier}-c>";
     mode = "v";
   }
-
   {
     action = ''"*p'';
     key = paste;
@@ -16,5 +15,5 @@ in [
     action = ''<Esc>"*pa'';
     key = paste;
     mode = "i";
-  }
+  } 
 ]
