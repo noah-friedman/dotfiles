@@ -20,8 +20,9 @@
     inherit mode;
   }
   (map ({ action, key }: map (x: {
-    action = action x; 
+    action = "<Cmd>${action x}<CR>";
     key = key x;
+    inherit mode;
   }) (map (x: toString x) (range 0 9))) [
     { action = x: "BufferGoto${x}"; key = x: "<${modifier}-${x}>"; }
     { action = x: "${x}tabnext"; key = x: "<A-${x}>"; }
