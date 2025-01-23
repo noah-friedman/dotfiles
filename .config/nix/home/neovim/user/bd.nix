@@ -1,0 +1,3 @@
+{ ... }: {
+  Bd.command = "BufferDelete";
+}

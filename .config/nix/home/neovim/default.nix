@@ -39,12 +39,16 @@ in {
 
     autoCmd = (mkDir {
       path = ./autocmd;
-    }).config;
+    });
 
-    extraFiles = (mkDir { 
+    userCommands = (mkDir {
+      path = ./user;
+    });
+
+    extraFiles = (mkDir {
       args = { inherit pkgs; };
       path = ./files;
-    }).config;
+    });
 
     keymaps = (mkDir {
       args = {
@@ -53,14 +57,14 @@ in {
         mode = ["n" "i" "v" "t" "c"];
       };
       path = ./keymaps;
-    }).config;
+    });
 
     plugins = (mkDir {
       path = ./plugins;
       extra = [{
         web-devicons.enable = true;
       }];
-    }).config;
+    });
   };
 
   programs.neovide = {

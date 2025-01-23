@@ -30,8 +30,8 @@ if [ -e $SINGLE_SRC ]; then
 fi
 PATH="/nix/var/nix/profiles/default/bin:$PATH"
 
+NIX_DARWIN="https://github.com/LnL7/nix-darwin/archive/nix-darwin-${VERSION}.tar.gz"
 PKGS=$(if [ $(uname) = Darwin ]; then
-	NIX_DARWIN="https://github.com/LnL7/nix-darwin/archive/nix-darwin-${VERSION}.tar.gz"
 	nix-channel --add $NIX_DARWIN darwin
 	printf "nixpkgs-${VERSION}-darwin"
 else
@@ -45,6 +45,7 @@ nix-channel --update
 if [ $(uname) = Darwin ]; then
 	TMPDIR=$(mktemp -d)
 	cd $TMPDIR
+    echo "done $NIX_DARWIN"
 
 	nix-build $NIX_DARWIN -A darwin-rebuild
 	./result/bin/darwin-rebuild switch -I darwin-config=$HOME/.config/nix/configuration.nix
