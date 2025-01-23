@@ -1,6 +1,7 @@
 { ... }: {
   project-nvim = {
     enable = true;
+    enableTelescope = true;
     settings = {
       ignore_lsp = [
         "copilot"

@@ -8,7 +8,15 @@ in {
     });
   in [nixvim.homeManagerModules.nixvim];
   
-  programs.nixvim = {
+  programs.nixvim = let
+    plugins = mkDir {
+      args = { inherit lib pkgs; };
+      path = ./plugins;
+      extra = [{
+        web-devicons.enable = true;
+      }];
+    };
+  in {
     enable = true;
     defaultEditor = true;
     vimAlias = true;
@@ -41,14 +49,12 @@ in {
       path = ./autocmd;
     });
 
-    userCommands = (mkDir {
-      path = ./user;
-    });
-
     extraFiles = (mkDir {
       args = { inherit pkgs; };
       path = ./files;
     });
+
+    extraPlugins = plugins.imports;
 
     keymaps = (mkDir {
       args = {
@@ -59,11 +65,10 @@ in {
       path = ./keymaps;
     });
 
-    plugins = (mkDir {
-      path = ./plugins;
-      extra = [{
-        web-devicons.enable = true;
-      }];
+    plugins = plugins.config;
+
+    userCommands = (mkDir {
+      path = ./user;
     });
   };
 
