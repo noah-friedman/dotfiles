@@ -21,6 +21,7 @@
 in {
   cmp = {
     enable = true;
+    lazyLoad.settings.event = ["User FileOpened" "CmdlineEnter"];
 
     settings = {
       sources = [

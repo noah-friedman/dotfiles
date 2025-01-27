@@ -1,28 +1,33 @@
 { lib, pkgs, ... }: let 
-mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
+  mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
 in {
   imports = let
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
-      ref = "nixos-${import ../../version.nix}";
+      #ref = "nixos-${import ../../version.nix}";
+      ref = "main";
     });
   in [nixvim.homeManagerModules.nixvim];
   
   programs.nixvim = let
+
     plugins = mkDir {
       args = { inherit lib pkgs; };
       path = ./plugins;
       extra = [{
         web-devicons.enable = true;
+        lz-n.enable = true;
       }];
     };
   in {
     enable = true;
+    nixpkgs = { inherit pkgs; };
     defaultEditor = true;
     vimAlias = true;
 
     colorschemes.dracula-nvim = {
       enable = true;
+      lazyLoad.enable = true;
       settings = {
         colors.menu = "none";
         transparent_bg = false;

@@ -8,10 +8,14 @@
   };
   fidget = {
     enable = true;
-    progress = {
-      display.doneIcon = "✓";
-      ignoreDoneAlready = true;
+    lazyLoad.settings.event = ["User FileOpened"];
+
+    settings = {
+      progress = {
+        display.done_icon = "✓";
+        ignore_done_already = true;
+      };
+      notification.window.winblend = 0;
     };
-    notification.window.winblend = 0;
   };
 }

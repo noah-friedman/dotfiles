@@ -1,6 +1,11 @@
 { lib, pkgs, ... }: {
   telescope = {
     enable = true;
+    lazyLoad.settings = {
+      cmd = "Telescope";
+      keys = ["<A-v>"];
+    };
+
     extensions = {
       file-browser = {
         enable = true;
