@@ -31,7 +31,7 @@ in {
         }
         {
           name = "treesitter";
-          group_index = 1;
+          group_index = 2;
         }
         {
           name = "snippy";
@@ -79,7 +79,7 @@ in {
         documentation = completion;
       };
 
-      formatting.format = ''function(entry, vim_item)
+      formatting.format.__raw = ''function(entry, vim_item)
         local icons = {
           kind = {
             Text = "󱩾",
@@ -114,7 +114,7 @@ in {
             treesitter = "󰙅",
           },
         }
-        vim_item.kind = string.format("%s  %-13s | %s", icons.kind[vim_item.kind],
+        vim_item.kind = string.format("%s  %-20s | %s", icons.kind[vim_item.kind] or " ",
                                       vim_item.kind,
                                       icons.source[entry.source.name])
         return vim_item

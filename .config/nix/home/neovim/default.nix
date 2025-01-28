@@ -10,15 +10,7 @@ in {
   in [nixvim.homeManagerModules.nixvim];
   
   programs.nixvim = let
-
-    plugins = mkDir {
-      args = { inherit lib pkgs; };
-      path = ./plugins;
-      extra = [{
-        web-devicons.enable = true;
-        lz-n.enable = true;
-      }];
-    };
+    plugins = import ./plugins { inherit lib pkgs; };
   in {
     enable = true;
     nixpkgs = { inherit pkgs; };
