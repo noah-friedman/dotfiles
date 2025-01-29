@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: let 
+{ config, lib, pkgs, ... }: let 
   mkDir = args: (import ../../mkDir.nix (args // { inherit lib; }));
 in {
   imports = let
@@ -10,7 +10,7 @@ in {
   in [nixvim.homeManagerModules.nixvim];
   
   programs.nixvim = let
-    plugins = import ./plugins { inherit lib pkgs; };
+    plugins = import ./plugins { inherit config lib pkgs; };
   in {
     enable = true;
     nixpkgs = { inherit pkgs; };

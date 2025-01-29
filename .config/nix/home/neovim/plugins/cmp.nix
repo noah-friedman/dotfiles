@@ -30,16 +30,11 @@ in {
           group_index = 1;
         }
         {
+          name = "nvim_lsp_signature_help";
+        }
+        {
           name = "treesitter";
           group_index = 2;
-        }
-        {
-          name = "snippy";
-          group_index = 2;
-        }
-        {
-          name = "nvim_lsp_signature_help";
-          group_index = 3;
         }
       ];
 
