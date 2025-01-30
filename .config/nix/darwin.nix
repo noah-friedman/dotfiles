@@ -1,7 +1,7 @@
 { lib, isDarwin, pkgs, ... }: let
   casks = import ./casks.nix pkgs;
 in lib.mkIf isDarwin {
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     casks.docker
   ];
   nixpkgs.overlays = [

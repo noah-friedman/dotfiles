@@ -1,8 +1,11 @@
 { isDarwin, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
+    clang-tools
+    curl
     git
     nix-output-monitor
     ripgrep
+    wget
     wireguard-tools
     yadm
   ];

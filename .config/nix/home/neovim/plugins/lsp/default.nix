@@ -1,25 +1,23 @@
-{ ... }: let
-  makeMapping = mode: maps: builtins.mapAttrs (n: v: "{ ${mode} = ${v} }") ({
-    "<CR>" = "cmp.mapping.confirm({ select = ${if mode != "c" then "true" else "false"} })";
-    "<S-BS>" = ''function()
-      if cmp.visible_docs() then
-        cmp.close_docs()
-      else
-        cmp.mapping.abort()
-      end
-    end'';
-  } // maps);
-  selectors = If: Else: prev: let
-  r = ''function(fallback)
+{ lib, ... }: {
+  cmp = let
+    makeMapping = mode: maps: builtins.mapAttrs (n: v: "{ ${mode} = ${v} }") ({
+      "<CR>" = "cmp.mapping.confirm({ select = ${if mode != "c" then "true" else "false"} })";
+      "<S-BS>" = ''function()
+        if cmp.visible_docs() then
+          cmp.close_docs()
+        else
+          cmp.mapping.abort()
+        end
+      end'';
+    } // maps);
+    selectors = If: Else: prev: ''function(fallback)
       ${If prev}
         cmp.select_${if prev then "prev" else "next"}_item()
       else
         ${Else}
       end
     end'';
-  in r;
-in {
-  cmp = {
+  in {
     enable = true;
     lazyLoad.settings.event = ["User FileOpened" "CmdlineEnter"];
 
@@ -152,5 +150,47 @@ in {
       { name = "buffer"; }
       { name = "async_path"; }
     ];
+  };
+
+  lsp = {
+    enable = true;
+    lazyLoad.settings.event = ["User FileOpened"];
+    inlayHints = true;
+
+    keymaps = {
+      lspBuf = {
+        "<F2>" = "rename";
+        "<F3>" = "code_action";
+      };
+      extra = lib.mapAttrsToList (key: action: { inherit action key; mode = ["n" "i" "v"]; }) {
+        "<F1>".__raw = ''function()
+          local lang = require 'otter.keeper'.get_current_language_context()
+          if lang ~= nil then
+            vim.lsp.get_clients({
+              name = "otter-ls[" .. vim.api.nvim_get_current_buf()  .. "]"
+            })[1].request(
+              vim.lsp.protocol.Methods.textDocument_hover,
+              vim.lsp.util.make_position_params()
+            )
+          else
+            vim.lsp.buf.hover()
+          end
+        end'';
+        "<F4>".__raw = ''function()
+          require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
+        end'';
+      };
+    };
+
+    servers = import ../../../../mkDir.nix {
+      inherit lib;
+      path = ./.;
+    };
+  };
+  
+  lsp-format.enable = true;
+  otter = {
+    enable = true;
+    lazyLoad.settings.event = "User FileOpened";
   };
 }

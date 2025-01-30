@@ -1,0 +1,3 @@
+{ ... }: {
+  nixd.enable = true;
+}

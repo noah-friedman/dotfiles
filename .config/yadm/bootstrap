@@ -45,11 +45,9 @@ nix-channel --update
 if [ $(uname) = Darwin ]; then
 	TMPDIR=$(mktemp -d)
 	cd $TMPDIR
-    echo "done $NIX_DARWIN"
-
-	nix-build $NIX_DARWIN -A darwin-rebuild
-	./result/bin/darwin-rebuild switch -I darwin-config=$HOME/.config/nix/configuration.nix
-
+    nix-shell -p nix-output-monitor --run "nom-build $NIX_DARWIN -A darwin-rebuild
+            ./result/bin/darwin-rebuild switch \
+                    -I darwin-config=$HOME/.config/nix/configuration.nix |& nom"
 	cd -
 	rm -rf $TMPDIR
 elif cmd_exists nixos-rebuild; then
