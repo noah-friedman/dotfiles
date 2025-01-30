@@ -5,27 +5,28 @@
   programs.nixvim.plugins.lsp.servers.arduino_language_server = {
     enable = true;
     extraOptions = {
-      capabilties = rec {
+      capabilities = rec {
         textDocument.semanticTokens.__raw = "vim.NIL";
         workspace = textDocument;
       };
-      cmd.__raw = ''{
-        "arduino-language-server",
-        "-clangd",
-        vim.system({ 'which', 'clangd' }, { text = true }):wait().stdout:gsub("\n", ""),
-        "-cli-config",
-        -- This needs to be symlinked manually
-        vim.env.HOME .. "/.arduino.yaml",
-        "-format-conf-path",
-        -- This too
-        vim.env.HOME .. "/.clang-format",
-        "-jobs",
-        tostring(#vim.uv.cpu_info())
-      }'';
+      cmd.__raw = ''(function()
+        Clangd = vim.system({ 'which', 'clangd' }, { text = true }):wait().stdout:gsub("\n", "")
+        return {
+          "arduino-language-server",
+          "-clangd",
+          Clangd,
+          "-cli-config",
+          -- This needs to be symlinked manually
+          vim.env.HOME .. "/.arduino.yaml",
+          "-format-conf-path",
+          -- This too
+          vim.env.HOME .. "/.clang-format",
+          "-jobs",
+          tostring(#vim.uv.cpu_info())
+        }
+      end)()'';
     };
-    onAttach.function = ''client.capabilities.textDocument.semanticTokens = vim.NIL
-                          client.capabilities.workspace.semanticTokens = vim.NIL
-                          Client = client'';
+    onAttach.function = ''Client = vim.lsp.get_client_by_id(client.id)'';
     package = pkgs.buildGoModule rec {
       name = src.repo;
       src = pkgs.fetchFromGitHub {

@@ -3,6 +3,9 @@
 in lib.mkIf isDarwin {
   environment.systemPackages = with pkgs; [
     casks.docker
+
+    # Gets rid of the 'install command line tools' pop-up
+    xcbuild
   ];
   nixpkgs.overlays = [
     (final: prev: with casks; {
