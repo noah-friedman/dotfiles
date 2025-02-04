@@ -1,4 +1,8 @@
 { lib, pkgs, ... }: {
+  dressing = {
+    enable = true;
+    lazyLoad.settings.event = "User DeferredUIEnter";
+  };
   telescope = {
     enable = true;
     lazyLoad.settings = {
@@ -16,6 +20,10 @@
             folder_browser = true;
           };
         };
+      };
+      ui-select = {
+        enable = true;
+        settings.__raw = "{ require 'telescope.themes'.get_cursor {} }";
       };
       undo.enable = true;
     };
@@ -50,6 +58,7 @@
       v = "vim_options";
       "<Enter>" = "resume";
     };
+    settings.defaults.initial_mode = "normal";
   };
   imports = [pkgs.vimPlugins.telescope-symbols-nvim];
 }

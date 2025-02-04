@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ config, lib, pkgs, ... }: let
+in {
   cmp = let
     makeMapping = mode: maps: builtins.mapAttrs (n: v: "{ ${mode} = ${v} }") ({
       "<CR>" = "cmp.mapping.confirm({ select = ${if mode != "c" then "true" else "false"} })";
@@ -158,11 +159,13 @@
     inlayHints = true;
 
     keymaps = {
-      lspBuf = {
-        "<F2>" = "rename";
-        "<F3>" = "code_action";
-      };
-      extra = lib.mapAttrsToList (key: action: { inherit action key; mode = ["n" "i" "v"]; }) {
+      extra = lib.mapAttrsToList (key: action: {
+        action = if builtins.typeOf action == "string"
+                 then "<Cmd>${action}<CR>"
+                 else action;
+        inherit key;
+        mode = ["n" "i" "v"]; 
+      }) {
         "<F1>".__raw = ''function()
           local lang = require 'otter.keeper'.get_current_language_context()
           if lang ~= nil then
@@ -176,13 +179,21 @@
             vim.lsp.buf.hover()
           end
         end'';
+        "<F2>".__raw = "vim.lsp.buf.rename";
+        "<F3>".__raw = "vim.lsp.buf.code_action";
         "<F4>".__raw = ''function()
           require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
         end'';
+        "<F5>".__raw = "vim.diagnostic.open_float";
+        "<F6>" = "noh";
+        "<F7>".__raw = "function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end";
       };
     };
 
+    onAttach = "require'otter'.activate(nil, true, false, nil)";
+
     servers = import ../../../../mkDir.nix {
+      args = { inherit config lib pkgs; };
       inherit lib;
       path = ./.;
     };
@@ -192,5 +203,7 @@
   otter = {
     enable = true;
     lazyLoad.settings.event = "User FileOpened";
+
+    autoActivate = false;
   };
 }

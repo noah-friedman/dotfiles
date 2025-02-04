@@ -18,6 +18,22 @@
         },
       })
     end'';
-    settings.diagnostics.disable = ["miss-name"];
+    settings = {
+      completion.showWord = "Disable";
+      format = {
+        enabled = true;
+        defaultConfig = {
+          align_call_args = "true";
+          align_function_params = "true";
+          align_continuous_rect_table_field = "true";
+          align_if_branch = "true";
+          call_arg_parentheses = "remove";
+          indent_style = "space";
+          indent_size = "2";
+          quote_style = "double";
+        };
+      };
+      hint.enable = true;
+    };
   };
 }

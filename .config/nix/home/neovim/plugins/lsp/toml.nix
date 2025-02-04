@@ -1,0 +1,3 @@
+{ ... }: {
+  taplo.enable = true;
+}

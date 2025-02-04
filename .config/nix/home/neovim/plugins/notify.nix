@@ -1,10 +1,12 @@
 { ... }: {
   notify = {
     enable = true;
-    fps = 60;
-    # Must set explicitly or bold highlight won't work
-    render = "default";
-    stages = "slide";
+    settings = {
+      fps = 60;
+      # Must set explicitly or bold highlight won't work
+      render = "default";
+      stages = "slide";
+    };
   };
   fidget = {
     enable = true;

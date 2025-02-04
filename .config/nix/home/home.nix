@@ -6,4 +6,5 @@
     username = user.name;
     homeDirectory = user.home;
   };
+  programs.home-manager.enable = true;
 }

@@ -2,9 +2,13 @@
   inherit args lib;
   path = ./.;
   extra = [{
-    dressing = {
+    crates = {
       enable = true;
-      lazyLoad.settings.event = "User DeferredUIEnter";
+      lazyLoad.settings.event = "BufEnter *Cargo.toml";
+    };
+    indent-blankline = {
+      enable = true;
+      lazyLoad.settings.event = "User FileOpened";
     };
     lz-n.enable = true;
     web-devicons.enable = true;

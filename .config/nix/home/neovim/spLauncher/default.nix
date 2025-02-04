@@ -1,0 +1,32 @@
+{ config, lib, pkgs, ... }: {
+  extraPlugins = [(pkgs.vimUtils.buildVimPlugin {
+    name = "spLauncher";
+    src = pkgs.fetchFromGitHub {
+      owner = "speelbarrow";
+      repo = "spLauncher.nvim";
+      tag = "v0.3.2";
+      sha256 = "8f9+XbQvZeGaviv8eWHnHV4r3ZQDElSoyNXypVPqXb0=";
+    };
+  })];
+  extraFiles = {
+    "after/plugin/spLauncher.lua".text = ''
+      require 'spLauncher'.setup()
+    '';
+  }// (with builtins; lib.mapAttrs' 
+    (name: _: let     
+      actionMap = import ./${name} { inherit lib pkgs; };
+    in {
+      name = "after/ftplugin/${lib.removeSuffix ".nix" name}.lua";
+      value.text = "vim.b.spLauncherActionMap = " + 
+                   (config.lib.nixvim.toLuaObject (removeAttrs actionMap ["__raw"])) +
+                   (if actionMap ? __raw then actionMap.__raw else "");
+    })
+    (
+      lib.filterAttrs (name: value: 
+        name != "default.nix" && (
+          lib.warnIf (value != "regular") "skipping non-regular file '${value}'" value
+        ) == "regular"
+      ) (readDir ./.)
+    )
+  );
+} 

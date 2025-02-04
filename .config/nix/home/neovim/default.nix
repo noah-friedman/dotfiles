@@ -11,63 +11,71 @@ in {
   
   programs.nixvim = let
     plugins = import ./plugins { inherit config lib pkgs; };
-  in {
-    enable = true;
-    nixpkgs = { inherit pkgs; };
-    defaultEditor = true;
-    vimAlias = true;
-
-    colorschemes.dracula-nvim = {
+    spLauncher = import ./spLauncher { inherit config lib pkgs; };
+  in lib.mkMerge [
+    spLauncher
+    {
       enable = true;
-      lazyLoad.enable = true;
-      settings = {
-        colors.menu = "none";
-        transparent_bg = false;
-        italic_comment = true;
-        show_end_of_buffer = true;
+      nixpkgs = { inherit pkgs; };
+      defaultEditor = true;
+      vimAlias = true;
+
+      colorschemes.dracula-nvim = {
+        enable = true;
+        lazyLoad.enable = true;
+        settings = {
+          colors.menu = "none";
+          transparent_bg = false;
+          italic_comment = true;
+          show_end_of_buffer = true;
+        };
       };
-    };
 
-    opts = {
-      colorcolumn = "+1";
-      expandtab = true;
-      mouse = "a";
-      number = true;
-      shiftwidth = 4;
-      signcolumn = "number";  
-      softtabstop = 4;
-      splitbelow = true;
-      splitright = true;
-      tabstop = 4;
-      textwidth = 100;
-    };
-
-    autoCmd = (mkDir {
-      path = ./autocmd;
-    });
-
-    extraFiles = (mkDir {
-      args = { inherit pkgs; };
-      path = ./files;
-    });
-
-    extraPlugins = plugins.imports;
-
-    keymaps = (mkDir {
-      args = {
-        inherit lib;
-        modifier = if pkgs.stdenv.isDarwin then "D" else "C";
-        mode = ["n" "i" "v" "t" "c"];
+      opts = {
+        colorcolumn = "+1";
+        expandtab = true;
+        mouse = "a";
+        number = true;
+        shiftwidth = 4;
+        signcolumn = "number";  
+        softtabstop = 4;
+        splitbelow = true;
+        splitright = true;
+        tabstop = 4;
+        textwidth = 100;
       };
-      path = ./keymaps;
-    });
 
-    plugins = plugins.config;
+      autoCmd = (mkDir {
+        path = ./autocmd;
+      });
 
-    userCommands = (mkDir {
-      path = ./user;
-    });
-  };
+      extraFiles = (mkDir {
+        args = { inherit pkgs; };
+        path = ./files;
+      });
+
+      extraPlugins = plugins.imports;
+
+      filetype = (mkDir {
+        path = ./filetype;
+      });
+
+      keymaps = (mkDir {
+        args = {
+          inherit lib;
+          modifier = if pkgs.stdenv.isDarwin then "D" else "C";
+          mode = ["n" "i" "v" "t" "c"];
+        };
+        path = ./keymaps;
+      });
+
+      plugins = plugins.config;
+
+      userCommands = (mkDir {
+        path = ./user;
+      });
+    }
+  ];
 
   programs.neovide = {
     enable = true;
