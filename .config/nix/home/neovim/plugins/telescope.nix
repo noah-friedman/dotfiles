@@ -2,6 +2,21 @@
   dressing = {
     enable = true;
     lazyLoad.settings.event = "User DeferredUIEnter";
+
+    settings = {
+      input.relative = "win";
+      select = {
+        backend = ["telescope" "builtin"];
+        get_config.__raw = ''function(opts)
+          if opts.kind == "codeaction" then
+            return {
+              builtin = { relative = "cursor" },
+              telescope = require("telescope.themes").get_cursor(),
+            }
+          end
+        end'';
+      };
+    };
   };
   telescope = {
     enable = true;
@@ -20,10 +35,6 @@
             folder_browser = true;
           };
         };
-      };
-      ui-select = {
-        enable = true;
-        settings.__raw = "{ require 'telescope.themes'.get_cursor {} }";
       };
       undo.enable = true;
     };

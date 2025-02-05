@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: let
-  casks = import ../casks.nix pkgs;
+  casks = import ../darwin/casks.nix pkgs;
 in lib.mkIf pkgs.stdenv.isDarwin {
   programs.ghostty.settings = {
     font-thicken = true;

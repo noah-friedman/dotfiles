@@ -5,7 +5,7 @@ in import ./mkDir.nix {
     isDarwin = lib.hasSuffix "darwin" builtins.currentSystem;
   };
   extra = [{ nixpkgs.config.allowUnfree = true; }];
-  filter = ["casks.nix" "configuration.nix" "home" "mkDir.nix" "user.nix" "version.nix"];
+  filter = ["configuration.nix" "home" "mkDir.nix" "user.nix" "version.nix"];
   inherit lib;
   path = ./.;
 }

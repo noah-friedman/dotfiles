@@ -30,6 +30,8 @@ in {
           show_end_of_buffer = true;
         };
       };
+      
+      luaLoader.enable = true;
 
       opts = {
         colorcolumn = "+1";
@@ -37,6 +39,7 @@ in {
         mouse = "a";
         number = true;
         shiftwidth = 4;
+        showmode = false;
         signcolumn = "number";  
         softtabstop = 4;
         splitbelow = true;

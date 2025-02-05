@@ -3,6 +3,7 @@
 in lib.mkIf isDarwin {
   environment.systemPackages = with pkgs; [
     casks.docker
+    raycast
 
     # Gets rid of the 'install command line tools' pop-up
     xcbuild

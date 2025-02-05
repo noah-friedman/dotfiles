@@ -7,7 +7,7 @@ in {
         if cmp.visible_docs() then
           cmp.close_docs()
         else
-          cmp.mapping.abort()
+          cmp.abort()
         end
       end'';
     } // maps);
@@ -202,8 +202,9 @@ in {
   lsp-format.enable = true;
   otter = {
     enable = true;
+    autoActivate = false;
     lazyLoad.settings.event = "User FileOpened";
 
-    autoActivate = false;
+    settings.buffers.set_filetype = true;
   };
 }
