@@ -15,7 +15,7 @@
     mode = "t";
   }
   {
-    action = ''function()
+    action.__raw = ''function()
       vim.fn.chansend(
         vim.b.terminal_job_id,
         vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
