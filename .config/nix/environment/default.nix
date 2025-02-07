@@ -1,6 +1,6 @@
-{ isDarwin, lib, pkgs, ... }: {
+{ lib, isDarwin, pkgs, ... }: {
   environment = {
-    extraInit = lib.concatStrings (import ../mkDir.nix {
+    extraInit = lib.concatLines (import ../mkDir.nix {
       args = { inherit pkgs; };
       inherit lib;
       path = ./init;
@@ -20,6 +20,30 @@
                 then "sysctl -n hw.ncpu"
                 else "nproc --all";
       in "${command} switch --cores $(${cores}) --max-jobs $(${cores}) |& nom";
+      eza = "command eza -l --header --git --icons";
+      z = let
+        ignore = builtins.concatStringsSep "|" ([
+          ".git"
+
+          "build"
+          "out"
+
+          "Cargo.lock"
+          "target"
+
+          "node_modules"
+
+          ".mypy_cache"
+          "__pycache__"
+          ".ropeproject"
+          ".venv"
+        ] ++ lib.optionals isDarwin [".DS_Store"]);
+      in ''eza $([ "$(dirname $PWD)" != "$(dirname $HOME)" ] && echo -n " -a ") \
+            --git-ignore \
+            --ignore-glob="${ignore}"'';
+      za = "eza -a";
+      zz = "z --tree";
+      zza = "za --tree";
     };
 
     systemPackages = with pkgs; [
@@ -57,6 +81,7 @@
           hash = "sha256-qDlEI9cav2RSsYinIlW4VqmCtUW+vAgFJOE2miFAVVo=";
         };
       })
+      eza
       git
       gnumake
       nix-output-monitor

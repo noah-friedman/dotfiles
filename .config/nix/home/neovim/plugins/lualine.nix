@@ -56,14 +56,14 @@
             __unkeyed-1 = "vim.wo.spell and '󱍓' or '󰏯'";
             color.__raw = ''function() return vim.wo.spell and {} or { fg = colors["white"] } end'';
           }
-          "filetype" "o:shiftwidth"
+          "o:shiftwidth" "filetype" 
         ];
         lualine_y = ["encoding" "fileformat"];
         lualine_z = ["progress" "location"];
       };
       options = {
         globalstatus = true;
-        theme = "dracula-nvim";
+        theme.__raw = "theme";
       };
     };
   };

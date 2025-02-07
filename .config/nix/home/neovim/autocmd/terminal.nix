@@ -5,10 +5,8 @@
         local winid = vim.fn.win_findbuf(args.buf)[1]
         for option, value in pairs {
           number = disable ~= true,
-          signcolumn = disable ~= true and "yes" or "no",
           wrap = disable ~= true,
         } do
-          vim.notify(vim.fn.join({args.event, args.buf, winid, option, value}, " "), vim.log.levels.TRACE)
           if winid ~= nil and vim.wo[winid] ~= nil then
             vim.wo[winid][option] = value
           end

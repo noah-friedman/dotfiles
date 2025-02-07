@@ -40,6 +40,13 @@
         test = "t",
         build = "b",
         clean = "c",
+        Run = function()
+          vim.b.spLauncherActionMap.run() .. " --release"
+        end,
+        Debug = "d --release",
+        Test = "t --release",
+        Build = "b --release",
+        Clean = "c --release"
       })
     end
   '';

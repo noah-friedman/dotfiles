@@ -10,7 +10,18 @@
   })];
   extraFiles = {
     "after/plugin/spLauncher.lua".text = ''
-      require 'spLauncher'.setup()
+      require 'spLauncher'.setup {
+        keymap = {
+          actions = {
+            Run = "<A-s>R",
+            Debug = "<A-s>D",
+            Test = "<A-s>T",
+            Build = "<A-s>B",
+            Clean = "<A-s>C",
+            Install = "<A-s>I",
+          }
+        }
+      }
     '';
   }// (with builtins; lib.mapAttrs' 
     (name: _: let     

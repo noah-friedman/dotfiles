@@ -40,7 +40,7 @@ in {
         number = true;
         shiftwidth = 4;
         showmode = false;
-        signcolumn = "number";  
+        signcolumn = "no"; # gitsigns will still change the color of the numbers
         softtabstop = 4;
         splitbelow = true;
         splitright = true;

@@ -4,6 +4,7 @@
     
     extraConfig = {
       core.editor = "nvim";
+      init.defaultBranch = "main";
       push.autoSetupRemote = true;
     };
     ignores = if pkgs.stdenv.isDarwin

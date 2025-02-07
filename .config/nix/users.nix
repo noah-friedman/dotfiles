@@ -1,4 +1,4 @@
-{ isDarwin, pkgs, ... }: let
+{ isDarwin, ... }: let
   user = import ./user.nix isDarwin;
   inherit (user) name;
 in {
