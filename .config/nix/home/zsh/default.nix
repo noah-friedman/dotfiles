@@ -1,5 +1,9 @@
 { lib, pkgs, ... }: {
-  programs.zsh = {
+  programs.zsh = let
+    init = path: lib.concatLines (import ../../mkDir.nix {
+      inherit lib path;
+    });
+  in {
     enable = true;
     
     autosuggestion.enable = true;
@@ -24,10 +28,11 @@
         DRACULA_ARROW_ICON = "-> ";
         ZSH_THEME = "dracula";
       }
-      (mkIf pkgs.stdenv.isLinux {
-        DEBIAN_PREVENT_KEYBOARD_CHANGES = "yes";
-      })
+      (mkIf pkgs.stdenv.isLinux { DEBIAN_PREVENT_KEYBOARD_CHANGES = "yes"; })
     ];
+
+    initExtraBeforeCompInit = init ./before;
+    initExtra = init ./after;
 
     plugins = [
       {

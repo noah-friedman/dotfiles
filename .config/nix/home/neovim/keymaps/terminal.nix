@@ -14,14 +14,14 @@
     key = "<Esc>";
     mode = "t";
   }
-  {
+  (map (x: {
     action.__raw = ''function()
       vim.fn.chansend(
         vim.b.terminal_job_id,
-        vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+        vim.api.nvim_replace_termcodes("<${x}>", true, false, true)
       )
     end'';
-    key = "<S-Esc>";
+    key = "<S-${x}>";
     mode = "t";
-  }
+  }) ["Esc" "Space"])
 ]

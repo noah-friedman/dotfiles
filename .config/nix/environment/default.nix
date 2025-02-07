@@ -1,36 +1,43 @@
-{ isDarwin, pkgs, ... }: {
+{ isDarwin, lib, pkgs, ... }: {
   environment = {
+    extraInit = lib.concatStrings (import ../mkDir.nix {
+      args = { inherit pkgs; };
+      inherit lib;
+      path = ./init;
+    });
+
     # Required for home-manager.programs.zsh.enableCompletion to work properly.
     pathsToLink = ["/share/zsh"];
 
     shellAliases = {
       rebuild = let
         command = if isDarwin
-                  then "darwin"
-                  else "nixos";
+                  then "darwin-rebuild"
+                  else if builtins.pathExists "/etc/nixos"
+                  then "nixos-rebuild"
+                  else "home-manager";
         cores = if isDarwin
                 then "sysctl -n hw.ncpu"
                 else "nproc --all";
-      in "${command}-rebuild switch --cores $(${cores}) --max-jobs $(${cores}) |& nom";
+      in "${command} switch --cores $(${cores}) --max-jobs $(${cores}) |& nom";
     };
 
     systemPackages = with pkgs; [
       arduino-cli
+      avrdude
       clang
       clang-tools
       curl
+      docker
       espflash
       espup
       (
         let
           mozilla = rec {
-            source = fetchFromGitHub {
-              owner = "mozilla";
-              repo = "nixpkgs-mozilla";
-              rev = "534ee26d3dbcbb9da3766c556638b9bcc3627871";
-              sha256 = "oh7GSCjBGHpxaU8/gejT55mlvI3qoKObXgqyn1XR7SA=";
+            source = builtins.fetchTarball {
+              url = "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz";
             };
-            overlay = callPackage "${source.out}/package-set.nix" {};
+            overlay = callPackage "${source}/package-set.nix" {};
           };
           rust = (mozilla.overlay.rustChannelOf { 
             channel = "stable";
@@ -51,7 +58,9 @@
         };
       })
       git
+      gnumake
       nix-output-monitor
+      python3
       ripgrep
       rustup
       wget

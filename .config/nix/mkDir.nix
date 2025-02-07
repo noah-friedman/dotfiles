@@ -1,4 +1,4 @@
-{ args ? {}, extra ? [], filter ? ["default.nix"], lib, path }: with builtins; let
+{ args ? {}, extra ? [], filter ? [".gitkeep" "default.nix"], lib, path }: with builtins; let
   list = (map (x: import (path + "/${x}") args) (attrNames (removeAttrs (readDir path) filter))) ++
             extra;
   r = {
