@@ -88,6 +88,7 @@
       python3
       ripgrep
       rustup
+      sl
       wget
       wireguard-tools
       yadm
