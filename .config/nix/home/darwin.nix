@@ -6,6 +6,7 @@ in lib.mkIf pkgs.stdenv.isDarwin {
     background-blur-radius = 50;
     window-colorspace = "display-p3";
     macos-titlebar-style = "transparent";
+    macos-option-as-alt = true;
     macos-icon = "custom-style";
     macos-icon-frame = "plastic";
     macos-icon-ghost-color = "green";

@@ -49,6 +49,8 @@
     systemPackages = with pkgs; [
       arduino-cli
       avrdude
+      cargo-expand
+      cargo-generate
       clang
       clang-tools
       curl

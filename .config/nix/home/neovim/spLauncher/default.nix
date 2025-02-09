@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }: {
-  extraPlugins = [(pkgs.vimUtils.buildVimPlugin {
+  extraPlugins = [(with pkgs; vimUtils.buildVimPlugin {
     name = "spLauncher";
-    src = pkgs.fetchFromGitHub {
+    src = fetchFromGitHub {
       owner = "speelbarrow";
       repo = "spLauncher.nvim";
       tag = "v0.3.2";

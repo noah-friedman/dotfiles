@@ -6,13 +6,15 @@ in lib.mkIf isDarwin {
       casks.docker
       casks.onyx
       darwin.libiconv
-      docker
       raycast
 
       # Gets rid of the 'install command line tools' pop-up
       xcbuild
     ];
-    variables.RUSTFLAGS = "-L ${darwin.libiconv}/lib";
+    variables = rec {
+      LIBRARY_PATH = "${darwin.libiconv}/lib";
+      RUSTFLAGS = "-L ${LIBRARY_PATH}";
+    };
   };
   nixpkgs.overlays = [
     (final: prev: with casks; {

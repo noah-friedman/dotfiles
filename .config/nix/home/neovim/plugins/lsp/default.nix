@@ -30,10 +30,11 @@ in {
         }
         {
           name = "nvim_lsp_signature_help";
+          group_index = 2;
         }
         {
           name = "treesitter";
-          group_index = 2;
+          group_index = 3;
         }
       ];
 
@@ -155,17 +156,40 @@ in {
 
   lsp = {
     enable = true;
-    lazyLoad.settings.event = ["User FileOpened"];
+    lazyLoad.settings.event = "User FileOpened";
     inlayHints = true;
 
     keymaps = {
-      extra = lib.mapAttrsToList (key: action: {
+      extra = let
+        callbacks = [
+          { __raw = ''function()
+
+            local lang = require 'otter.keeper'.get_current_language_context()
+            if lang ~= nil then
+              vim.lsp.get_clients({
+                name = "otter-ls[" .. vim.api.nvim_get_current_buf()  .. "]"
+              })[1].request(
+                vim.lsp.protocol.Methods.textDocument_hover,
+                vim.lsp.util.make_position_params()
+              )
+            else
+              vim.lsp.buf.hover()
+            end
+          end''; }
+          { __raw = "vim.lsp.buf.rename"; }
+          { __raw = "vim.lsp.buf.code_action"; }
+          { __raw = ''function()
+            require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
+          end''; }
+          { __raw = "vim.lsp.buf.implementation"; }
+        ];
+      in lib.mapAttrsToList (key: action: {
         action = if builtins.typeOf action == "string"
                  then "<Cmd>${action}<CR>"
                  else action;
         inherit key;
         mode = ["n" "i" "v"]; 
-      }) {
+      }) (lib.listToAttrs (lib.zipListsWith (n: v: { name = "<F${toString n}>"; value = v; }) (lib.range 1 (builtins.length callbacks)) callbacks));/*{
         "<F1>".__raw = ''function()
           local lang = require 'otter.keeper'.get_current_language_context()
           if lang ~= nil then
@@ -187,7 +211,7 @@ in {
         "<F5>".__raw = "vim.diagnostic.open_float";
         "<F6>" = "noh";
         "<F7>".__raw = "function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end";
-      };
+      };*/
     };
 
     onAttach = "require'otter'.activate(nil, true, false, nil)";
@@ -199,12 +223,34 @@ in {
     };
   };
   
-  lsp-format.enable = true;
+  lsp-format = {
+    enable = true;
+    lazyLoad.settings.event = "LspAttach";
+  };
+  lsp-lines = {
+    enable = true;
+    lazyLoad.settings.event = "LspAttach";
+  };
   otter = {
     enable = true;
-    autoActivate = false;
-    lazyLoad.settings.event = "User FileOpened";
+    lazyLoad.settings.event = "LspAttach";
 
     settings.buffers.set_filetype = true;
   };
+  
+  imports = [(pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-lsp-endhints";
+    src = builtins.fetchTarball {
+      url = "https://github.com/chrisgrieser/nvim-lsp-endhints/archive/main.tar.gz"; 
+    };
+  })];
+  lz-n.plugins = [
+    {
+      __unkeyed-1 = "nvim-lsp-endhints";
+      after.__raw = ''function()
+        require'lsp-endhints'.setup()
+      end'';
+      event = "LspAttach";
+    }
+  ];
 }
