@@ -7,16 +7,17 @@
       ignore_lsp = [
         "copilot"
         "lua_ls"
+        "rust_analyzer"
         "taplo"
-        "rust-analyzer"
       ];
       patterns = [
         ".git"
         "Cargo.toml"
         "pyproject.toml"
         "package.json"
-        ".project"
         ">.config"
+        ">Git"
+        ">Scratch"
       ];
       scope_chdir = "tab";
       silent_chdir = false;

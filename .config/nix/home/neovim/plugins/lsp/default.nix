@@ -160,58 +160,40 @@ in {
     inlayHints = true;
 
     keymaps = {
-      extra = let
-        callbacks = [
-          { __raw = ''function()
-
-            local lang = require 'otter.keeper'.get_current_language_context()
-            if lang ~= nil then
-              vim.lsp.get_clients({
-                name = "otter-ls[" .. vim.api.nvim_get_current_buf()  .. "]"
-              })[1].request(
-                vim.lsp.protocol.Methods.textDocument_hover,
-                vim.lsp.util.make_position_params()
-              )
-            else
-              vim.lsp.buf.hover()
-            end
-          end''; }
-          { __raw = "vim.lsp.buf.rename"; }
-          { __raw = "vim.lsp.buf.code_action"; }
-          { __raw = ''function()
-            require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
-          end''; }
-          { __raw = "vim.lsp.buf.implementation"; }
-        ];
-      in lib.mapAttrsToList (key: action: {
-        action = if builtins.typeOf action == "string"
-                 then "<Cmd>${action}<CR>"
-                 else action;
-        inherit key;
-        mode = ["n" "i" "v"]; 
-      }) (lib.listToAttrs (lib.zipListsWith (n: v: { name = "<F${toString n}>"; value = v; }) (lib.range 1 (builtins.length callbacks)) callbacks));/*{
+      extra = lib.mapAttrsToList (n: v: {
+        action = v;
+        key = n;
+        mode = ["n" "i" "v"];
+      }) {
         "<F1>".__raw = ''function()
-          local lang = require 'otter.keeper'.get_current_language_context()
-          if lang ~= nil then
-            vim.lsp.get_clients({
-              name = "otter-ls[" .. vim.api.nvim_get_current_buf()  .. "]"
-            })[1].request(
+
+          local buffer = vim.api.nvim_get_current_buf()
+          local client = vim.lsp.get_clients({ 
+            name = "otter-ls[" .. buffer .. "]"
+          })[1]
+          if client ~= nil 
+             and lang ~= nil 
+             and lang ~= vim.api.nvim_buf_get_option(buffer, "filetype") 
+          then
+            client.request(
               vim.lsp.protocol.Methods.textDocument_hover,
               vim.lsp.util.make_position_params()
             )
           else
             vim.lsp.buf.hover()
           end
-        end'';
-        "<F2>".__raw = "vim.lsp.buf.rename";
+        end''; 
+        # F2: smartRename -> home/neovim/plugins/treesitter.nix
         "<F3>".__raw = "vim.lsp.buf.code_action";
         "<F4>".__raw = ''function()
           require "telescope.builtin".lsp_definitions(require "telescope.themes".get_cursor {})
         end'';
-        "<F5>".__raw = "vim.diagnostic.open_float";
-        "<F6>" = "noh";
-        "<F7>".__raw = "function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end";
-      };*/
+        "<F5>".__raw = "vim.lsp.buf.implementation";
+        "<F6>".__raw = "vim.diagnostic.open_float";
+        # F10: noh -> home/neovim/keymaps/noh.nix
+        "<F11>".__raw = "function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end";
+        "<F12>".__raw = "function() vim.wo.spell = not vim.wo.spell end";
+      };
     };
 
     onAttach = "require'otter'.activate(nil, true, false, nil)";
@@ -227,15 +209,9 @@ in {
     enable = true;
     lazyLoad.settings.event = "LspAttach";
   };
-  lsp-lines = {
-    enable = true;
-    lazyLoad.settings.event = "LspAttach";
-  };
   otter = {
     enable = true;
     lazyLoad.settings.event = "LspAttach";
-
-    settings.buffers.set_filetype = true;
   };
   
   imports = [(pkgs.vimUtils.buildVimPlugin {
